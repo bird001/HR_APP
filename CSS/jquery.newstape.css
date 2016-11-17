@@ -1,0 +1,19 @@
+.newstape {
+  background-color: #fff;
+  color: #000;
+  height: 400px;
+  overflow: hidden;
+}
+
+.newstape-content {
+  position: relative;
+  padding: 15px;
+}
+
+.newstape-drag { cursor: ns-resize; }
+
+.text-center { text-align: center; }
+
+.text-right { text-align: right; }
+
+.text-justify { text-align: justify; }
