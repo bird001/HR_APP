@@ -2,16 +2,30 @@
 include ("../db/db3.php");
 session_start();
 
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    $functiontype = $_POST['Submit'];
 
+    if ($functiontype == 'Login') {
 
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']); //md5() to encrypt
-    $role = mysqli_real_escape_string($conn, $_POST['EmpRole']);
-    $sql = "SELECT id_val FROM Users WHERE EmpEmail='$email' and EmpPass='$password' and EmpRole='$role'";
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $password = mysqli_real_escape_string($conn, $_POST['password']); //md5() to encrypt
+        $role = mysqli_real_escape_string($conn, $_POST['EmpRole']);
 
-    $sql_users = "insert into HR_DEPT.UserLog 
+        $sql_usercheck = "SELECT * FROM Users WHERE EmpEmail='$email' and EmpPass='$password' and EmpRole='$role'";
+        $result_usercheck = mysqli_query($conn, $sql_usercheck);
+        $row_usercheck = mysqli_fetch_array($result_usercheck, MYSQLI_ASSOC);
+
+        $checkpassword = $row_usercheck['PasswordChanged'];
+
+        $usercheck = mysqli_num_rows($result_usercheck);
+
+        // If result matched $myusername and $mypassword, table row must be 1 row
+        if ($usercheck === 1 && $checkpassword === '1') {
+
+            $sql_users = "insert into HR_DEPT.UserLog 
             (EmpEmail,TimeLoggedIn)
             select 
             EmpEmail, now() 
@@ -19,25 +33,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             HR_DEPT.Users 
             where 
             EmpEmail = '$email'"; //a log of users that have logged into this app
+            mysqli_query($conn, $sql_users); //execute the statement
 
-    mysqli_query($conn, $sql_users); //execute the statement
+            $_SESSION['login_user'] = $email;
+            $_SESSION['login_pass'] = $password;
+            $_SESSION['last_time'] = time();
 
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    //$active=$row['active'];
+            header("location: ../Profile/profile.php");
+        }
 
-    $count = mysqli_num_rows($result);
+        if ($usercheck === 1 && $checkpassword === '0') {
+            header("location: ../Login/ChangePassword.php");
+        }
 
-    // If result matched $myusername and $mypassword, table row must be 1 row
-    if ($count == 1) {
-        //session_register("myusername");
-        $_SESSION['login_user'] = $email;
-        $_SESSION['login_pass'] = $password;
-        $_SESSION['last_time'] = time();
-
-        header("location: ../Welcome/index.php");
-    } else {
-        $error = "Your Login Name or Password is invalid";
+        if ($usercheck === 0) {
+            $error = "Your Login Name or Password is invalid";
+        }
     }
 }
 ?>
@@ -86,23 +97,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </select>
                         </div>
 
-                        <input class="btn btn-primary" type="submit" value=" Submit "/> 
-                        <input class="btn btn-primary" type="button" value="Register" onclick="Register();" ><br />
+                        <input class="btn btn-primary" type="submit" name = "Submit" value = "Login"/>                         
                     </form>
 
                     <div style="font-size:11px; color:#cc0000; margin-top:10px"></div>
-                    <?php if (isset($error)) echo "Login failed: Incorrect user name, password, or rights<br /-->"; ?>			
+<?php if (isset($error)) echo $error . "<br/>"; ?>			
                 </div>
 
             </div>
 
         </div>
-        <?php
-        /* echo '<p><pre>after: '; // cehck if session destroyeed
-          print_r($_SESSION);
-          echo '</pre>';
-         * 
-         */
-        ?>
+
     </body>
 </html>

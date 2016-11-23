@@ -470,4 +470,42 @@ function smtpmailer_Disburse($to,$name,$dept, $type, $amount) {
         //return true;
     }
 }
+
+function smtpmailer_Registration($to,$name,$dept,$password) {
+//global $error;
+
+    $mail = new PHPMailer;  // create a new object
+    $mail->isSMTP(); // enable SMTP
+    //$mail->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mail->SMTPAuth = true;  // authentication enabled
+    $mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mail->SMTPAutoTLS = false;
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 25;
+    $mail->Username = GUSER;
+    $mail->Password = GPWD;
+    $mail->SetFrom(GUSER, 'TIP Friendly Society');
+    $mail->Subject = "Registration";
+    $mail->Body = "Dear $name of the $dept we would like to inform you that your HRM account has been created"
+            . "your username is your email address and your password is $password";
+    $mail->AddAddress($to);
+    //$mail->addAttachment($attatch);
+    $mail->isHTML(true);
+
+
+
+    if (!$mail->send()) {
+        //$error = 'Mail error: ' . $mail->ErrorInfo;
+        echo 'Try Again';
+        //echo 'Mailer Error: ' . $mail->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        echo $error;
+
+        //exit;
+        //return true;
+    }
+}
 ?>

@@ -62,42 +62,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (ValidateName($lname) === 1) {
         $lnameSet = 1;
-    }else {
+    } else {
         $lnameSet = 0;
         $lnameError = ValidateName($lname);
     }
-       
-if(ValidateEmail($manemail === 1)){
-    $manemailSet = 1;
-} else{
-    $manemailSet = 0;
-    $manemailError = ValidateEmail($manemail);
-}
 
-/*
-    if (empty($manemail)) {
-        $manemailError = "Managers Email is required";
+    if (ValidateEmail($manemail === 1)) {
+        $manemailSet = 1;
     } else {
-        $manemail = validate_input($manemail);
-// check if Mail is valid
-        if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/", $manemail)) {
-            $manemailError = "Invalid Email Format";
-            $manemailSet = 0;
-        } else {
-
-            $sql_emailtest = "SELECT * FROM Users WHERE EmpEmail = '$manemail'";
-            $selectresult = mysqli_query($conn, $sql_emailtest);
-            if (mysqli_num_rows($selectresult) >= 1) {
-//die('email already exists');
-                $manemailSet = 1;
-            } else {
-                $manemailError = "Email doesn't exist, check spelling or contact admin";
-                $manemailSet = 0;
-            }
-        }
+        $manemailSet = 0;
+        $manemailError = ValidateEmail($manemail);
     }
- * 
- */
+
+    /*
+      if (empty($manemail)) {
+      $manemailError = "Managers Email is required";
+      } else {
+      $manemail = validate_input($manemail);
+      // check if Mail is valid
+      if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/", $manemail)) {
+      $manemailError = "Invalid Email Format";
+      $manemailSet = 0;
+      } else {
+
+      $sql_emailtest = "SELECT * FROM Users WHERE EmpEmail = '$manemail'";
+      $selectresult = mysqli_query($conn, $sql_emailtest);
+      if (mysqli_num_rows($selectresult) >= 1) {
+      //die('email already exists');
+      $manemailSet = 1;
+      } else {
+      $manemailError = "Email doesn't exist, check spelling or contact admin";
+      $manemailSet = 0;
+      }
+      }
+      }
+     * 
+     */
 
     if (empty($startdate)) {
         $startdateError = "Start Date is required";
@@ -187,6 +187,11 @@ if(ValidateEmail($manemail === 1)){
     }
 }
 ?>
+<style>
+    form {
+        display: inline;
+    }
+</style>
 
 <br>
 <div align="left" class = "form-group">

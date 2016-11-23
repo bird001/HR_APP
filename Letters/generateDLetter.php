@@ -16,6 +16,13 @@ include("../db/db3.php");
 
     //window.alert("blah");
 </script>
+
+
+<style>
+    form {
+        display: inline;
+    }
+</style>
 <?php include("../Templates/navigation.php"); ?>
 <?php include("../Templates/body.php"); ?>
 <?php include("../Letters/lettersNav.php"); ?>

@@ -9,6 +9,15 @@ function validate_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+function RandomString($length = 10) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
 
 //////////////////////////////////////////////////////////////////////
 //PARA: Date Should In YYYY-MM-DD Format
@@ -100,12 +109,14 @@ function ValidateEmail($email) {
         }
     }
 }
-
+/*
 if(ValidateEmail('a.adams@tipfriendly.com') === 1){
     echo ValidateEmail('a.adams@tipfriendly.com');
 } else{
     echo ValidateEmail('a.adams@tipfriendly.com');
 }
+ * 
+ */
 
 function ValidateDate($date) {
     

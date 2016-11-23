@@ -20,12 +20,12 @@
         <nav id="primary-navigation" class="row">
             <div class="col-lg-12">
                 <ul class="nav nav-tabs">
-                    <li><a href="../Welcome/index.php">Home</a></li>
                     <li><a  href="../Profile/profile.php">Profile</a></li>
                     <li><a  href="../DashboardMod/Dashboard.php">DashBoard</a></li>
                     <li><a  href="../Letters/letters.php">Letters</a></li>
                     <li><a  href="../LeaveMod/Leave.php">Leave</a></li>
                     <li><a  href="../StaffClaimMod/Claims.php">Staff Claims</a></li>
+                    <li><a  href="../RegistrationMod/Reg.php">Registration</a></li>
                     <li><a  href="#Payroll">Payroll</a></li>
                     <li><a  href="#Inventory">Inventory</a></li>
                 </ul>
