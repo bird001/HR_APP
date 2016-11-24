@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </form>
 
                     <div style="font-size:11px; color:#cc0000; margin-top:10px"></div>
-<?php if (isset($error)) echo $error . "<br/>"; ?>			
+                        <?php if (isset($error)) echo $error . "<br/>"; ?>			
                 </div>
 
             </div>

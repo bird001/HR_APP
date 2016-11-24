@@ -158,9 +158,9 @@ foreach ($idArr as $id) {
         if (!empty($approvedby) && !empty($vettedby)) {
 
             $disbursed_date = date("F d, Y");
-            $sql_insert_loan_approved = "insert into LoanApproved (id_val, EmpName, EmpID, LoanType, LoanAmount, DateDisbursed,
+            $sql_insert_loan_approved = "insert into LoanApproved (id_val, EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
                 MonthlyRepayment, RepaymentPeriod, InterestPerAnnum, BalanceOutstanding)
-                select id_val, EmpName, EmpID, LoanType, AmountRequested, '$disbursed_date', MonthlyRepayment, RepaymentPeriod, InterestPerAnnum, AmountRequested
+                select id_val, EmpName, EmpID, LoanType, LoanID, AmountRequested, '$disbursed_date', MonthlyRepayment, RepaymentPeriod, InterestPerAnnum, AmountRequested
                 from LoanApplication
                 where id_val = '$id'";
             mysqli_query($conn, $sql_insert_loan_approved);
@@ -171,12 +171,12 @@ foreach ($idArr as $id) {
             smtpmailer_Disburse($empemail, $empname, $empdept, $loantype, $amount);
 
             //remove this data from the loan application table
-            //$removeloanapp = "delete from LoanApplication where id_val = '$id'";
-            //mysqli_query($conn, $removeloanapp); //execute the query to remove the loan app
+            $removeloanapp = "delete from LoanApplication where id_val = '$id'";
+            mysqli_query($conn, $removeloanapp); //execute the query to remove the loan app
 
             header("Location:../StaffClaimMod/LoanRequest.php"); //go back to loan request page
         } else{
-            $disburseerror = "Not approved to be disbursed";
+            $disburseerror = "Not approved. Cannot be disbursed";
             header("Location:../StaffClaimMod/LoanRequest.php");
         }
     }
