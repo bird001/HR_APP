@@ -159,8 +159,8 @@ foreach ($idArr as $id) {
 
             $disbursed_date = date("F d, Y");
             $sql_insert_loan_approved = "insert into LoanApproved (id_val, EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
-                MonthlyRepayment, RepaymentPeriod, InterestPerAnnum, BalanceOutstanding)
-                select id_val, EmpName, EmpID, LoanType, LoanID, AmountRequested, '$disbursed_date', MonthlyRepayment, RepaymentPeriod, InterestPerAnnum, AmountRequested
+                MonthlyRepayment, RepaymentPeriod, InterestPerAnnum, BalanceOutstanding, Editable)
+                select id_val, EmpName, EmpID, LoanType, LoanID, AmountRequested, '$disbursed_date', MonthlyRepayment, RepaymentPeriod, InterestPerAnnum, AmountRequested, '0'
                 from LoanApplication
                 where id_val = '$id'";
             mysqli_query($conn, $sql_insert_loan_approved);

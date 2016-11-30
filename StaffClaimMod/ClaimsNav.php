@@ -23,9 +23,11 @@ $position = $row['EmpPosition'];
             <?php
             }
             ?>
+            <li><a href="LoanPaymentFront.php">Loan Payment</a></li>
+            <!--
             <li><a href="#">Salary Advance</a></li>
             <li><a href="#">Payment Authorization</a></li>
-
+            -->
         </ul>
     </div>
 </nav>

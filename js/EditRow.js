@@ -12,6 +12,7 @@ function displayForm( cell ) {
 
 	var column = cell.attr('class'),//class of td corresponds to database table column
 		id = cell.closest('tr').attr('id'),//id of tr corresponds to database primary key
+                tablename = cell.closest('tr').attr('name'),//name of tr that corresponds to table name
 		cellWidth = cell.css('width'),//get width of cell for styling width of input field
 		prevContent = cell.text(),//store previous value
 		//form action prevents page refresh when enter pressed.  hidden fields pass primary key and column name
@@ -27,6 +28,8 @@ function displayForm( cell ) {
 	//disable listener on individual cell once clicked
 	cell.on('click', function(){return false});
 
+        
+            
 	//on keypress within td
 	cell.on('keydown',function(e) {
 		if (e.keyCode == 13) {//13 == enter
@@ -43,11 +46,10 @@ function changeField( cell, prevContent ) {
 
 	//remove keydown listener once action initiated
 	cell.off('keydown');
-        //form = document.getElementById('')
-
+        
 	var url = '../Edit_Delete/AjaxEdit.php?edit&',//relative path to PHP processing script
 		input = cell.find('form').serialize();//serialize form for passing via url
-		
+                //
 	//send ajax request
 	$.getJSON(url+input, function(data) {//data argument is used to retrieve response from processing script
 

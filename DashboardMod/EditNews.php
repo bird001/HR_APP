@@ -17,7 +17,7 @@ include('../db/db3.php');
         <script type = "text/javascript" charset="utf-8">
 
             $(document).ready(function () {
-                $('#datatables').dataTable();
+                $('#EditNews').dataTable();
             });
             //window.alert("blah");
         </script>
@@ -31,7 +31,7 @@ include('../db/db3.php');
 
     <body>
         <div class = "container-fluid datatables_wrapper">
-            <table id = "datatables" class = "table-hover table-bordered" style="width:100%">
+            <table id = "EditNews" class = "table-hover table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th style="display:none">id_val</th><!--needed for sorting--> 
@@ -46,7 +46,7 @@ include('../db/db3.php');
                     $rows = $results->fetchAll();
                     //NB... if you want to make all the rows editable, make the class name the same as the row name`
                     foreach ($rows as $row) {
-                        echo '<tr id="' . $row['id_val'] . '">';
+                        echo '<tr name = "EditNews" id="' . $row['id_val'] . '">';
                         echo '<td class="if" style="display:none">' . $row['id_val'] . '</td>' .
                         '<td class="Headline">' . $row['Headline'] . '</td>' .
                         '<td class="Story">' . $row['Story'] . '</td>';

@@ -3,11 +3,7 @@ include("../Login/session.php");
 include("../db/db2.php");
 include("../db/db3.php");
 include("../Templates/header.php");
-include("../Templates/navigation.php");
-include("../Templates/body.php");
-include("../StaffClaimMod/ClaimsNav.php");
 ?>
-
 <script type = "text/javascript" charset="utf-8">
 
     $(document).ready(function () {
@@ -18,19 +14,12 @@ include("../StaffClaimMod/ClaimsNav.php");
 
     //window.alert("blah");
 </script>
-<!--
-<script type = "text/javascript">
-    $(document).ready(function () {
-        $('.checkbox').on('click', function () {
-            if ($('.checkbox:checked').length == $('.checkbox').length) {
-                $('#select_all').prop('checked', true);
-            } else {
-                $('#select_all').prop('checked', false);
-            }
-        });
-    });
-</script>
--->
+<?php
+include("../Templates/navigation.php");
+include("../Templates/body.php");
+include("../StaffClaimMod/ClaimsNav.php");
+?>
+
 
 
 <?php
