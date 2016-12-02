@@ -56,13 +56,14 @@ $empid = $row1['EmpID'];
                 <th style="display:none">id_val</th><!--needed for sorting-->
                 <th>Name</th>
                 <th>Loan Type</th>
-                <th>Balance Outstanding</th>
+                <th>Beginning Balance</th>
                 <th>Monthly Repayment($)</th>
                 <th>Repayment Period(Months)</th>
-                <th>Amount RePaid</th>
+                <th>Payment</th>
                 <th>Date of Payment</th>
-                <th>Interest Repaid</th>
-                <th>Balance Repaid</th>
+                <th>Principal</th>
+                <th>Interest</th>
+                <th>Ending Balance</th>
             </tr>
         </thead>
         <tbody>
@@ -88,26 +89,27 @@ $empid = $row1['EmpID'];
                         <td class="id" style="display:none"> <?php echo $row['id_val']; ?>  </td>
                         <td class="name"> <?php echo $row['EmpName']; ?> </td>
                         <td class="empnum"><?php echo $row['LoanType']; ?> </td>
-                        <td class="bal"><?php echo $row['BalanceOutstanding']; ?> </td>
+                        <td class="bal"><?php echo $row['StartBalance']; ?> </td>
                         <td class="type"> <?php echo $row['MonthlyRepayment']; ?></td>
                         <td class="dates"> <?php echo $row['RepaymentPeriod']; ?></td>
                         <?php
                         if ($row['Editable'] == 0) {
                             ?>
-                            <td class="days" contenteditable="true" onblur="saveToDatabase(this, 'AmountBroughtForward', '<?php echo $row['id_val']; ?>', 'LoanPayments');"
+                            <td class="days" contenteditable="true" onblur="saveToDatabase(this, 'Payment', '<?php echo $row['id_val']; ?>', 'LoanPayments');"
                                 onClick="showEdit(this);"> 
-                                    <?php echo $row['AmountBroughtForward']; ?>
+                                    <?php echo $row['Payment']; ?>
                             </td>
                             <?php
                         } else {
                             ?>
-                            <td class="days"> <?php echo $row['AmountBroughtForward']; ?> </td>
+                            <td class="days"> <?php echo $row['Payment']; ?> </td>
                             <?php
                         }
                         ?>
                         <td class="days"> <?php echo $row['PaymentDate']; ?> </td>
+                        <td class="days"> <?php echo $row['PrincipalRepaid']; ?></td>
                         <td class="days"> <?php echo $row['InterestRepaid']; ?></td>
-                        <td class="days"> <?php echo $row['BalanceRepaid']; ?></td>
+                        <td class="days"> <?php echo $row['EndBalance']; ?></td>
 
 
                         <?php
@@ -117,13 +119,14 @@ $empid = $row1['EmpID'];
                         <td class="id" style="display:none"> <?php echo $row['id_val']; ?>  </td>
                         <td class="name"> <?php echo $row['EmpName']; ?> </td>
                         <td class="empnum"><?php echo $row['LoanType']; ?> </td>
-                        <td class="bal"><?php echo $row['BalanceOutstanding']; ?> </td>
+                        <td class="bal"><?php echo $row['StartBalance']; ?> </td>
                         <td class="type"> <?php echo $row['MonthlyRepayment']; ?></td>
                         <td class="dates"> <?php echo $row['RepaymentPeriod']; ?></td>
-                        <td class="days"> <?php echo $row['AmountBroughtForward']; ?></td>
+                        <td class="days"> <?php echo $row['Payment']; ?></td>
                         <td class="days"> <?php echo $row['PaymentDate']; ?> </td>
+                        <td class="days"> <?php echo $row['PrincipalRepaid']; ?></td>
                         <td class="days"> <?php echo $row['InterestRepaid']; ?></td>
-                        <td class="days"> <?php echo $row['BalanceRepaid']; ?></td>
+                        <td class="days"> <?php echo $row['EndBalance']; ?></td>
                         <?php
                     }
                 }

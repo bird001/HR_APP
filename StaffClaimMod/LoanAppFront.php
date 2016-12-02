@@ -96,9 +96,17 @@ $phone = $row['EmpPhone'];
                 $("#LoanType").change(function () {
                     var loanValues = $("#LoanType").val().split('|');
                     var loanInterest = loanValues[0] / 100; //interest
+                    var loanTerm = loanValues[1]; //term
+                    var J = loanInterest / 12; //calculate J which is loanInterest/12 
                     var loanTerm = loanValues[1]; //term of loan
                     var loanAmount = parseInt($("#Amount").val());
-                    var loanPayment = roundToTwo((loanAmount + (loanAmount * loanInterest)) / loanTerm);
+                    var loanPayment = roundToTwo(loanAmount * 
+                            (J/
+                            (1-
+                            (Math.pow((1+J), -(loanTerm)))
+                            )
+                            )
+                            );
 
                     $("#Payment").val(loanPayment);
                     $("#Period").val(loanTerm);
