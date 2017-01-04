@@ -410,7 +410,7 @@ function smtpmailer_GMApprove2($to,$name,$dept, $type, $amount) {
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
     $mail->Subject = "Loan Application";
-    $mail->Body = "Dear $name of the $dept we would like to inform you that your $type loan request for $ $amount has been approved"
+    $mail->Body = "Dear $name of the $dept department we would like to inform you that your $type loan request for $ $amount has been approved"
             . ". Please Go to the Accounts Dept to sign the relevant documents.";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
@@ -449,7 +449,7 @@ function smtpmailer_Disburse($to,$name,$dept, $type, $amount) {
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
     $mail->Subject = "Loan Application";
-    $mail->Body = "Dear $name of the $dept we would like to inform you that your $type loan request for $ $amount has been disbursed.";
+    $mail->Body = "Dear $name of the $dept department we would like to inform you that your $type loan request for $ $amount has been disbursed.";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -486,7 +486,7 @@ function smtpmailer_Registration($to,$name,$dept,$password) {
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
     $mail->Subject = "Registration";
-    $mail->Body = "Dear $name of the $dept Department we would like to inform you that your HRM account has been created"
+    $mail->Body = "Dear $name of the $dept department we would like to inform you that your HRM account has been created"
             . " your username is your email address and your password is $password";
     $mail->AddAddress($to);
     $mail->isHTML(true);
