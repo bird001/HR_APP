@@ -15,7 +15,7 @@ include("../Templates/header.php");
         $.ajax({
             url: "../Edit_Delete/SaveEdit.php",
             type: "POST",
-            data: 'column=' + column + '&editval=' + editableObj.innerHTML + '&id=' + id + '&name=' + name // send data to SaveEdit to be processed
+            data: 'column=' + column + '&editval=' + editableObj.innerHTML + '&id=' + id + '&name=' + name, // send data to SaveEdit to be processed
         });
         location.reload();//reload to display changes
     }

@@ -1,8 +1,7 @@
 <?php
 include('../db/db3.php');
 include('../Validation/ValidateInput.php');
-include("../Login/session.php");
-include("../db/db2.php");
+include('../PHPMailer/SmtpMailer.php');
 include("../Templates/header.php");
 ?>
 <script>
@@ -48,108 +47,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $empstart = $_POST['EmpStartDate'];
         $empsex = $_POST['EmpSex'];
 
-        if (empty($fname)) {
-            $fnameError = "First Name is required";
-        } else {
-            $fname = validate_input($fname);
-            // check if Fname only contains letters and whitespace
-            if (!preg_match("/^[a-zA-Z ]*$/", $fname)) {
-                $fnameError = "Only letters and white space allowed"; //FirstName
-                $fnameSet = 0;
-            } else {
-                $fnameSet = 1;
-            }
-        }
-
-        if (empty($lname)) {
-            $lnameError = "Last Name is required";
-        } else {
-            $lname = validate_input($lname);
-            // check if Lname only contains letters and whitespace
-            if (!preg_match("/^[a-zA-Z ]*$/", $lname)) {
-                $lnameError = "Only letters and white space allowed"; //LastName
-                $lnameSet = 0;
-            } else {
-                $lnameSet = 1;
-            }
-        }
-
-        if (empty($emppos)) {
-            $empposError = "Position is required";
-        } else {
-            $emppos = validate_input($emppos);
-            // check if Lname only contains letters and whitespace
-            if (!preg_match("/^[a-zA-Z ]*$/", $emppos)) {
-                $empposError = "Only letters and white space allowed"; //LastName
-                $empposSet = 0;
-            } else {
-                $empposSet = 1;
-            }
-        }
-
-        if (empty($empmail)) {
-            $empmailError = "Email is required";
-        } else {
-            $empmail = validate_input($empmail);
-            // check if Mail is valid
-            if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/", $empmail)) {
-                $empmailError = "Invalid Email Format";
-                $empmailSet = 0;
-            } else {
-
-                $sql_emailtest = "SELECT * FROM Users WHERE EmpEmail = '$empmail'";
-                $selectresult = mysqli_query($conn, $sql_emailtest);
-                if (mysqli_num_rows($selectresult) == 0) {
-                    //die('email already exists');
-                    $empmailSet = 1;
-                } else {
-                    $empmailError = "Email already exists, contact IT Manager";
-                    $empmailSet = 0;
-                }
-            }
-        }
-
-        if (empty($empphone)) {
-            $empphoneError = "Phone# is required";
-        } else {
-            $empphone = validate_input($empphone);
-            // check if phone# has only numbers and '-'
-            if (!preg_match("/^[0-9 ]*$/", $empphone)) {
-                $empphoneError = "Only numbers allowed";
-                $empphoneSet = 0;
-            } else {
-                $empphoneSet = 1;
-            }
-        }
-
-        /*
-          if ($emppass != $emppass2) {
-          $emppassError = "Passwords Do not Match";
-          $emppassSet = 0;
-          } else {
-          $emppassSet = 1;
-          }
-         * 
-         */
-
-        if (empty($empdob)) {
-            $empdobError = "DOB is required";
-            $empdobSet = 0;
-        } else {
-            $originalDateDOB = $empdob;
-            $newDateDOB = date("d-m-Y", strtotime($originalDateDOB));
-            $empdobSet = 1;
-        }
-
-        if (empty($empstart)) {
-            $empstartError = "Date of Employment is required";
-            $empstartSet = 0;
-        } else {
-            $originalDateStart = $empstart;
-            $newDateStart = date("d-m-Y", strtotime($originalDateStart));
-            $newDateStart2 = date("Y-m-d", strtotime($originalDateStart));
-            $empstartSet = 1;
-        }
+        
+        $fname_result = ValidateName($fname);
+        $lname_result = ValidateName($lname);
+        $emppos_result = ValidateName($emppos);
+        $empmail_result = ValidateEmail($empmail);
+        $empphone_result = ValidatePhone($empphone);
+        $empdob_result = ValidateDOB($empdob);
+        $empdate_result = ValidateDate($empstart);
+        
+        //convert DOB to format for DB
+        $originalDateDOB = $empdob;
+        $newDateDOB = date("d-m-Y", strtotime($originalDateDOB));
+        
+        //convert Start Date to format for DB
+        $originalDateStart = $empstart;
+        $newDateStart = date("d-m-Y", strtotime($originalDateStart));
+        $newDateStart2 = date("Y-m-d", strtotime($originalDateStart));
+        
+        
 
         //begin calculation of leave days---------------------------------------------------------------------------------------------------------------
         $yearsOfEmp = dateDifferenceYears($newDateStart2, date("Y-m-d"));
@@ -222,47 +138,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         //end calculation of leave days-----------------------------------------------------------------------------------------------------------------
 
+        
+          if ($empphone_result == 1 && $empmail_result == 1 && $lname_result == 1 && $emppos_result == 1 && $fname_result == 1 && $empdob_result == 1 && $empdate_result == 1) {
 
-        if ($empphoneSet == 1 && $empmailSet == 1 && $lnameSet == 1 && $empposSet == 1 && $fnameSet == 1 && $empdobSet == 1 && $empstartSet == 1) {
+          //insert into Users table-------------------------------------------------------------------------
 
-            //insert into Users table-------------------------------------------------------------------------
+          $registration = "insert into HR_DEPT.Users(FirstName,LastName,EmpSex,EmpID,EmpEmail,EmpStatus,EmpDept,EmpRole,EmpPosition,EmpAddress,EmpDOB,EmpPhone,EmpStartDate,EmpPass,TimeCreated,PasswordChanged)
+          values(
+          '$fname','$lname','$empsex','$empnum','$empmail','$status','$empdept','$role','$emppos','$empadd','$newDateDOB','$empphone','$newDateStart','$emppass',NOW(),'0'
+          )";
+          mysqli_query($conn, $registration);
+          //--------------------------------------------------------------------------------------------
+          //insert into DLetter tables, disciplinary------------------------------------------------------
+          $dletter = "insert into HR_DEPT.DLetters(EmpFName,EmpLName,EmpEmail,EmpID)
+          values(
+          '$fname','$lname','$empmail','$empnum'
+          )";
 
-            $registration = "insert into HR_DEPT.Users(FirstName,LastName,EmpSex,EmpID,EmpEmail,EmpStatus,EmpDept,EmpRole,EmpPosition,EmpAddress,EmpDOB,EmpPhone,EmpStartDate,EmpPass,TimeCreated,PasswordChanged)
-      values(
-      '$fname','$lname','$empsex','$empnum','$empmail','$status','$empdept','$role','$emppos','$empadd','$newDateDOB','$empphone','$newDateStart','$emppass',NOW(),'0'
-      )";
-            mysqli_query($conn, $registration);
-            //--------------------------------------------------------------------------------------------
-            //insert into DLetter tables, disciplinary------------------------------------------------------
-            $dletter = "insert into HR_DEPT.DLetters(EmpFName,EmpLName,EmpEmail,EmpID)
-      values(
-      '$fname','$lname','$empmail','$empnum'
-      )";
+          mysqli_query($conn, $dletter);
+          //-----------------------------------------------------------------------------------------
+          //insert into Leave table------------------------------------------------------------------------------
+          $leave = "insert into HR_DEPT.Leaves(EmpFName,EmpLName,EmpID,EmpEmail,YearsOfEmployment,Vacation,Sick,Department,Maternity,Study,Bereavement,JuryDuty,
+          EmpStartDate,EmpStatus,EmpRole,EmpSex)
+          values(
+          '$fname','$lname','$empnum','$empmail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
+          '$newDateStart','$status','$role','$empsex'
+          )";
+          mysqli_query($conn, $leave);
+          //----------------------------------------------------------------------------------------------------------
+          //insert into Dashboard table------------------------------------------------------------------------------
+          $headline = "New Employee";
+          $story = "TIP Welcomes " . $fname . " " . $lname;
+          $name_reg = "Reg_Mod";
+          $dashboard_reg = "insert into HR_DEPT.DashBoard(Headline,Story,Name,Email,Time)
+          values(
+          '$headline','$story','$name_reg','$empemail',now()
+          )";
+          mysqli_query($conn, $dashboard_reg);
+          //----------------------------------------------------------------------------------------------------------
 
-            mysqli_query($conn, $dletter);
-            //-----------------------------------------------------------------------------------------
-            //insert into Leave table------------------------------------------------------------------------------
-            $leave = "insert into HR_DEPT.Leaves(EmpFName,EmpLName,EmpID,EmpEmail,YearsOfEmployment,Vacation,Sick,Department,Maternity,Study,Bereavement,JuryDuty,
-            EmpStartDate,EmpStatus,EmpRole,EmpSex)
-              values(
-              '$fname','$lname','$empnum','$empmail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
-                  '$newDateStart','$status','$role','$empsex'
-              )";
-            mysqli_query($conn, $leave);
-            //----------------------------------------------------------------------------------------------------------
-            //insert into Dashboard table------------------------------------------------------------------------------
-            $headline = "New Employee";
-            $story = "TIP Welcomes " . $fname . " " . $lname;
-            $name_reg = "Reg_Mod";
-            $dashboard_reg = "insert into HR_DEPT.DashBoard(Headline,Story,Name,Email,Time)
-              values(
-              '$headline','$story','$name_reg','$empemail',now()
-              )";
-            mysqli_query($conn, $dashboard_reg);
-            //----------------------------------------------------------------------------------------------------------
-            
-            smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email to person
-        }
+          smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email with password to person
+          }
+          
     }
 }
 ?>
@@ -278,14 +195,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <label for="inputFName" class="control-label">First Name</label>
                     <input type="text" name="Fname" id="Fname" class="form-control" placeholder="John" required/>
-                    <span class="error"><?php echo $fnameError; ?></span>
+                    <span class="error">
+                        <?php
+                        if($fname_result != 1){
+                        echo $fname_result; 
+                        }
+                        ?>
+                    </span>
 
                 </div>
 
                 <div class="form-group">
                     <label for="inputLName" class="control-label">Last Name</label>
                     <input type="text" name="Lname" id="Lname" class="form-control" placeholder="Hancock" required/>
-                    <span class="error"><?php echo $lnameError; ?></span>
+                    <span class="error">
+                        <?php
+                        if($lname_result != 1){
+                        echo $lname_result;
+                        }
+                        ?>
+                    </span>
                 </div>
 
                 <div class="form-group">
@@ -297,7 +226,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="inputEmail" class="control-label">Email</label>
                     <input type="email" name="EmpEmail" id="EmpEmail" class="form-control" placeholder="j.hancock@tipfriendly.com" 
                            data-error="Email address is invalid" required/>
-                    <span class="error"><?php echo $empmailError; ?></span>
+                    <span class="error">
+                        <?php 
+                        if($empemail_result != 1){
+                        echo $empmail_result; 
+                        }
+                        ?>
+                    </span>
                 </div>
 
                 <div class="form-group">
@@ -351,7 +286,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">  
                     <label for="inputPosition" class="control-label">Position</label>
                     <input type="text" name="EmpPosition" id="EmpPosition" class="form-control" placeholder="Delinquency Clerk" required/>
-                    <span class="error"> <?php echo $empposError; ?></span>
+                    <span class="error"> 
+                        <?php 
+                        if($emppos_result != 1){
+                        echo $emppos_result;
+                        }
+                        ?>
+                    </span>
                 </div>
 
                 <div class="form-group">  
@@ -362,17 +303,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">  
                     <label for="inputDOB" class="control-label">D.O.B</label>
                     <input type="date" name="EmpDOB" id="EmpDOB" class="form-control"  required/>
+                    <span class="error"> 
+                        <?php 
+                        if($empdob_result != 1){
+                        echo $empdob_result; 
+                        }
+                        ?>
+                    </span>
                 </div>
 
                 <div class="form-group">
                     <label for="inputPhone" class="control-label">Phone</label>
                     <input type="tel" name="EmpPhone" id="EmpPhone" class="form-control" placeholder="8765555555" required/>
-                    <span class="error"> <?php echo $empphoneError; ?></span>
+                    <span class="error"> 
+                        <?php 
+                        if($empphone_result != 1){
+                        echo $empphone_result; 
+                        }
+                        ?>
+                    </span>
                 </div>
 
                 <div class="form-group">
                     <label for="inputEmpStartDate" class="control-label">Date of Employment</label>
                     <input type="date" name="EmpStartDate" id="EmpStartDate" class="form-control" required/>
+                    <span class="error"> 
+                        <?php 
+                        if($empdate_result != 1){
+                        echo $empdate_result; 
+                        }
+                        ?>
+                    </span>
                 </div>
 
                 <!--

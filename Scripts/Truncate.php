@@ -24,5 +24,23 @@ mysqli_query($conn, $sql7);
 
 $sql8 = "truncate table DashBoard";
 mysqli_query($conn, $sql8);
+
+$sql9 = "truncate table LoanApproved";
+mysqli_query($conn, $sql9);
+
+$sql10 = "truncate table LoanApprovedArchive";
+mysqli_query($conn, $sql10);
+
+$sql11 = "truncate table LoanApplication";
+mysqli_query($conn, $sql11);
+
+$sql12 = "truncate table LoanApplicationArchive";
+mysqli_query($conn, $sql12);
+
+$sql13 = "truncate table ApplyLeaveHRArchive";
+mysqli_query($conn, $sql13);
+
+$sql14 = "truncate table ApplyLeaveHR";
+mysqli_query($conn, $sql14);
 ?>
 

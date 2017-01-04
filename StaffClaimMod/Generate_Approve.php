@@ -161,8 +161,8 @@ foreach ($idArr as $id) {
             //$balanceoutstanding = $amount * (1+ (($loaninterest/100)/12));
             
             $sql_insert_loan_approved = "insert into LoanApproved (id_val, EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
-                MonthlyRepayment, RepaymentPeriod, InterestPerAnnum, StartBalance, Editable)
-                select id_val, EmpName, EmpID, LoanType, LoanID, AmountRequested, '$disbursed_date', MonthlyRepayment, RepaymentPeriod, 
+                MonthlyRepayment,ActualRepayment, RepaymentPeriod, InterestPerAnnum, StartBalance, Editable)
+                select id_val, EmpName, EmpID, LoanType, LoanID, AmountRequested, '$disbursed_date', MonthlyRepayment,MonthlyRepayment, RepaymentPeriod, 
                     InterestPerAnnum, '$amount', '0' from LoanApplication
                 where id_val = '$id'";
             mysqli_query($conn, $sql_insert_loan_approved);

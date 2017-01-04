@@ -12,7 +12,7 @@ $role = $row['EmpRole'];
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
             <li><a href="LeaveApply.php">Apply for Leave</a></li>
-            <li><a href="LeaveResumption.php">Resumption of Duty</a></li>
+            <!--<li><a href="LeaveResumption.php">Resumption of Duty</a></li>-->
             <?php
             if ($role == 'Manager' || $role == 'Supervisor') {
                 ?>

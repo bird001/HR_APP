@@ -486,26 +486,21 @@ function smtpmailer_Registration($to,$name,$dept,$password) {
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
     $mail->Subject = "Registration";
-    $mail->Body = "Dear $name of the $dept we would like to inform you that your HRM account has been created"
-            . "your username is your email address and your password is $password";
+    $mail->Body = "Dear $name of the $dept Department we would like to inform you that your HRM account has been created"
+            . " your username is your email address and your password is $password";
     $mail->AddAddress($to);
-    //$mail->addAttachment($attatch);
     $mail->isHTML(true);
 
 
 
     if (!$mail->send()) {
-        //$error = 'Mail error: ' . $mail->ErrorInfo;
         echo 'Try Again';
         //echo 'Mailer Error: ' . $mail->ErrorInfo;
         //exit;
         //return false;
     } else {
         $error = 'Message sent!';
-        echo $error;
-
-        //exit;
-        //return true;
+        //echo $error;
     }
 }
 ?>

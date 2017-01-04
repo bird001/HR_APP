@@ -1,4 +1,12 @@
-<?php ?>
+<?php 
+$email = $_SESSION['login_user'];
+$result = mysqli_query($conn, "select * from Users where EmpEmail = '$email' ");
+$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+$role = $row['EmpRole'];
+$dept = $row['EmpDept'];
+$position = $row['EmpPosition'];
+
+?>
 
 <script>
     function GenerateReport() {
@@ -25,7 +33,13 @@
                     <li><a  href="../Letters/letters.php">Letters</a></li>
                     <li><a  href="../LeaveMod/Leave.php">Leave</a></li>
                     <li><a  href="../StaffClaimMod/Claims.php">Staff Claims</a></li>
-                    <li><a  href="../RegistrationMod/Reg.php">Registration</a></li>
+                    <?php
+                    if ($dept == 'HR') {
+                        ?>
+                        <li><a  href="../RegistrationMod/Registration.php">Registration</a></li>
+                        <?php
+                    }
+                    ?>
                    <!-- <li><a  href="#Payroll">Payroll</a></li>
                     <li><a  href="#Inventory">Inventory</a></li>-->
                 </ul>

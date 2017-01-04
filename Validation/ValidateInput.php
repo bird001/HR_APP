@@ -9,6 +9,7 @@ function validate_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+
 function RandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
@@ -77,13 +78,29 @@ function getWeekdayDifference(\DateTime $startDate, \DateTime $endDate) {
     return $days;
 }
 
+//Form Validation
 function ValidateName($name) {
     if (empty($name)) {
         return "cannot be empty";
     } else {
+        $name = validate_input($name);
 // check if name only contains letters and whitespace
         if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
             return "only letter and white space";
+        } else {
+            return 1;
+        }
+    }
+}
+
+function ValidatePosition($emppos) {
+    if (empty($emppos)) {
+        return "Position is required";
+    } else {
+        $emppos = validate_input($emppos);
+        // check if Lname only contains letters and whitespace
+        if (!preg_match("/^[a-zA-Z ]*$/", $emppos)) {
+            return "Only letters and white space allowed"; //LastName
         } else {
             return 1;
         }
@@ -94,6 +111,7 @@ function ValidateEmail($email) {
     if (empty($email)) {
         return "Managers Email is required";
     } else {
+        $email = validate_input($email);
 // check if Mail is valid
         if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/", $email)) {
             return "Invalid Email Format";
@@ -102,48 +120,84 @@ function ValidateEmail($email) {
             $sql_emailtest = "SELECT * FROM Users WHERE EmpEmail = '$email'";
             $selectresult = mysqli_query($conn, $sql_emailtest);
             if (mysqli_num_rows($selectresult) >= 1) {
-                return 1;
+                return "Email already exists, contact IT Manager";
             } else {
-                return "Email doesn't exist, check spelling or contact admin";
+                return 1;
             }
         }
     }
 }
-/*
-if(ValidateEmail('a.adams@tipfriendly.com') === 1){
-    echo ValidateEmail('a.adams@tipfriendly.com');
-} else{
-    echo ValidateEmail('a.adams@tipfriendly.com');
+
+function ValidatePhone($phone) {
+
+    if (empty($phone)) {
+        return "Phone# is required";
+    } else {
+        $phone = validate_input($phone);
+        // check if phone# has only numbers and '-'
+        if (!preg_match("/^[0-9 ]*$/", $phone)) {
+            return "Only numbers allowed";
+        } else {
+            return 1;
+        }
+    }
 }
- * 
- */
+
+function ValidateDOB($dob) {
+
+    if (empty($dob)) {
+        return "DOB is required";
+    } else {
+        $DOB = date("d-m-Y", strtotime($dob));
+        $currentDate = date("d-m-Y");
+        if (dateDifferenceYears($DOB, $currentDate) < 18) {
+            return "This person is too young to be an employee of TIPFS";
+        } else {
+
+            return 1;
+        }
+    }
+}
 
 function ValidateDate($date) {
-    
+
+    if (empty($date)) {
+        return "Date of Employment is required";
+    } else {
+        $Date = strtotime(date("d-m-Y", strtotime($date)));
+        $currentDate = strtotime(date("d-m-Y"));
+        if ($Date > $currentDate) {
+            return "Cannot be a future date";
+        } else {
+
+            return 1;
+        }
+    }
 }
 
-function ValidateID($name) {
-    
-}
+/*
+  function ValidateID($name) {
 
-function ValidateDept($name) {
-    
-}
+  }
 
-function ValidateLeaveType($name) {
-    
-}
+  function ValidateDept($name) {
 
-function ValidateLoanType($name) {
-    
-}
+  }
 
-function ValidateRepayment($name) {
-    
-}
+  function ValidateLeaveType($name) {
 
-function ValidatePeriod($name) {
-    
-}
+  }
 
+  function ValidateLoanType($name) {
+
+  }
+
+  function ValidateRepayment($name) {
+
+  }
+
+  function ValidatePeriod($name) {
+
+  }
+ */
 ?>

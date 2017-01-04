@@ -12,7 +12,14 @@ $position = $row['EmpPosition'];
 <nav id="primary-navigation" class="row">
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
+            <?php
+            if($dept == 'HR'){
+                
+            ?>
             <li><a href="Registration.php">Registration</a></li>
+            <?php
+            }
+            ?>
         </ul>
     </div>
 </nav>

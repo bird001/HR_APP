@@ -7,13 +7,13 @@ include("../db/db3.php");
  * 
  */
 
-$sql_get = "select * from LoanApproved";
+$sql_get = "select * from LoanApproved where Refreshable = '0'";
 $get_arr = array();
 $get_arr = $conn->query($sql_get);
 
 $dayofmonth = date("d");
 
-if ($dayofmonth == '23') {
+if ($dayofmonth == '20') {
 
     while ($row = $get_arr->fetch_assoc()) {
 
@@ -26,6 +26,7 @@ if ($dayofmonth == '23') {
         $loanendbalance = $row['EndBalance'];
         $datedisbursed = $row['DateDisbursed'];
         $monthlyrepayment = $row['MonthlyRepayment'];
+        $actualrepayment = $row['ActualRepayment'];
         $amountpaid = $row['Payment'];
         $paymentdate = $row['PaymentDate'];
         $interestrepaid = $row['InterestRepaid'];
@@ -43,14 +44,34 @@ if ($dayofmonth == '23') {
         if ($term != '0') {
 
             $newterm = $term - 1;
-
-            $sql_insert_new_approved = "INSERT INTO LoanApproved(EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
-                        MonthlyRepayment, RepaymentPeriod, InterestPerAnnum, StartBalance, Editable)
-                        VALUES ('$empname','$empid','$loantype','$loanid','$loanamount','$datedisbursed','$monthlyrepayment',
+            if($amountpaid >= $monthlyrepayment) {//if the client pays the correect sum of money
+                
+                $sql_insert_new_approved = "INSERT INTO LoanApproved(EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
+                        MonthlyRepayment, ActualRepayment, RepaymentPeriod, InterestPerAnnum, StartBalance, Editable)
+                        VALUES ('$empname','$empid','$loantype','$loanid','$loanamount','$datedisbursed','$actualrepayment',
+                        '$actualrepayment','$newterm','$interestperannum','$loanendbalance',0)";
+                mysqli_query($conn, $sql_insert_new_approved);
+                
+                //set refreshable to 1 so that next month the same record doesn't get updated
+                $sql_update_refresh = "update LoanApproved set Refreshable = '1' where id_val = '$id'";
+                mysqli_query($conn, $sql_update_refresh);
+            } 
+            
+            if($amountpaid < $monthlyrepayment){//if not then difference is added to the principal
+                
+                $difference = $monthlyrepayment - $amountpaid;
+                $newmonthlyrepayment = $monthlyrepayment + $difference;
+                
+                $sql_insert_new_approved = "INSERT INTO LoanApproved(EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
+                        MonthlyRepayment, ActualRepayment, RepaymentPeriod, InterestPerAnnum, StartBalance, Editable)
+                        VALUES ('$empname','$empid','$loantype','$loanid','$loanamount','$datedisbursed','$newmonthlyrepayment','$actualrepayment',
                         '$newterm','$interestperannum','$loanendbalance',0)";
-            mysqli_query($conn, $sql_insert_new_approved);
-
-           
+                mysqli_query($conn, $sql_insert_new_approved);
+                
+                //set refreshable to 1 so that next month the same record doesn't get updated
+                $sql_update_refresh = "update LoanApproved set Refreshable = '1' where id_val = '$id'";
+                mysqli_query($conn, $sql_update_refresh);
+            }
         } else {
             //TO-DO remove from LoanApproved table and place into the archive table, loan has been paid off
         }
