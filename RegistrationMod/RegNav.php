@@ -13,7 +13,7 @@ $position = $row['EmpPosition'];
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
             <?php
-            if($dept == 'HR'){
+            if($dept == 'HR' || $role = 'Administrator'){
                 
             ?>
             <li><a href="Registration.php">Registration</a></li>
