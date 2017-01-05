@@ -32,6 +32,7 @@
         <script src="../js/jquery.newstape.js"></script>
         <script src="../js/jquery.mousewheel.min.js"></script>
         <link rel = "stylesheet" href = "../CSS/jquery.newstape.css">
+       
         
         <script>
             // start
@@ -39,7 +40,6 @@
                 $('.newstape').newstape();
             });
         </script>
-        
         
 
 

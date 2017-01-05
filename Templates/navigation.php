@@ -1,11 +1,10 @@
-<?php 
+<?php
 $email = $_SESSION['login_user'];
 $result = mysqli_query($conn, "select * from Users where EmpEmail = '$email' ");
 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 $role = $row['EmpRole'];
 $dept = $row['EmpDept'];
 $position = $row['EmpPosition'];
-
 ?>
 
 <script>
@@ -18,8 +17,10 @@ $position = $row['EmpPosition'];
 <body>
     <div class="container">
         <header class="row">
-            <h4>Welcome <?php echo $login_name; ?></h4><!--user name display-->
-            <h4 align="right"><a href="../Login/logout.php">Sign Out</a></h4>
+            <div class = "col-lg-12 page-header" >
+                <h4 class = "panel-title">Welcome <?php echo $login_name; ?></h4><!--user name display-->
+                <h4 align="right"><a href="../Login/logout.php">Sign Out</a></h4>
+            </div>
         </header>
         <?php
         //include("../DashboardMod/ViewNewsStrip.php");
@@ -40,8 +41,8 @@ $position = $row['EmpPosition'];
                         <?php
                     }
                     ?>
-                   <!-- <li><a  href="#Payroll">Payroll</a></li>
-                    <li><a  href="#Inventory">Inventory</a></li>-->
+                    <!-- <li><a  href="#Payroll">Payroll</a></li>
+                     <li><a  href="#Inventory">Inventory</a></li>-->
                 </ul>
             </div>
         </nav>

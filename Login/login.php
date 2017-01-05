@@ -66,47 +66,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <script type = "text/javascript" src = "../Validation/Register.js"></script>
     </head>
 
-    <body bgcolor="#FFFFFF">
+    <body bgcolor ="#f9f9f9" >
 
-        <div align="center" class = "form-group">
-            <h1>HR DEPT</h1>
-            <div style="width:300px; border: solid 1px #333333; " class = "form-group" align="left">
-                <div style="background-color:#333333; color:#FFFFFF; padding:3px;"><b>Login</b></div>
+            <div align="center" class = "form-group">
+                <div style ="width:500px;" class = "bg-primary">
+                    <img src="http://www.tipfriendly.com/images/tip-logo2.png" alt="Tip Friendly Society">
+                    <h1>Human Resource Department</h1>
+                </div>
+                <div style="width:300px; border: solid 1px #333333; " class = "form-group" align="left">
+                    <div class ="bg-primary text-white" padding:5px;"> <b>Login</b> </div>
 
-                <div style="margin:30px">
+                    <div style="margin:30px">
 
-                    <form action="" method="post" class = "form-group" align="left">
-                        <div class="form-group">
-                            <label for="inputEmail" class="control-label">Email</label>
-                            <input type="text" name="email" id="email" class="form-control" placeholder="j.hancokck@tipfriendly.com" required/>
-                        </div>  
+                        <form action="" method="post" class = "form-group" align="left">
+                            <div class="form-group">
+                                <label for="inputEmail" class="control-label">Email</label>
+                                <input type="text" name="email" id="email" class="form-control" placeholder="j.hancokck@tipfriendly.com" required/>
+                            </div>  
 
-                        <div class="form-group">
-                            <label for="inputPassword" class="control-label">Password</label>
-                            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required/>
-                        </div>  
+                            <div class="form-group">
+                                <label for="inputPassword" class="control-label">Password</label>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="Password" required/>
+                            </div>  
 
-                        <div class="form-group">
-                            <label for="inputRole" class="control-label">Role</label>
-                            <!--<input type="text" name="EmpStatus" id="EmpStatus" class="form-control" placeholder="Permanent" required/>-->
-                            <select class="form-control" name="EmpRole" id="EmpRole" required>
-                                <option>Employee</option>
-                                <option>Supervisor</option>
-                                <option>Manager</option>
+                            <div class="form-group">
+                                <label for="inputRole" class="control-label">Role</label>
+                                <!--<input type="text" name="EmpStatus" id="EmpStatus" class="form-control" placeholder="Permanent" required/>-->
+                                <select class="form-control" name="EmpRole" id="EmpRole" required>
+                                    <option>Employee</option>
+                                    <option>Supervisor</option>
+                                    <option>Manager</option>
 
-                            </select>
-                        </div>
+                                </select>
+                            </div>
 
-                        <input class="btn btn-primary" type="submit" name = "Submit" value = "Login"/>                         
-                    </form>
+                            <input class="btn btn-primary" type="submit" name = "Submit" value = "Login"/>                         
+                        </form>
 
-                    <div style="font-size:11px; color:#cc0000; margin-top:10px"></div>
+                        <div style="font-size:11px; color:#cc0000; margin-top:10px"></div>
                         <?php if (isset($error)) echo $error . "<br/>"; ?>			
+                    </div>
+
                 </div>
 
             </div>
-
-        </div>
+        
 
     </body>
 </html>
