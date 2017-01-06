@@ -18,7 +18,7 @@ $position = $row['EmpPosition'];
     <div class="container">
         <header class="row">
             <div class = "col-lg-12 page-header" >
-                <h4 class = "panel-title">Welcome <?php echo $login_name; ?></h4><!--user name display-->
+                <h4 class = "panel-title">Welcome <?php echo $login_name?></h4><!--user name display-->
                 <h4 align="right"><a href="../Login/logout.php">Sign Out</a></h4>
             </div>
         </header>
@@ -35,7 +35,7 @@ $position = $row['EmpPosition'];
                     <li><a  href="../LeaveMod/Leave.php">Leave</a></li>
                     <li><a  href="../StaffClaimMod/Claims.php">Staff Claims</a></li>
                     <?php
-                    if ($dept == 'HR') {
+                    if ($dept == 'HR' || $position == 'Admin') {
                         ?>
                         <li><a  href="../RegistrationMod/Registration.php">Registration</a></li>
                         <?php
