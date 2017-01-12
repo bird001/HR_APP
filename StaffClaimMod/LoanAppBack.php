@@ -95,7 +95,7 @@ if ($loanamountSet == 1 && $purposeSet == 1) {
     $row_accman = mysqli_fetch_array($result_accman, MYSQLI_ASSOC);
     $accman = $row_accman['EmpEmail']; //gets the email address of the Accounts manager and sends an email when someone applies for a loan
 
-    smtpmailer_LoanApplication($accman, $operator, $name, $empdept);
+    smtpmailer_LoanApplication($accman, $name, $empdept);
 
     header("Location:../StaffClaimMod/LoanAppFront.php");
 } else {

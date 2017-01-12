@@ -17,6 +17,7 @@ $position = $row['EmpPosition'];
                 
             ?>
             <li><a href="Registration.php">Registration</a></li>
+            <li><a href="EditRegistration.php">Edit Registration</a></li>
             <?php
             }
             ?>

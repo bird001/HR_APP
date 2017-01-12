@@ -74,9 +74,11 @@ foreach ($idArr as $id) {
 
     if ($functiontype == 'Approve') {
 
-        if (strpos($operatorposition, 'Assistant General Manager') == false) {//if the operator's position is not AGM then execute this code
+        if (strpos($operatorposition, 'Assistant General') == false) {
+
+            //if the operator's position is not AGM then execute this code
             //get email address for the assistant GM
-            $asstgm = "SELECT * FROM Users WHERE INSTR(EmpPosition, 'Assistant General Manager') > 0";
+            $asstgm = "SELECT * FROM Users WHERE INSTR(EmpPosition, 'Assistant General') > 0";
             $result_asstgm = mysqli_query($conn, $asstgm);
             $row_asstgm = mysqli_fetch_array($result_asstgm);
             $asstgm_email = $row_asstgm['EmpEmail'];
@@ -91,7 +93,10 @@ foreach ($idArr as $id) {
             smtpmailer_AccountsApprove($asstgm_email, $empname, $empdept);
 
             header("Location:../StaffClaimMod/LoanRequest.php");
-        } else {//if operator is the AGM execute this code
+            
+        } else {
+
+            //if operator is the AGM execute this code
             $accmanemail = "select EmpEmail from Users where EmpDept = 'Accounts' and EmpRole = 'Manager'";
             $result_accman = mysqli_query($conn, $accmanemail);
             $row_accman = mysqli_fetch_array($result_accman, MYSQLI_ASSOC);
@@ -159,7 +164,7 @@ foreach ($idArr as $id) {
 
             $disbursed_date = date("F d, Y");
             //$balanceoutstanding = $amount * (1+ (($loaninterest/100)/12));
-            
+
             $sql_insert_loan_approved = "insert into LoanApproved (id_val, EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
                 MonthlyRepayment,ActualRepayment, RepaymentPeriod, InterestPerAnnum, StartBalance, Editable)
                 select id_val, EmpName, EmpID, LoanType, LoanID, AmountRequested, '$disbursed_date', MonthlyRepayment,MonthlyRepayment, RepaymentPeriod, 
@@ -177,7 +182,7 @@ foreach ($idArr as $id) {
             mysqli_query($conn, $removeloanapp); //execute the query to remove the loan app
 
             header("Location:../StaffClaimMod/LoanRequest.php"); //go back to loan request page
-        } else{
+        } else {
             $disburseerror = "Not approved. Cannot be disbursed";
             header("Location:../StaffClaimMod/LoanRequest.php");
         }
