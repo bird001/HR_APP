@@ -33,7 +33,7 @@ $position = $row['EmpPosition'];
                     <li><a  href="../LeaveMod/Leave.php">Leave</a></li>
                     <li><a  href="../StaffClaimMod/Claims.php">Staff Claims</a></li>
                     <?php
-                    if ($dept == 'HR') {
+                    if ($dept == 'HR' || $position == 'Admin') {
                         ?>
                         <li><a  href="../RegistrationMod/Registration.php">Registration</a></li>
                         <?php

@@ -24,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // If result matched $myusername and $mypassword, table row must be 1 row
         if ($usercheck === 1 && $checkpassword === '1') {
-
+            
             $sql_users = "insert into HR_DEPT.UserLog 
-            (EmpEmail,TimeLoggedIn)
+            (EmpEmail,TimeLoggedIn) 
             select 
             EmpEmail, now() 
             from 
@@ -34,7 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             where 
             EmpEmail = '$email'"; //a log of users that have logged into this app
             mysqli_query($conn, $sql_users); //execute the statement
-
+             
+            
             $_SESSION['login_user'] = $email;
             $_SESSION['login_pass'] = $password;
             $_SESSION['last_time'] = time();
@@ -42,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("location: ../Profile/profile.php");
         }
 
-        if ($usercheck === 1 && $checkpassword === '0') {
+        if ($usercheck === 1 && $checkpassword === 0) {
             header("location: ../Login/ChangePassword.php");
         }
 

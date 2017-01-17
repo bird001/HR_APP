@@ -257,7 +257,8 @@ function smtpmailer_OutstandingLeave($to, $name,$days) {
     $mail->SetFrom(GUSER, 'Tip Friendly Society');
     $mail->Subject = "Outstanding Leave";
     $mail->Body = "Dear $name it has been noted that you have accumulated $days outstanding leave day(s) over a three year period."
-            . "Please rectify by going on leave ASAP to clear off the days.";
+            . "Please rectify by going on leave ASAP to clear off the days. \n"
+            . "tiphra.com/login";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -295,7 +296,7 @@ function smtpmailer_LoanApplication($to,$name,$dept) {
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'Tip Friendly Society');
     $mail->Subject = "Loan Application from ".$name." of the ".$dept." Department";
-    $mail->Body = "Please Log into the HR Application";
+    $mail->Body = "Please Log into the HR Application tiphra.com/login";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -334,7 +335,8 @@ function smtpmailer_AccountsApprove($to,$name,$dept) {
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
     $mail->Subject = "Loan Application from ".$name." of the ".$dept." Department";
     $mail->Body = "This application has been revised and approved by the Accounts Dept."
-            . "Vet and proceed as necessary";
+            . "Vet and proceed as necessary \n"
+            . "tiphra.com/login";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -373,7 +375,8 @@ function smtpmailer_GMApprove($to,$name,$dept) {
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
     $mail->Subject = "Loan Application from ".$name." of the ".$dept." Department";
     $mail->Body = "This application has been Vetted and approved by the AGM."
-            . " Disburse the loan";
+            . " Disburse the loan \n"
+            . "tiphra.com/login";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -486,8 +489,9 @@ function smtpmailer_Registration($to,$name,$dept,$password) {
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
     $mail->Subject = "Registration";
-    $mail->Body = "Dear $name of the $dept department we would like to inform you that your HRM account has been created"
-            . " your username is your email address and your password is $password";
+    $mail->Body = "Dear $name of the $dept department we would like to inform you that your HRM account has been created "
+            . "your username is your email address and your password is $password "
+            . "please login at tiphra.com/login";
     $mail->AddAddress($to);
     $mail->isHTML(true);
 
