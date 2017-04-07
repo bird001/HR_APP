@@ -39,8 +39,8 @@ $position = $row['EmpPosition'];
                         <?php
                     }
                     ?>
-                    <!--<li><a  href="#Payroll">Payroll</a></li>
-                    <li><a  href="#Inventory">Inventory</a></li>-->
+                    <!--<li><a  href="#Payroll">Payroll</a></li>-->
+                    <li><a  href="../InventoryMod/Inventory.php">Inventory</a></li>
                 </ul>
             </div>
         </nav>

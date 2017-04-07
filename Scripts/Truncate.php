@@ -4,6 +4,10 @@ include("../db/db3.php");
 $sql1 = "truncate table Users";
 mysqli_query($conn, $sql1);
 
+$sql1_adminuser = "insert into Users (FirstName, EmpEmail, EmpStatus, EmpRole, EmpPosition, EmpPass, PasswordChanged) values('Administrator',"
+        . "'info@tipfriendly.com','Permanent','Manager','Admin','Admin','1')";
+mysqli_query($conn, $sql1_adminuser);
+
 $sql2 = "truncate table UserLog";
 mysqli_query($conn, $sql2);
 
@@ -42,5 +46,6 @@ mysqli_query($conn, $sql13);
 
 $sql14 = "truncate table ApplyLeaveHR";
 mysqli_query($conn, $sql14);
+
 ?>
 

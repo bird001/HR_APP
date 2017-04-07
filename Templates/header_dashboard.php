@@ -1,4 +1,8 @@
-<?php ?>
+<?php 
+include("../db/db3.php");
+include("../db/db2.php");
+include("../Login/session.php");
+?>
 <html>
     <head>
         <meta charset="UTF-8">

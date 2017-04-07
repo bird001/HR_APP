@@ -1,7 +1,7 @@
 <?php
 
-include("../Login/session.php");
-include("../db/db3.php");
+//include("../Login/session.php");
+//include("../db/db3.php");
 
 function validate_input($data) {
     $data = trim($data);
@@ -86,7 +86,7 @@ function ValidateName($name) {
         $name = validate_input($name);
 // check if name only contains letters and whitespace
         if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-            return "only letter and white space";
+            return "only letters and white space";
         } else {
             return 1;
         }

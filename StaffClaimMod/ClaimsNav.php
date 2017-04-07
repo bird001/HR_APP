@@ -16,12 +16,12 @@ $position = $row['EmpPosition'];
             <li><a href="MealTravel.php">Meal & Travel</a></li>
             <li><a href="LoanAppFront.php">Loan Application</a></li>
             <?php
-            if(($dept == "Accounts" && $role == "Manager") || ($dept == "Accounts" && $role == "Supervisor") || (strpos($position, 'Assistant General Manager') !== false)){
+            //if(($dept == "Accounts" && $role == "Manager") || ($dept == "Accounts" && $role == "Supervisor") || (strpos($position, 'Assistant General Manager') !== false)){
                 
             ?>
             <li><a href="LoanRequest.php">Loan Requests</a></li>
             <?php
-            }
+            //}
             ?>
             <li><a href="LoanPaymentFront.php">Loan Payment</a></li>
             <!--

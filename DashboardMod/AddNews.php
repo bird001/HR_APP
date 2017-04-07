@@ -44,7 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $addNews = "INSERT INTO DashBoard(Headline, Story, Name, Email, Time)VALUES('$headline', '$story', '$name', '$email', now())";
     $result = mysqli_query($conn, $addNews);
-
+    header("Location: ../DashboardMod/AddNews.php");
+    
     if (!$result) {
         echo('Error adding news: ' . $mysql_error());
         exit();
@@ -52,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysql_close($link);
         echo('Success!');
     }
+    
 }
 ?>
 <br>

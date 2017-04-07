@@ -31,10 +31,10 @@ if ($_FILES[uploaded_file][size] > 0) {
                 $emprole = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(7, $row)->getValue());
                 $empposition = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(8, $row)->getValue());
                 $empaddress = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(9, $row)->getValue());
-                $dob = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(10, $row)->getValue());
+                $dob = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(10, $row)->getFormattedValue());
                 $empdob = date("d-m-Y", strtotime($dob));
                 $empphone = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(11, $row)->getValue());
-                $start = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(12, $row)->getValue());
+                $start = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(12, $row)->getFormattedValue());
                 $empstart = date("d-m-Y", strtotime($start));
                 $empstartdate = date("Y-m-d", strtotime($start));
                 //$emppass = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(13, $row)->getValue());
@@ -118,7 +118,7 @@ if ($_FILES[uploaded_file][size] > 0) {
                 EmpStartDate,EmpStatus,EmpRole,EmpSex)
                 values(
                 '$fname','$lname','$empnum','$empmail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
-                      '$empstart','$status','$role','$empsex'
+                      '$empstart','$empstatus','$emprole','$empsex'
                     )";
                 mysqli_query($conn, $leave);
                 //----------------------------------------------------------------------------------------------------------
@@ -131,14 +131,14 @@ if ($_FILES[uploaded_file][size] > 0) {
                 mysqli_query($conn, $dletter);
                 //-----------------------------------------------------------------------------------------
                 
-                smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email to person
+                //smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email to person
             }
         }
     } else {
         echo "incorrect file type, expecting microsoft excel document";
     }
 }
-
+          
 
 //to-do calculate leave days for each entry
 //to-do insert each entry into DLetter Tables

@@ -1,11 +1,10 @@
 <?php
-
-include ('../db/db3.php');
+//include ('../db/db3.php');
 include('class.phpmailer.php');
 include('PHPMailerAutoload.php');
 
 define('GUSER', 'info@tipfriendly.com'); // GMail username
-define('GPWD', 'Jamaica$1'); // GMail password
+define('GPWD', 'Jamaica$#$123'); // GMail password
 
 function smtpmailer_Discipline($to, $from, $subject, $attatch) {
 //global $error;
@@ -507,4 +506,187 @@ function smtpmailer_Registration($to,$name,$dept,$password) {
         //echo $error;
     }
 }
+
+function smtpmailer_InventoryRequestApprove($empname,$empdept,$empemail,$itemname,$itemamount,$manname,$manemail,$invmanname,$invmanemail) {
+//global $error;
+
+    //email to employee--------------------------------------------------------------------------------
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    //$mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, $manemail);
+    $mailemp->Subject = "Inventory Request";
+    $mailemp->Body = "Dear $empname your request for $itemamount $itemname(s) has been approved, you may approach $invmanname for the item(s) requested)";
+    $mailemp->AddAddress($empemail);
+    $mailemp->isHTML(true);
+
+    //--------------------------------------------------------------------------------------------------------
+    
+    //email to inventory manager------------------------------------------------------------------------------
+    $mailinv = new PHPMailer;  // create a new object
+    $mailinv->isSMTP(); // enable SMTP
+    //$mailinv->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailinv->SMTPAuth = true;  // authentication enabled
+    $mailinv->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailinv->SMTPAutoTLS = false;
+    $mailinv->Host = 'smtp.gmail.com';
+    $mailinv->Port = 25;
+    $mailinv->Username = GUSER;
+    $mailinv->Password = GPWD;
+    $mailinv->SetFrom(GUSER, $manemail);
+    $mailinv->Subject = "Inventory Request";
+    $mailinv->Body = "Dear $invmanname I, $manname, have approved for $empname to receive $itemamount $itemname from you."
+            . " They will be by shortly";
+    $mailinv->AddAddress($invmanemail);
+    $mailinv->isHTML(true);
+    
+    //--------------------------------------------------------------------------------------------------------
+
+    if (!$mailemp->send() || !$mailinv->send()) {
+        echo 'Try Again';
+        //echo 'Mailer Error: ' . $mailemp->ErrorInfo;
+        //echo 'Mailer Error: ' . $mailinv->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        //echo $error;
+    }
+    
+    
+}
+
+function smtpmailer_InventoryRequestDeny($empname,$empdept,$empemail,$itemname,$itemamount,$manname,$manemail,$invmanname,$invmanemail) {
+//global $error;
+
+    //email to employee--------------------------------------------------------------------------------
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    //$mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, $manemail);
+    $mailemp->Subject = "Inventory Request";
+    $mailemp->Body = "Dear $empname your request for $itemamount $itemname(s) has been denied.)";
+    $mailemp->AddAddress($empemail);
+    $mailemp->isHTML(true);
+
+    //--------------------------------------------------------------------------------------------------------
+    
+    //email to inventory manager------------------------------------------------------------------------------
+    $mailinv = new PHPMailer;  // create a new object
+    $mailinv->isSMTP(); // enable SMTP
+    //$mailinv->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailinv->SMTPAuth = true;  // authentication enabled
+    $mailinv->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailinv->SMTPAutoTLS = false;
+    $mailinv->Host = 'smtp.gmail.com';
+    $mailinv->Port = 25;
+    $mailinv->Username = GUSER;
+    $mailinv->Password = GPWD;
+    $mailinv->SetFrom(GUSER, $manemail);
+    $mailinv->Subject = "Inventory Request";
+    $mailinv->Body = "Dear $invmanname I, $manname, have denied $empname from receiving $itemamount $itemname from you."
+            . " Do not provide this individual with such item";
+    $mailinv->AddAddress($invmanemail);
+    $mailinv->isHTML(true);
+    
+    //--------------------------------------------------------------------------------------------------------
+
+    if (!$mailemp->send() || !$mailinv->send()) {
+        echo 'Try Again';
+        //echo 'Mailer Error: ' . $mailemp->ErrorInfo;
+        //echo 'Mailer Error: ' . $mailinv->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        //echo $error;
+    }
+    
+    
+}
+
+function smtpmailer_InventoryRequestLimited($empname,$empdept,$empemail,$itemname,$itemamount,$manname,$manemail,$invmanname,$invmanemail) {
+//global $error;
+
+    //email to employee--------------------------------------------------------------------------------
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    //$mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, $manemail);
+    $mailemp->Subject = "Inventory Request";
+    $mailemp->Body = "Dear $empname, there is not enough inventory for the item(s) you requested, namely $itemamount $itemname(s).)";
+    $mailemp->AddAddress($empemail);
+    $mailemp->isHTML(true);
+
+    //-------------------------------------------------------------------------------------------------------
+    
+    //--------------------------------------------------------------------------------------------------------
+
+    if (!$mailemp->send()) {
+        echo 'Try Again';
+        //echo 'Mailer Error: ' . $mailemp->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        //echo $error;
+    }
+    
+    
+}
+
+function smtpmailer_test() {
+//global $error;
+
+    $mail = new PHPMailer;  // create a new object
+    $mail->isSMTP(); // enable SMTP
+    //$mail->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mail->SMTPAuth = true;  // authentication enabled
+    $mail->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mail->SMTPAutoTLS = false;
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 25;
+    $mail->Username = GUSER;
+    $mail->Password = GPWD;
+    $mail->SetFrom(GUSER, 'Test');
+    $mail->Subject = "test";
+    $mail->Body = "just a test";
+    $mail->AddAddress('a.thomas@tipfriendly.com');
+    $mail->isHTML(true);
+
+
+
+    if (!$mail->send()) {
+        echo 'Try Again';
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        //echo $error;
+    }
+}
+
+//smtpmailer_test();
 ?>
