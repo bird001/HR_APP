@@ -159,6 +159,7 @@ function ValidateDOB($dob) {
     }
 }
 
+
 function ValidateDate($date) {
 
     if (empty($date)) {
@@ -175,6 +176,24 @@ function ValidateDate($date) {
     }
 }
 
+function ValidateDatePast($date) {
+    if (empty($date)) {
+        //echo "Date(s) required";
+        return "Date(s) required";
+    } else {
+        $Date = strtotime(date("d-m-Y", strtotime($date)));
+        $currentDate = strtotime(date("d-m-Y"));
+        if ($Date < $currentDate) {
+            //echo "Cannot be a past date";
+            return "Cannot be a past date";
+        } else {
+
+            //echo 1;
+            return 1;
+        }
+    }
+}
+ValidateDatePast(05/20/2017);
 /*
   function ValidateID($name) {
 

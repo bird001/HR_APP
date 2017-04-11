@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $lnameError = ValidateName($lname);
     }
 
-    if (ValidateEmail($manemail === 1)) {
+    if (ValidateEmail($manemail) === 1) {
         $manemailSet = 1;
     } else {
         $manemailSet = 0;
@@ -99,30 +99,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      * 
      */
 
-    if (empty($startdate)) {
-        $startdateError = "Start Date is required";
-        $startdateSet = 0;
+    if (ValidateDatePast($startdate) === 1) {
+        $startdateSet = 1;
     } else {
-        if ($leavetype === 'Department') {
-            $Sdate = date("d-m-Y, g:i a", strtotime($startdate));
-            $startdateSet = 1;
-        } else {
-            $Sdate = date("d-m-Y", strtotime($startdate));
-            $startdateSet = 1;
-        }
+        $startdateSet = 0;
+        $startdateError = ValidateDatePast($startdate);
     }
 
-    if (empty($enddate)) {
-        $enddateError = "Start Date is required";
-        $enddateSet = 0;
+    if (ValidateDatePast($enddate) === 1) {
+        $enddateSet = 1;
     } else {
-        if ($leavetype === 'Department') {
-            $Edate = date("d-m-Y, g:i a", strtotime($enddate));
-            $enddateSet = 1;
-        } else {
-            $Edate = date("d-m-Y", strtotime($enddate));
-            $enddateSet = 1;
-        }
+        $enddateSet = 0;
+        $enddateError = ValidateDatePast($enddate);
     }
 
     if (empty($reason)) {
@@ -155,6 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($wkdays <= $availabledays || $hours <= $availabledays || $leavetype === 'NoPayLeave') {
 
         if ($fnameSet == 1 && $lnameSet == 1 && $manemailSet == 1 && $startdateSet == 1 && $enddateSet == 1 && $reasonSet == 1) {
+
 
             if ($leavetype === 'Department') {
                 //insert the details into the ApplyLeave table
