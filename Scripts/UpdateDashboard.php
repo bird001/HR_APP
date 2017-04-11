@@ -77,4 +77,24 @@ while ($row = $get_leaveday->fetch_assoc()) {//alert for the day an employee goe
         mysqli_query($conn, $sql_dashboard);
     }
 }
+
+//remove old posts from Dashboard table----------------------------------------------------------------------------------
+$getdashsql = "select * from DashBoard";
+$getdash = array();
+$getdash = $conn->query($getdashsql);
+
+while ($row = $getdash->fetch_assoc()){
+    
+    $getdate = $row['Time'];
+    $dashdate = date("d-m-Y", strtotime($getdate));
+    $currentdate = date("d-m-Y");
+    
+    if(dateDifferenceDays($dashdate, $currentdate) > 2){
+        $removedash = "delete from Dashboard where Time = $getdate";
+        mysqli_query($conn, $removedash);
+    }
+    
+    
+    
+}
 ?>
