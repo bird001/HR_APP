@@ -4,7 +4,7 @@
 include("../db/db3.php"); //use when testing
 include("../Validation/ValidateInput.php"); //use when testing
 
-/*
+
 $sql_bday_workanni = "select * from Users";
 $get_bday_workanni = array();
 $get_bday_workanni = $conn->query($sql_bday_workanni);
@@ -77,7 +77,7 @@ while ($row = $get_leaveday->fetch_assoc()) {//alert for the day an employee goe
         mysqli_query($conn, $sql_dashboard);
     }
 }
-*/
+
 //remove old posts from Dashboard table----------------------------------------------------------------------------------
 $getdashsql = "select * from DashBoard";
 $getdash = array();
