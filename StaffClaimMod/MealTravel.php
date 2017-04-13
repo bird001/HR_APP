@@ -20,7 +20,7 @@ $dept = $row['EmpDept'];
 <br>
 <div align="left" class = "form-group">
     <div style="width:500px;" class = "form-group" align="left">
-        <form action="../StaffClaimMod/MealTravelGen.php" method="post" name="mealtravel" id="mealtravel" class = "form-group" >
+        <form action="mealtravelgen" method="post" name="mealtravel" id="mealtravel" class = "form-group" >
 
             <div class="form-group">
                 <label for="inputFName" class="control-label">First Name</label>

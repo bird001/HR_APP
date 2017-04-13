@@ -10,10 +10,9 @@ include('../db/db3.php');
         <title>View Inventory</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src = "../js/jquery-2.1.4.min.js" type = "text/javascript"></script>
-        <script src = "../js/jquery.dataTables.js" type = "text/javascript"></script>    
-        <script src = "../js/tableTools.js" type = "text/javascript"></script>    
-        <script type="text/javascript" src="../js/EditRow.js"></script>
+        <script src = "jquerylib" type = "text/javascript"></script>
+        <script src = "datatableslib" type = "text/javascript"></script>    
+        <script src = "tabletoolslib" type = "text/javascript"></script>
         <script type = "text/javascript" charset="utf-8">
 
             $(document).ready(function () {
@@ -26,9 +25,9 @@ include('../db/db3.php');
         <script>
 
         </script>
-        <link href="../CSS/bootstrap.min.css" rel="stylesheet">
-        <link href="../CSS/tableTools.css" rel="stylesheet">
-        <link href="../CSS/datatables.min.css" rel="stylesheet">
+        <link href="bootstrapCSS" rel="stylesheet">
+        <link href="tableToolsCSS" rel="stylesheet">
+        <link href="datatablesCSS" rel="stylesheet">
     </head>
 
     <body>

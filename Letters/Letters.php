@@ -8,7 +8,7 @@ include('../Pdf/fpdf.php');
 class HeaderFooter extends FPDF {
 
     function Header() {
-        $this->Image('../images/tipheader.jpg', 10, 6, 190);
+        $this->Image('/var/www/HR_APP/images/tipheader.jpg', 10, 6, 190);
         //set font 
         $this->SetFont('Arial', 'B', 15);
         // Move to the right
@@ -20,7 +20,7 @@ class HeaderFooter extends FPDF {
     }
 
     function Footer() {
-        $this->Image('../images/tipfooter.jpg', 10, 240, 190);
+        $this->Image('/var/www/HR_APP/images/tipfooter.jpg', 10, 240, 190);
     }
 
 }
@@ -28,7 +28,7 @@ class HeaderFooter extends FPDF {
 class HeaderLoan extends FPDF {
 
     function Header() {
-        $this->Image('../images/loan.jpg', 10, 6, 150);
+        $this->Image('/var/www/HR_APP/images/loan.jpg', 10, 6, 150);
         //set font 
         $this->SetFont('Arial', 'B', 15);
         // Move to the right
@@ -73,9 +73,9 @@ function FirstLetter($fname, $lname, $empid) {
     //used to display the letter[if needed]
     //$pdf->Output('I', $fname . "_" . $lname . "_" . $empid . ".pdf");
     //save pdf to folder
-    $pdf->Output('F', "/var/www/HR_APP/HR_APP/Pdf/pdf_docs/First/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
+    $pdf->Output('F', "/var/www/HR_APP/Pdf/pdf_docs/First/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
     //return to original web page
-    header("Location: ../Letters/generateDLetter.php");
+    header("Location: disciplinaryletters");
 }
 
 function SecondLetter($fname, $lname, $empid) {
@@ -108,7 +108,7 @@ function SecondLetter($fname, $lname, $empid) {
     $pdf->write(5, $secondLetter);
 
     //$pdf->Output('I', $fname . "_" . $lname . "_" . $empid . ".pdf");
-    $pdf->Output('F', "/var/www/HR_APP/HR_APP/Pdf/pdf_docs/Second/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
+    $pdf->Output('F', "/var/www/HR_APP/Pdf/pdf_docs/Second/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
     header("Location:../Letters/generateDLetter.php");
 }
 
@@ -148,7 +148,7 @@ function SuspensionLetter($fname, $lname, $empid) {
     $pdf->write(5, $suspensionLetter);
 
     //$pdf->Output('I', $fname . "_" . $lname . "_" . $empid . ".pdf");
-    $pdf->Output('F', "/var/www/HR_APP/HR_APP/Pdf/pdf_docs/Suspension/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
+    $pdf->Output('F', "/var/www/HR_APP/Pdf/pdf_docs/Suspension/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
     header("Location:../Letters/generateDLetter.php");
 }
 
@@ -183,7 +183,7 @@ function DismisalLetter($fname, $lname, $empid) {
     $pdf->write(5, $dismisalLetter);
 
     //$pdf->Output('I', $fname . "_" . $lname . "_" . $empid . ".pdf");
-    $pdf->Output('F', "/var/www/HR_APP/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
+    $pdf->Output('F', "/var/www/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
     header("Location:../Letters/generateDLetter.php");
 }
 
@@ -266,7 +266,7 @@ function JobLetter($nametitle, $companyname, $companyadd, $manname, $manpos, $em
 
     $pdf->Output('I', $name . " " . "Job Letter" . ".pdf"); //output letter to browser for printing or downloading
     //
-    //$pdf->Output('F', "/var/www/HR_APP/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
+    //$pdf->Output('F', "/var/www/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
     //header("Location:../Letters/generateDLetter.php");
 }
 
@@ -347,7 +347,7 @@ function RecomLetter($nametitle, $companyname, $companyadd, $manname, $manpos, $
 
 
     $pdf->Output('I', $name . " " . "Recommendation Letter" . ".pdf");
-    //$pdf->Output('F', "/var/www/HR_APP/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
+    //$pdf->Output('F', "/var/www/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
     //header("Location:../Letters/generateDLetter.php");
 }
 
@@ -435,7 +435,7 @@ function TravelSubsistence($name, $dept, $from, $to, $dest, $origin, $purpose, $
     $pdf->write(5, "                   ");
     $pdf->write(5, "Manager's Signature: ____________________");
     $pdf->Output('I', $name . " " . "TravelSubsistence" . ".pdf");
-    //$pdf->Output('F', "/var/www/HR_APP/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
+    //$pdf->Output('F', "/var/www/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
     //header("Location:../Letters/generateDLetter.php");
 }
 
@@ -509,7 +509,7 @@ function MealTravel($name, $dept, $date, $date2, $dest, $purpose, $meal) {
     $pdf->write(5, "                   ");
     $pdf->write(5, "Manager's Signature: ____________________");
     $pdf->Output('I', $name . " " . "MealTravel" . ".pdf");
-    //$pdf->Output('F', "/var/www/HR_APP/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
+    //$pdf->Output('F', "/var/www/HR_APP/Pdf/pdf_docs/Dismisal/" . $fname . "_" . $lname . "_" . $empid . ".pdf");
     //header("Location:../Letters/generateDLetter.php");
 }
 

@@ -19,7 +19,7 @@ if (!empty($idArr)) {
         $empid = $row['EmpID'];
         $empemail = $row['EmpEmail'];
 
-        $filepath = "/var/www/HR_APP/HR_APP/Pdf/pdf_docs/";
+        $filepath = "/var/www/HR_APP/Pdf/pdf_docs/";
 
         if (!(file_exists($filepath . "First/" . $fname . "_" . $lname . "_" . $empid . ".pdf"))) {
             //generate the letter
@@ -81,6 +81,6 @@ if (!empty($idArr)) {
         }
     }
 } else {
-    header("Location: ../Letters/generateDLetter.php"); //redirect to login page
+    header("Location: disciplinaryletters"); //redirect to login page
 }
 ?>

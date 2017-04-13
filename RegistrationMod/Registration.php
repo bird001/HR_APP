@@ -7,7 +7,7 @@ include("../Templates/header.php");
 <script>
     function Bulk() {
         //pop up window for uploading SchoolListinngs csv files
-        window.open("Bulk.php", "Multiple Registrations", "location=1,status=1,scrollbars=1,width=400,height=400");
+        window.open("addbulk", "Multiple Registrations", "location=1,status=1,scrollbars=1,width=400,height=400");
     }
 
 </script>
@@ -227,7 +227,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                            data-error="Email address is invalid" required/>
                     <span class="error">
                         <?php
-                        if ($empemail_result != 1) {
+                        if ($empmail_result != 1) {
                             echo $empmail_result;
                         }
                         ?>

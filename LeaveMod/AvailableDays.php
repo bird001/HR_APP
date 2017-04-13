@@ -8,11 +8,11 @@ include("../db/db3.php");
 
     <head>
         <title>Available Days</title>
-        <link href="../CSS/bootstrap.min.css" rel="stylesheet">
+        <link href="bootstrapCSS" rel="stylesheet">
 
-        <script type = "text/javascript" src = "../js/bootstrapValidator.js"></script>
-        <script type = "text/javascript" src = "../js/jquery-2.1.4.min.js"></script>
-        <script type = "text/javascript" src = "../js/bootstrap.js"></script>
+        <script type = "text/javascript" src = "bootstrapvalidate"></script>
+        <script type = "text/javascript" src = "jquerylib"></script>
+        <script type = "text/javascript" src = "bootstrap"></script>
     </head>
 
     <body bgcolor="#FFFFFF">

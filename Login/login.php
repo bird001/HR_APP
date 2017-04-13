@@ -40,11 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['login_pass'] = $password;
             $_SESSION['last_time'] = time();
 
-            header("location: ../Profile/profile.php");
+            header("location: profile");
         }
 
-        if ($usercheck === 1 && $checkpassword === 0) {
-            header("location: ../Login/ChangePassword.php");
+        if ($usercheck === 1 && $checkpassword === '0') {
+            header("location: changepassword");
         }
 
         if ($usercheck === 0) {
@@ -58,13 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <head>
         <title>HR DEPT</title>
-        <link href="../CSS/bootstrap.min.css" rel="stylesheet">
+        <link href="bootstrapCSS" rel="stylesheet">
 
-        <script type = "text/javascript" src = "../js/bootstrapValidator.js"></script>
-        <script type = "text/javascript" src = "../js/jquery-2.1.4.min.js"></script>
-        <script type = "text/javascript" src = "../js/bootstrap.js"></script>
-
-        <script type = "text/javascript" src = "../Validation/Register.js"></script>
+        <script type = "text/javascript" src = "bootstrapValidate"></script>
+        <script type = "text/javascript" src = "jquerylib"></script>
+        <script type = "text/javascript" src = "bootstrap"></script>
     </head>
 
     <body bgcolor ="#f9f9f9" >

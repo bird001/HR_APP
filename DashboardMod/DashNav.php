@@ -13,13 +13,13 @@ $role = $row['EmpRole'];
             <?php
             if ($role == 'Manager') {
                 ?>
-                <li><a href="AddNews.php">Add News</a></li>
+                <li><a href="addnews">Add News</a></li>
                 <?php
             }
             ?>
 
 
-            <li><a href="ViewNews.php">View News</a></li>
+            <li><a href="viewnews">View News</a></li>
         </ul>
     </div>
 </nav>

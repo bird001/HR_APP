@@ -83,6 +83,6 @@ if (!empty($idArr)) {
         }
     }
 } else {
-    header("Location: ../Letters/generateDLetter.php"); //redirect to login page
+    header("Location: lettertemplates"); //redirect to login page
 }
 ?>

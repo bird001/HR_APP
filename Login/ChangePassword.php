@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql_password = "update Users set EmpPass = '$newpass1', PasswordChanged = '1' where EmpEmail = '$changeemail' and EmpPass = '$oldpass'";
             mysqli_query($conn, $sql_password);
             
-            header("location: ../Login/login.php");
+            header("location: login");
             
         }
     }
@@ -58,13 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <head>
         <title>HR DEPT</title>
-        <link href="../CSS/bootstrap.min.css" rel="stylesheet">
+        <link href="bootstrapCSS" rel="stylesheet">
 
-        <script type = "text/javascript" src = "../js/bootstrapValidator.js"></script>
-        <script type = "text/javascript" src = "../js/jquery-2.1.4.min.js"></script>
-        <script type = "text/javascript" src = "../js/bootstrap.js"></script>
-
-        <script type = "text/javascript" src = "../Validation/Register.js"></script>
+        <script type = "text/javascript" src = "bootstrapvalidate"></script>
+        <script type = "text/javascript" src = "jquerylib"></script>
+        <script type = "text/javascript" src = "bootstrap"></script>
     </head>
 
     <body bgcolor="#FFFFFF">

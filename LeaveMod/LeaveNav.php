@@ -11,12 +11,12 @@ $role = $row['EmpRole'];
 <nav id="primary-navigation" class="row">
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
-            <li><a href="LeaveApply.php">Apply for Leave</a></li>
+            <li><a href="leaveapply">Apply for Leave</a></li>
             <!--<li><a href="LeaveResumption.php">Resumption of Duty</a></li>-->
             <?php
             if ($role == 'Manager' || $role == 'Supervisor') {
                 ?>
-                <li><a  href="LeaveRequests.php">Leave Requests</a></li>
+                <li><a  href="leaverequests">Leave Requests</a></li>
                 <?php
             }
             ?>

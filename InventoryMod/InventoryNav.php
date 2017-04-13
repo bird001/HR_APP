@@ -12,10 +12,10 @@ $position = $row['EmpPosition'];
 <nav id="primary-navigation" class="row">
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
-            <li><a href="../InventoryMod/InventoryCRUD.php">Update Inventory</a></li> <!--Update/Add/Delete inventory items-->
-            <li><a href="../InventoryMod/RequestInventory.php">Request Inventory</a></li><!--Used to request inventory items from HR Dept-->
-            <li><a href="../InventoryMod/InventoryRequests.php">Inventory Requests</a></li><!--Used to request inventory items from HR Dept-->
-            <li><a href="../InventoryMod/InventoryReports.php">Reports</a></li><!--Generate reports based on specific parameters-->
+            <li><a href="inventorycrud">Update Inventory</a></li> <!--Update/Add/Delete inventory items-->
+            <li><a href="requestinventory">Request Inventory</a></li><!--Used to request inventory items from HR Dept-->
+            <li><a href="inventoryrequests">Inventory Requests</a></li><!--Used to request inventory items from HR Dept-->
+            <li><a href="inventoryreports">Reports</a></li><!--Generate reports based on specific parameters-->
             <!--
             <li><a href="#">Payment Authorization</a></li>
             -->

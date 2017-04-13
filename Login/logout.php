@@ -22,5 +22,5 @@ session_destroy(); //completely destroy the session
 
 
 
-header("Location: ../Login/login.php");//redirect to login page
+header("Location:login");//redirect to login page
 ?>

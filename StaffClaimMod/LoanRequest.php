@@ -34,7 +34,7 @@ $role = $row1['EmpRole'];
 ?>
 
 <div class = "container-fluid datatables_wrapper">
-    <form name="bulk_action_form" action="../StaffClaimMod/Generate_Approve.php" method="post" >
+    <form name="bulk_action_form" action="generate_approve" method="post" >
         <table id = "LeaveRequests" class = "table-hover table-bordered" style="width:100%">
             <thead>
                 <tr>

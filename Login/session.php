@@ -15,11 +15,11 @@ $login_name = $row['FirstName']." ".$row['LastName'];
 
 if (isset($_SESSION["login_user"])) {// ensures user times out after a certain time
     if ((time() - $_SESSION['last_time']) > 1800) { //time in secconds
-        header("location:../Login/logout.php");
+        header("location:logout");
     } else {
         $_SESSION['last_time'] = time();
     }
 } else {
-    header("location:../Login/logout.php");
+    header("location:logout");
 }
 ?>

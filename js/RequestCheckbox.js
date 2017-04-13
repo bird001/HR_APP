@@ -7,7 +7,7 @@ function handleClick(cb) {
   
   $.ajax({
     data: {id : closestTrChecked, column: closestTd, check : checkB },
-    url: 'RequestCheckbox.php',
+    url: 'requestcheck',
     method: 'GET', // or GET
     success: function(msg) {
         //alert(closestTrChecked);

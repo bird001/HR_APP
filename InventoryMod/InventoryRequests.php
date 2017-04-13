@@ -7,7 +7,7 @@ include("../Templates/header.php");
 <script>
     function ViewInventory() {
         //pop up window for uploading SchoolListinngs csv files
-        window.open("ViewInventory.php", "View Inventory", "location=1,status=1,scrollbars=1,width=400,height=550");
+        window.open("viewinventory", "View Inventory", "location=1,status=1,scrollbars=1,width=400,height=550");
     }
 </script>
 

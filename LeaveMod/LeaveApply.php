@@ -6,7 +6,7 @@ include("../Templates/header.php");
 <script>
     function AvailableDays() {
         //pop up window for uploading SchoolListinngs csv files
-        window.open("AvailableDays.php", "Available Days", "location=1,status=1,scrollbars=1,width=400,height=550");
+        window.open("available", "Available Days", "location=1,status=1,scrollbars=1,width=400,height=550");
     }
 </script>
 <?php
@@ -127,7 +127,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newEdate = new DateTime(date("Y-m-d", strtotime($enddate)));
     $wkdays = getWeekdayDifference($newSdate, $newEdate);
 
-
+    $Sdate = date("d-m-Y",strtotime($startdate));
+    $Edate = date("d-m-Y",strtotime($enddate));
 //check date and calculate hours
     $hours = getHourDifference($startdate, $enddate);
     //echo $startdate;
@@ -155,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 //send email to associated Manager and HR
                 smtpmailer_ApplyLeave($manemail, $email, $name, $empdept, $leavetype, $hours . " hours", $Sdate, $Edate);
-                header("Location: ..Leave/LeaveApply.php");
+                header("Location: leaveapply");
             } else {
                 //insert the details into the ApplyLeave table
                 $leaveapply = "insert into HR_DEPT.ApplyLeave(FirstName,LastName,EmpID,EmpDept,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
@@ -166,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 //send email to associated ManageR
                 smtpmailer_ApplyLeave($manemail, $email, $name, $empdept, $leavetype, $wkdays . " days", $Sdate, $Edate);
-                header("Location: ..Leave/LeaveApply.php");
+                header("Location: leaveapply");
             }
         } else {
             echo "error";

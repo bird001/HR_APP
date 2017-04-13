@@ -18,7 +18,7 @@ include("../Templates/header.php");
 <script>
     function EditProfile() {
         //pop up window for uploading SchoolListinngs csv files
-        window.open("EditProfile.php", "Available Days", "location=1,status=1,scrollbars=1,width=400,height=550");
+        window.open("editprofile", "Edit Profile", "location=1,status=1,scrollbars=1,width=400,height=550");
     }
 </script>
 <?php
@@ -29,7 +29,7 @@ include("../RegistrationMod/RegNav.php");
 
 
 <div class = "container-fluid datatables_wrapper">
-    <form name="bulk_action_form" action="EditProfile.php" method="post" target="popup" 
+    <form name="bulk_action_form" action="editprofile" method="post" target="popup" 
           onsubmit="window.open('about:blank','popup','width=600,height=990');">
         
         <table id = "EditReg" class = "table-hover table-bordered" style="width:100%">

@@ -13,12 +13,12 @@ include("../Templates/header_dashboard.php");
 <script>
     function EditNews() {
 //pop up window for uploading SchoolListinngs csv files
-        window.open("../DashboardMod/EditNews.php", "Edit News", "location=1,status=1,scrollbars=1,width=400,height=400");
+        window.open("editnews", "Edit News", "location=1,status=1,scrollbars=1,width=400,height=400");
     }
 
     function DeleteNews() {
 //pop up window for uploading SchoolListinngs csv files
-        window.open("../DashboardMod/DeleteNews.php", "Delete News", "location=1,status=1,scrollbars=1,width=400,height=400");
+        window.open("deletenews", "Delete News", "location=1,status=1,scrollbars=1,width=400,height=400");
     }
 </script>
 <?php
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $addNews = "INSERT INTO DashBoard(Headline, Story, Name, Email, Time)VALUES('$headline', '$story', '$name', '$email', now())";
     $result = mysqli_query($conn, $addNews);
-    header("Location: ../DashboardMod/AddNews.php");
+    header("Location: addnews");
     
     if (!$result) {
         echo('Error adding news: ' . $mysql_error());

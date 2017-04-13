@@ -16,8 +16,8 @@ $position = $row['EmpPosition'];
             if($dept == 'HR' || $position == 'Admin'){
                 
             ?>
-            <li><a href="Registration.php">Registration</a></li>
-            <li><a href="EditRegistration.php">Edit Registration</a></li>
+            <li><a href="registration">Registration</a></li>
+            <li><a href="editregistration">Edit Registration</a></li>
             <?php
             }
             ?>

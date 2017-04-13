@@ -13,7 +13,7 @@ include("../Templates/header.php");
     function saveToDatabase(editableObj, column, id, name) {
         $(editableObj).css("background", "#FFF url(loaderIcon.gif) no-repeat right");
         $.ajax({
-            url: "../Edit_Delete/SaveEdit.php",
+            url: "saverows",
             type: "POST",
             data: 'column=' + column + '&editval=' + editableObj.innerHTML + '&id=' + id + '&name=' + name, // send data to SaveEdit to be processed
         });

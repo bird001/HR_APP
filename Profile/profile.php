@@ -40,11 +40,11 @@ $empphone = $row["EmpPhone"];
                         <?php
                         if($empsex === 'F'){
                         ?>
-                        <div class="col-md-3 col-lg-3 " align="left"> <img alt="User Pic" src="../images/female_avatar.jpg" class="img-circle img-responsive"> </div>
+                        <div class="col-md-3 col-lg-3 " align="left"> <img alt="User Pic" src="imagefemale" class="img-circle img-responsive"> </div>
                         <?php
                         }else {
                             ?>
-                        <div class="col-md-3 col-lg-3 " align="left"> <img alt="User Pic" src="../images/Male_Avatar.jpg" class="img-circle img-responsive"> </div>
+                        <div class="col-md-3 col-lg-3 " align="left"> <img alt="User Pic" src="imagemale" class="img-circle img-responsive"> </div>
                             <?php
                         }
                         ?>

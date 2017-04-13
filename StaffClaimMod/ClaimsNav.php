@@ -12,18 +12,18 @@ $position = $row['EmpPosition'];
 <nav id="primary-navigation" class="row">
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
-            <li><a href="TravelSubsistence.php">Traveling & Subsistence</a></li>
-            <li><a href="MealTravel.php">Meal & Travel</a></li>
-            <li><a href="LoanAppFront.php">Loan Application</a></li>
+            <li><a href="travelsubsistence">Traveling & Subsistence</a></li>
+            <li><a href="mealtravel">Meal & Travel</a></li>
+            <li><a href="loanapplication">Loan Application</a></li>
             <?php
             //if(($dept == "Accounts" && $role == "Manager") || ($dept == "Accounts" && $role == "Supervisor") || (strpos($position, 'Assistant General Manager') !== false)){
                 
             ?>
-            <li><a href="LoanRequest.php">Loan Requests</a></li>
+            <li><a href="loanrequests">Loan Requests</a></li>
             <?php
             //}
             ?>
-            <li><a href="LoanPaymentFront.php">Loan Payment</a></li>
+            <li><a href="loanpayment">Loan Payment</a></li>
             <!--
             <li><a href="#">Salary Advance</a></li>
             <li><a href="#">Payment Authorization</a></li>

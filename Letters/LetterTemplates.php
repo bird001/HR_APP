@@ -20,7 +20,7 @@ include("../db/db3.php");
 <?php include("../Letters/lettersNav.php"); ?>
 
 <div class = "container-fluid datatables_wrapper">
-    <form name="bulk_action_form" action="../Letters/LetterTemplatesGen.php" method="post" >
+    <form name="bulk_action_form" action="lettertemplatesgen" method="post" >
         <table id = "Search" class = "table-hover table-bordered" style="width:100%">
             <thead>
                 <tr>

@@ -97,7 +97,7 @@ if ($loanamountSet == 1 && $purposeSet == 1) {
 
     smtpmailer_LoanApplication($accman, $name, $empdept);
 
-    header("Location:../StaffClaimMod/LoanAppFront.php");
+    header("Location: loanapplication");
 } else {
     echo "error";
 }

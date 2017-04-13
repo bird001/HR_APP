@@ -74,7 +74,7 @@ foreach ($idArr as $id) {
 
     if ($functiontype == 'Approve') {
 
-        if (strpos($operatorposition, 'Assistant General') == false) {
+        if (strpos($operatorposition, 'General Manager') == false) {
 
             //if the operator's position is not AGM then execute this code
             //get email address for the assistant GM
@@ -92,7 +92,7 @@ foreach ($idArr as $id) {
             //notify the Assistant GM
             smtpmailer_AccountsApprove($asstgm_email, $empname, $empdept);
 
-            header("Location:../StaffClaimMod/LoanRequest.php");
+            header("Location: loanrequests");
             
         } else {
 
@@ -127,7 +127,7 @@ foreach ($idArr as $id) {
             $sql_update_loan_archive = "UPDATE LoanApplicationArchive SET Status = 'Approved' WHERE id_val = $id";
             mysqli_query($conn, $sql_update_loan_archive);
 
-            header("Location:../StaffClaimMod/LoanRequest.php");
+            header("Location: loanrequests");
         }
     }
 
@@ -154,7 +154,7 @@ foreach ($idArr as $id) {
         mysqli_query($conn, $sql_update_loan_archive);
 
 
-        header("Location:../StaffClaimMod/LoanRequest.php"); //go back to loan request page
+        header("Location: loanrequests"); //go back to loan request page
     }
 
 
@@ -181,10 +181,10 @@ foreach ($idArr as $id) {
             $removeloanapp = "delete from LoanApplication where id_val = '$id'";
             mysqli_query($conn, $removeloanapp); //execute the query to remove the loan app
 
-            header("Location:../StaffClaimMod/LoanRequest.php"); //go back to loan request page
+            header("Location: loanrequests"); //go back to loan request page
         } else {
             $disburseerror = "Not approved. Cannot be disbursed";
-            header("Location:../StaffClaimMod/LoanRequest.php");
+            header("Location: loanrequests");
         }
     }
 }

@@ -8,6 +8,6 @@
             mysqli_query($conn,"DELETE FROM DashBoard WHERE id_val='$id' and Email = '$operator'");
         }
         $_SESSION['success_msg'] = 'News has been deleted successfully.';
-        header("Location:../DashboardMod/DeleteNews.php");
+        header("Location: deletenews");
     
 ?>

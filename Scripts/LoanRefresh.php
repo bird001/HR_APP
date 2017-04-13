@@ -14,7 +14,7 @@ $get_arr = $conn->query($sql_get);
 
 $dayofmonth = date("d");
 
-if ($dayofmonth == '11') {
+if ($dayofmonth == '25') {
 
     while ($row = $get_arr->fetch_assoc()) {
 

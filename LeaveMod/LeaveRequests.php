@@ -4,7 +4,7 @@ include("../db/db2.php");
 include("../db/db3.php");
 include("../Templates/header.php");
 ?>
-<script type="text/javascript" src="RequestCheckbox.js"></script>
+<script type="text/javascript" src="requestcheckbox"></script>
 <script type = "text/javascript" charset="utf-8">
 
     $(document).ready(function () {
@@ -12,8 +12,6 @@ include("../Templates/header.php");
 
         $(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
     });
-
-    //window.alert("blah");
 </script>
 
 
@@ -33,7 +31,6 @@ $row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 
 $manemail = $row1['ManagerEmail'];
 $hremail = $row2['HREmail'];
-
 ?>
 
 <?php
@@ -51,7 +48,7 @@ if ($email === $manemail) {
                         <th>Emp Dept</th>
                         <th>Leave Type</th>
                         <th>Dates</th>
-                        <th>Days/Hours</th>
+                        <th>Duration</th>
                         <th>Reason</th>
                         <th>Accept</th>
                         <th>Reject</th>
@@ -71,9 +68,13 @@ if ($email === $manemail) {
                         '<td class="empnum">' . $row['EmpID'] . '</td>' .
                         '<td class="empdept">' . $row['EmpDept'] . '</td>' .
                         '<td class="type">' . $row['LeaveType'] . '</td>' .
-                        '<td class="dates">' . $row['StartDate'] . "-->" . $row['EndDate'] . '</td>' .
-                        '<td class="days">' . $row['NumDays'] . '</td>' .
-                        '<td class="reason">' . $row['Reason'] . '</td>' .
+                        '<td class="dates">' . $row['StartDate'] . "-->" . $row['EndDate'] . '</td>';
+                        if ($row['LeaveType'] === 'Department') {
+                            echo '<td class="days">' . $row['NumDays'] .' Hours'. '</td>';
+                        } else {
+                            echo '<td class="days">' . $row['NumDays'] . ' Days'. '</td>';
+                        }
+                        echo '<td class="reason">' . $row['Reason'] . '</td>' .
                         '<td id = "Accept"><input type="checkbox" onclick="handleClick(this);">' . '</td>' .
                         '<td id = "Reject"><input type="checkbox" onclick="handleClick(this);">' . '</td>';
 

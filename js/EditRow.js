@@ -47,7 +47,7 @@ function changeField( cell, prevContent ) {
 	//remove keydown listener once action initiated
 	cell.off('keydown');
         
-	var url = '../Edit_Delete/AjaxEdit.php?edit&',//relative path to PHP processing script
+	var url = 'editrows?edit&',//relative path to PHP processing script
 		input = cell.find('form').serialize();//serialize form for passing via url
                 //
 	//send ajax request
