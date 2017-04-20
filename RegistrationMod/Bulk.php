@@ -152,7 +152,7 @@ if ($_FILES[uploaded_file][size] > 0) {
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <title>Import Bulk</title>
-        <link href="../CSS/bootstrap.min.css" rel="stylesheet" />
+        <link href="bootstrapCSS" rel="stylesheet" />
     </head>
 
     <body>
