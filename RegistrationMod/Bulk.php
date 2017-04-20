@@ -131,7 +131,7 @@ if ($_FILES[uploaded_file][size] > 0) {
                 mysqli_query($conn, $dletter);
                 //-----------------------------------------------------------------------------------------
                 
-                //smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email to person
+                smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email to person
             }
         }
     } else {
