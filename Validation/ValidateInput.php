@@ -135,7 +135,7 @@ function ValidatePhone($phone) {
     } else {
         $phone = validate_input($phone);
         // check if phone# has only numbers and '-'
-        if (!preg_match("/^[0-9 ]*$/", $phone)) {
+        if (!preg_match("/^[0-9 -]*$/", $phone)) {
             return "Only numbers allowed";
         } else {
             return 1;

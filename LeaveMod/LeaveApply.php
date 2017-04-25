@@ -25,6 +25,7 @@ $firstname = $row['FirstName'];
 $lastname = $row['LastName'];
 $dept = $row['EmpDept'];
 $empid = $row['EmpID'];
+$role = $row['EmpRole'];
 
 //get managers email address
 $getmanager = "select * from Users where EmpDept = '$dept' and EmpRole = 'Manager'";
@@ -209,12 +210,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="inputEmpDept" class="control-label">Department</label>
                 <input type="text" name="EmpDept" id="EmpDept" class="form-control" value="<?php echo $dept; ?>" required readonly/>
             </div>
-
+            <?php
+            if(0==0){//TO-DO if person is manager, no need to send emails to themselves
+            ?>
             <div class="form-group">
                 <label for="inputManEmail" class="control-label">Manager's Email</label>
                 <input type="email" name="ManEmail" id="ManEmail" class="form-control" value="<?php echo $manageremail; ?>"  required readonly/>
                 <span class="error"><?php echo $manemailError; ?></span>
             </div>
+            <?php
+            }
+            ?>
 
             <div class="form-group">
                 <label for="inputHREmail" class="control-label">HR Email</label>

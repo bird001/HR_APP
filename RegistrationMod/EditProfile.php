@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $fname_result = ValidateName($fname);
         $lname_result = ValidateName($lname);
-        $emppos_result = ValidateName($emppos);
+        //$emppos_result = ValidatePosition($emppos);
         $empmail_result = ValidateEmail($empmail);
         $empphone_result = ValidatePhone($empphone);
         $empdob_result = ValidateDOB($empdob);
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $newDateStart = date("d-m-Y", strtotime($originalDateStart));
         $newDateStart2 = date("Y-m-d", strtotime($originalDateStart));
 
-        if ($empphone_result == 1 && $empmail_result == 1 && $lname_result == 1 && $emppos_result == 1 && $fname_result == 1 && $empdob_result == 1 && $empdate_result == 1) {
+        if ($empphone_result == 1 && $empmail_result == 1 && $lname_result == 1 && $fname_result == 1 && $empdob_result == 1 && $empdate_result == 1) {
 
 
             $updateregistration = "update Users set FirstName = '$fname', LastName = '$lname', EmpSex = '$empsex', EmpID = '$empnum', EmpEmail = '$empmail', "

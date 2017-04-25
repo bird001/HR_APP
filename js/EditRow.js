@@ -18,7 +18,8 @@ function displayForm( cell ) {
 		//form action prevents page refresh when enter pressed.  hidden fields pass primary key and column name
 		form = '<form action="javascript: this.preventDefault" id = "EditForm"><input type="text" size="4" name="newValue" value="'+
 			   prevContent+'" /><input type="hidden" name="id" value="'+id+'" />'+
-			   '<input type="hidden" name="column" value="'+column+'" /></form>';
+			   '<input type="hidden" name="column" value="'+column+'" />'+
+                            '<input type="hidden" name="tablename" value="'+tablename+'"></form>';
 
 	//insert form into td and change focus to input field, set width
 	cell.html(form).find('input[type=text]')

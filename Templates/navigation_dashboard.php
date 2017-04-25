@@ -23,7 +23,13 @@ $position = $row['EmpPosition'];
                 <ul class="nav nav-tabs">
                     <li><a  href="profile">Profile</a></li>
                     <li><a  href="dashboard">DashBoard</a></li>
-                    <li><a  href="letters">Letters</a></li>
+                    <?php
+                    if ($dept == 'HR') {
+                        ?>
+                        <li><a  href="letters">Letters</a></li>
+                        <?php
+                    }
+                    ?>
                     <li><a  href="leave">Leave</a></li>
                     <li><a  href="claims">Staff Claims</a></li>
                     <?php
@@ -33,8 +39,14 @@ $position = $row['EmpPosition'];
                         <?php
                     }
                     ?>
-                    <!--<li><a  href="#Payroll">Payroll</a></li>-->
                     <li><a  href="inventory">Inventory</a></li>
+                    <?php
+                    if ($dept == 'HR') {
+                        ?>
+                        <!--<li><a  href="operations">Operations</a></li>-->
+                        <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </nav>
