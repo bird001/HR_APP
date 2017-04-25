@@ -490,7 +490,7 @@ function smtpmailer_Registration($to,$name,$dept,$password) {
     $mail->Subject = "Registration";
     $mail->Body = "Dear $name of the $dept department we would like to inform you that your HRM account has been created "
             . "your username is your email address and your password is $password "
-            . "please login at <a href = 'tiphra/login'>tiphrapp</a>";
+            . "please login at <a href = 'http://tiphra/login'>tiphrapp</a>";
     $mail->AddAddress($to);
     $mail->isHTML(true);
 
