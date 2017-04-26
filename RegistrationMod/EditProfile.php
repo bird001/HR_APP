@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $empphone = $row['EmpPhone'];
                 $empdob = $row['EmpDOB'];
                 $empstart = $row['EmpStartDate'];
+                $empnum = $row['id_val'];
             }
         }
     }
@@ -40,9 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($functiontype == 'Update') {
         $fname = $_POST['Fname'];
         $lname = $_POST['Lname'];
+        $empid = $_POST['EmpID'];
         $empnum = $_POST['EmpNum'];
-        $empnumperm = $_POST['EmpNum'];
-        $empmail = $_POST['EmpEmail'];
+        $empemail = $_POST['EmpEmail'];
         $status = $_POST['EmpStatus'];
         $role = $_POST['EmpRole'];
         $empdept = $_POST['EmpDept'];
@@ -55,11 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $empstart = $_POST['EmpStartDate'];
         $empsex = $_POST['EmpSex'];
 
-
         $fname_result = ValidateName($fname);
         $lname_result = ValidateName($lname);
         //$emppos_result = ValidatePosition($emppos);
-        $empmail_result = ValidateEmail($empmail);
+        $empemail_result = ValidateEmail($empemail);
         $empphone_result = ValidatePhone($empphone);
         $empdob_result = ValidateDOB($empdob);
         $empdate_result = ValidateDate($empstart);
@@ -73,16 +73,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $newDateStart = date("d-m-Y", strtotime($originalDateStart));
         $newDateStart2 = date("Y-m-d", strtotime($originalDateStart));
 
-        if ($empphone_result == 1 && $empmail_result == 1 && $lname_result == 1 && $fname_result == 1 && $empdob_result == 1 && $empdate_result == 1) {
+        if ($empphone_result == 1 && $empemail_result == 1 && $lname_result == 1 && $fname_result == 1 && $empdob_result == 1 && $empdate_result == 1) {
 
 
-            $updateregistration = "update Users set FirstName = '$fname', LastName = '$lname', EmpSex = '$empsex', EmpID = '$empnum', EmpEmail = '$empmail', "
+            $updateregistration = "update Users set FirstName = '$fname', LastName = '$lname', EmpSex = '$empsex', EmpID = '$empid', EmpEmail = '$empemail', "
                     . "EmpStatus = '$status', EmpDept = '$empdept', EmpRole = '$role', EmpPosition = '$emppos', EmpAddress = '$empadd', "
-                    . "EmpDOB = '$newDateDOB', EmpPhone = '$empphone', EmpStartDate = '$newDateStart' where EmpID = '$empnumperm'";
+                    . "EmpDOB = '$newDateDOB', EmpPhone = '$empphone', EmpStartDate = '$newDateStart' where id_val = '$empnum'";
             mysqli_query($conn, $updateregistration);
             echo "<script>window.close();</script>";
         }
-        
     }
 }
 ?>
@@ -119,9 +118,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style = "display:none">
                     <label for="Employee#" class="control-label">Employee #</label>
-                    <input type="number" name="EmpNum" id="EmpNum" class="form-control" value="<?php echo $empid ?>" required/>
+                    <input type="number" name="EmpNum" id="EmpNum" class="form-control" value="<?php echo $empnum ?>" required/>
+                </div>
+
+                <div class="form-group">
+                    <label for="EmployeeID" class="control-label">Employee ID</label>
+                    <input type="number" name="EmpID" id="EmpID" class="form-control" value="<?php echo $empid ?>" required/>
                 </div>
 
                 <div class="form-group">
@@ -131,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <span class="error">
                         <?php
                         if ($empemail_result != 1) {
-                            echo $empmail_result;
+                            echo $empemail_result;
                         }
                         ?>
                     </span>
