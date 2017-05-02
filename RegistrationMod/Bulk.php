@@ -104,6 +104,8 @@ if ($_FILES[uploaded_file][size] > 0) {
 
                 if ($empsex == "F") {
                     $maternityDays = "60";
+                }else{
+                    $maternityDays = "0";
                 }
 
 
@@ -117,7 +119,7 @@ if ($_FILES[uploaded_file][size] > 0) {
                 $leave = "insert into HR_DEPT.Leaves(EmpFName,EmpLName,EmpID,EmpEmail,YearsOfEmployment,Vacation,Sick,Department,Maternity,Study,Bereavement,JuryDuty,
                 EmpStartDate,EmpStatus,EmpRole,EmpSex)
                 values(
-                '$fname','$lname','$empnum','$empmail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
+                '$fname','$lname','$empid','$empmail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
                       '$empstart','$empstatus','$emprole','$empsex'
                     )";
                 mysqli_query($conn, $leave);
@@ -131,6 +133,15 @@ if ($_FILES[uploaded_file][size] > 0) {
                 mysqli_query($conn, $dletter);
                 //-----------------------------------------------------------------------------------------
                 
+                //insert into managers table-----------------------------------------------------------------
+                $name = $fname." ".$lname;
+                if($emprole == "Manager"){
+                $managers = "insert into ManagersDepartments (Name,EmpID,EmpEmail,Department) values('$name','$empid','$empmail',"
+                        . "'$empdept')";
+                mysqli_query($conn, $managers);
+                }
+                //-------------------------------------------------------------------------------------------
+                
                 smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email to person
             }
         }
@@ -138,6 +149,8 @@ if ($_FILES[uploaded_file][size] > 0) {
         echo "incorrect file type, expecting microsoft excel document";
     }
 }
+//echo "<script>window.close();</script>";
+
           
 
 //to-do calculate leave days for each entry

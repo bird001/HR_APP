@@ -10,4 +10,4 @@ include("../db/db3.php");
 
 
 
-<?php include("../Templates/footer.php"); ?>
+<?php include("../Templates/footer_dashboard.php"); ?>

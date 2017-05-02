@@ -1,8 +1,5 @@
 <?php
 include("../Templates/header.php");
-?>
-
-<?php
 include("../Templates/navigation.php");
 include("../Templates/body.php");
 include("../InventoryMod/InventoryNav.php");

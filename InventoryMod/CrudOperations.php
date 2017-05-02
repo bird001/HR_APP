@@ -19,14 +19,6 @@ function Update($itemname, $itemid, $itemcategory, $itemamout){
     mysqli_query($conn, $update_query);  
 }
 
-function Delete($itemname, $itemid, $itemamout){//TO-DO
-    global $conn;
-    $date_now = date("d-m-Y h:i A");
-    
-    $update_query = "update Inventory set ItemAmount = '$itemamout', DateInputed = '$date_now' where ItemID = '$itemid' and ItemName = '$itemname'";
-
-    mysqli_query($conn, $update_query);  
-}
     
 ?>
 

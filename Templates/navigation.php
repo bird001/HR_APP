@@ -45,7 +45,7 @@ $position = $row['EmpPosition'];
                     <?php
                     if ($dept == 'HR') {
                         ?>
-                        <!--<li><a  href="operations">Operations</a></li>-->
+                        <li><a  href="operations">Operations</a></li>
                         <?php
                     }
                     ?>

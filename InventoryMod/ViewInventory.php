@@ -22,9 +22,6 @@ include('../db/db3.php');
             });
 
         </script>
-        <script>
-
-        </script>
         <link href="bootstrapCSS" rel="stylesheet">
         <link href="tableToolsCSS" rel="stylesheet">
         <link href="datatablesCSS" rel="stylesheet">

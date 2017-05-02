@@ -16,7 +16,10 @@ $position = $row['EmpPosition'];
             if($dept == 'HR'){
                 
             ?>
-            <li><a href="managers">CRUD Managers</a></li>
+            <li><a href="managercrud">CRUD Manager</a></li>
+            <li><a href="leavecrud">CRUD Leave</a></li>
+            <li><a href="loancrud">CRUD Loan Types</a></li>
+            
             <?php
             }
             ?>

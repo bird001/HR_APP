@@ -33,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $fname = $_POST['Fname'];
         $lname = $_POST['Lname'];
-        $empnum = $_POST['EmpNum'];
-        $empmail = $_POST['EmpEmail'];
+        $empid = $_POST['EmpID'];
+        $empemail = $_POST['EmpEmail'];
         $status = $_POST['EmpStatus'];
         $role = $_POST['EmpRole'];
         $empdept = $_POST['EmpDept'];
@@ -50,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $fname_result = ValidateName($fname);
         $lname_result = ValidateName($lname);
-        $emppos_result = ValidateName($emppos);
-        $empmail_result = ValidateEmail($empmail);
+        //$emppos_result = ValidateName($emppos);
+        $empemail_result = ValidateEmail($empemail);
         $empphone_result = ValidatePhone($empphone);
         $empdob_result = ValidateDOB($empdob);
         $empdate_result = ValidateDate($empstart);
@@ -124,6 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($empsex == "F") {
             $maternityDays = "60";
+        } else {
+            $maternityDays = "0";
         }
 
 
@@ -139,20 +141,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //end calculation of leave days-----------------------------------------------------------------------------------------------------------------
 
 
-        if ($empphone_result == 1 && $empmail_result == 1 && $lname_result == 1 && $emppos_result == 1 && $fname_result == 1 && $empdob_result == 1 && $empdate_result == 1) {
+        if ($empphone_result == 1 && $empemail_result == 1 && $lname_result == 1 && $fname_result == 1 && $empdob_result == 1 && $empdate_result == 1) {
 
             //insert into Users table-------------------------------------------------------------------------
 
             $registration = "insert into HR_DEPT.Users(FirstName,LastName,EmpSex,EmpID,EmpEmail,EmpStatus,EmpDept,EmpRole,EmpPosition,EmpAddress,EmpDOB,EmpPhone,EmpStartDate,EmpPass,TimeCreated,PasswordChanged)
           values(
-          '$fname','$lname','$empsex','$empnum','$empmail','$status','$empdept','$role','$emppos','$empadd','$newDateDOB','$empphone','$newDateStart','$emppass',NOW(),'0'
+          '$fname','$lname','$empsex','$empid','$empemail','$status','$empdept','$role','$emppos','$empadd','$newDateDOB','$empphone','$newDateStart','$emppass',NOW(),'0'
           )";
             mysqli_query($conn, $registration);
             //--------------------------------------------------------------------------------------------
             //insert into DLetter tables, disciplinary------------------------------------------------------
             $dletter = "insert into HR_DEPT.DLetters(EmpFName,EmpLName,EmpEmail,EmpID)
           values(
-          '$fname','$lname','$empmail','$empnum'
+          '$fname','$lname','$empemail','$empid'
           )";
 
             mysqli_query($conn, $dletter);
@@ -161,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $leave = "insert into HR_DEPT.Leaves(EmpFName,EmpLName,EmpID,EmpEmail,YearsOfEmployment,Vacation,Sick,Department,Maternity,Study,Bereavement,JuryDuty,
           EmpStartDate,EmpStatus,EmpRole,EmpSex)
           values(
-          '$fname','$lname','$empnum','$empmail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
+          '$fname','$lname','$empid','$empemail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
           '$newDateStart','$status','$role','$empsex'
           )";
             mysqli_query($conn, $leave);
@@ -176,8 +178,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           )";
             mysqli_query($conn, $dashboard_reg);
             //----------------------------------------------------------------------------------------------------------
+            //insert into managers table-----------------------------------------------------------------
+            $name = $fname . " " . $lname;
+            if ($emprole == "Manager") {
+                $managers = "insert into ManagersDepartments (Name,EmpID,EmpEmail,Department) values('$name','$empid','$empmail',"
+                        . "'$empdept')";
+                mysqli_query($conn, $managers);
+            }
+            //-------------------------------------------------------------------------------------------
 
-            smtpmailer_Registration($empmail, $fname . " " . $lname, $empdept, $emppass); //send email with password to person
+            smtpmailer_Registration($empemail, $fname . " " . $lname, $empdept, $emppass); //send email with password to person
         }
     }
 }
@@ -217,8 +227,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <div class="form-group">
-                    <label for="Employee#" class="control-label">Employee #</label>
-                    <input type="number" name="EmpNum" id="EmpNum" class="form-control" placeholder="12345" required/>
+                    <label for="Employee#" class="control-label">Employee ID</label>
+                    <input type="number" name="EmpID" id="EmpID" class="form-control" placeholder="12345" required/>
                 </div>
 
                 <div class="form-group">
@@ -227,8 +237,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                            data-error="Email address is invalid" required/>
                     <span class="error">
                         <?php
-                        if ($empmail_result != 1) {
-                            echo $empmail_result;
+                        if ($empemail_result != 1) {
+                            echo $empemail_result;
                         }
                         ?>
                     </span>

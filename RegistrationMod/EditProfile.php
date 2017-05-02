@@ -2,6 +2,7 @@
 include('../db/db3.php');
 include('../Validation/ValidateInput.php');
 include("../Templates/header.php");
+include("../RegistrationMod/Updates.php");
 
 
 $idArr = $_POST['checked_id'];
@@ -76,10 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($empphone_result == 1 && $empemail_result == 1 && $lname_result == 1 && $fname_result == 1 && $empdob_result == 1 && $empdate_result == 1) {
 
 
-            $updateregistration = "update Users set FirstName = '$fname', LastName = '$lname', EmpSex = '$empsex', EmpID = '$empid', EmpEmail = '$empemail', "
-                    . "EmpStatus = '$status', EmpDept = '$empdept', EmpRole = '$role', EmpPosition = '$emppos', EmpAddress = '$empadd', "
-                    . "EmpDOB = '$newDateDOB', EmpPhone = '$empphone', EmpStartDate = '$newDateStart' where id_val = '$empnum'";
-            mysqli_query($conn, $updateregistration);
+            Updates($fname,$lname,$empsex,$empid,$empemail,$status,$empdept,$role,$emppos,$empadd,$newDateDOB,$empphone,$newDateStart);
             echo "<script>window.close();</script>";
         }
     }

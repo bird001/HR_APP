@@ -60,7 +60,7 @@ function changeField( cell, prevContent ) {
 		else {
 			//On failure, revert to original value and alert
 			//alert("There was a problem updating the data.  Please try again.");
-			alert(url); //"Only edit the comments Section... Thank you :D.");
+			alert("This cell cannot be updated, contact your system admin"); //"Only edit the comments Section... Thank you :D.");
 			cell.html(prevContent);
 		}
 

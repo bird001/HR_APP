@@ -1,5 +1,25 @@
 <?php
 include("../Templates/header.php");
+?>
+<script type="text/javascript" src="editrow"></script>
+
+<script>
+    function AddInventory() {
+//pop up window for uploading SchoolListinngs csv files
+        window.open("addinventory", "Add Inventory", "location=1,status=1,scrollbars=1,width=400,height=400");
+    }
+</script>
+
+<script type = "text/javascript" charset="utf-8">
+
+    $(document).ready(function () {
+        $('#ViewInventory').dataTable({
+            "sPaginationType": "full_numbers" //show pagination buttons
+        });
+    });
+
+</script>
+<?php
 include("../Templates/navigation.php");
 include("../Templates/body.php");
 include("../InventoryMod/InventoryNav.php");
@@ -26,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($itemNV == 1 && $itemIV == 1 && $itemAV == 1) { //check validation
         if ($posttype == 'Create') { //create a new type of item
             Create($itemname, $itemid, $itemcategory, $itemamount);
-            
         }
 
         if ($posttype == 'Update') {//update items that are already 
@@ -41,68 +60,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<div class = "container-fluid datatables_wrapper">
+    <table id = "ViewInventory" class = "table-hover table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th style="display:none">id_val</th><!--needed for sorting--> 
+                <th>Item Name</th>
+                <th>Item ID</th>
+                <th>Category</th>
+                <th>Item Amount</th>
+                <th>Last Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $sql = "SELECT * FROM Inventory";
+            $results = $dbh->query($sql);
+            $rows = $results->fetchAll();
+            //NB... if you want to make all the rows editable, make the class name the same as the row name`
+            foreach ($rows as $row) {
+                echo '<tr name = "ViewInventory" id="' . $row['id_val'] . '">';
+                echo '<td class="if" style="display:none">' . $row['id_val'] . '</td>' .
+                '<td class="ItemName">' . $row['ItemName'] . '</td>' .
+                '<td class="itid">' . $row['ItemID'] . '</td>' .
+                '<td class="Category">' . $row['Category'] . '</td>' .
+                '<td class="ItemAmount">' . $row['ItemAmount'] . '</td>'.
+                '<td class="itdate">' . $row['DateInputed'] . '</td>';
 
-<br>
-<div align="left" class = "form-group">
-    <div style="width:500px;" class = "form-group" align="left">
-        <form action="#" method="post" name="inventorycrud" id="inventorycrud" class = "form-group" >
+                echo '</tr>';
+            }
+            ?>
+            
 
-            <div class="form-group">
-                <label for="inputIName" class="control-label">Item Name</label>
-                <input type="text" name="Iname" id="Iname" class="form-control" placeholder="Tush P"  required/>
-                <span class="error">
-                    <?php
-                    if ($itemNV != 1) {
-                        echo $itemNV;
-                    }
-                    ?>
-                </span>
-            </div>
-
-            <div class="form-group">
-                <label for="inputItemID" class="control-label">Item ID</label>
-                <input type="number" name="ItemID" id="ItemID" class="form-control" placeholder="000" required/>
-                <span class="error">
-                    <?php
-                    if ($itemIV != 1) {
-                        echo $itemIV;
-                    }
-                    ?>
-                </span>
-            </div>
-
-            <div class="form-group">
-                <label for="inputCategory" class="control-label">Category</label>
-                <select class="form-control" name="category" id="category" required>
-                    <option>Select Category</option>
-                    <?php
-                    $sql_inventory = "select * from InventoryCategory";
-                    $inventory_results = $dbh->query($sql_inventory);
-                    $row_inventory = $inventory_results->fetchAll();
-
-
-                    foreach ($row_inventory as $row) {
-                        echo '<option>' . $row['ItemCategory'] . '</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="inputAmount" class="control-label">Amount</label>
-                <input type="number" name="Amt" id="Amt" class="form-control" placeholder="500" required/>
-                <span class="error">
-                    <?php
-                    if ($itemAV != 1) {
-                        echo $itemAV;
-                    }
-                    ?>
-                </span>
-            </div>
-            <input class="btn btn-primary" type="submit" name="crud" value="Create"/> 
-            <input class="btn btn-primary" type="submit" name="crud" value="Update"/>
-        </form>
-    </div>
+        </tbody>                     
+    </table>
+    <button class="btn btn-primary" onclick="AddInventory();">Add Inventory</button>
 </div>
-
-
 <?php include("../Templates/footer.php"); ?>
