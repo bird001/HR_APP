@@ -142,14 +142,15 @@ if ($_FILES[uploaded_file][size] > 0) {
                 }
                 //-------------------------------------------------------------------------------------------
                 
-                smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email to person
+                //smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email to person
             }
         }
     } else {
         echo "incorrect file type, expecting microsoft excel document";
     }
+    echo "<script>window.close();</script>";
 }
-//echo "<script>window.close();</script>";
+
 
           
 

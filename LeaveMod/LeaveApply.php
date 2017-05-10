@@ -28,13 +28,19 @@ $empid = $row['EmpID'];
 $role = $row['EmpRole'];
 
 //get managers email address
-$getmanager = "select * from Users where EmpDept = '$dept' and EmpRole = 'Manager'";
-$result_manager = mysqli_query($conn, $getmanager);
-$row_manager = mysqli_fetch_array($result_manager, MYSQLI_ASSOC);
-$manageremail = $row_manager['EmpEmail'];
-
+if ($role == 'Manager') {
+    $getmanager = "select * from ManagersDepartments where Department like '%Management%'";
+    $result_manager = mysqli_query($conn, $getmanager);
+    $row_manager = mysqli_fetch_array($result_manager, MYSQLI_ASSOC);
+    $manageremail = $row_manager['EmpEmail'];
+} else {
+    $getmanager = "select * from ManagersDepartments where Department like '%$dept%'";
+    $result_manager = mysqli_query($conn, $getmanager);
+    $row_manager = mysqli_fetch_array($result_manager, MYSQLI_ASSOC);
+    $manageremail = $row_manager['EmpEmail'];
+}
 //get HR email address
-$gethr = "select * from Users where EmpDept = 'HR' and EmpRole = 'Manager'";
+$gethr = "select * from ManagersDepartments where Department like '%HR%'";
 $result_hr = mysqli_query($conn, $gethr);
 $row_hr = mysqli_fetch_array($result_hr, MYSQLI_ASSOC);
 
@@ -128,8 +134,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newEdate = new DateTime(date("Y-m-d", strtotime($enddate)));
     $wkdays = getWeekdayDifference($newSdate, $newEdate);
 
-    $Sdate = date("d-m-Y",strtotime($startdate));
-    $Edate = date("d-m-Y",strtotime($enddate));
+    $Sdate = date("d-m-Y", strtotime($startdate));
+    $Edate = date("d-m-Y", strtotime($enddate));
 //check date and calculate hours
     $hours = getHourDifference($startdate, $enddate);
     //echo $startdate;
@@ -149,9 +155,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($leavetype === 'Department') {
                 //insert the details into the ApplyLeave table
-                $leaveapply = "insert into HR_DEPT.ApplyLeave(FirstName,LastName,EmpID,EmpDept,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
+                $leaveapply = "insert into HR_DEPT.ApplyLeave(FirstName,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
       values(
-      '$fname','$lname','$empnum','$empdept','$email','$manemail','$hremail','$leavetype','$Sdate','$Edate','$hours','$reason'
+      '$fname','$lname','$empnum','$empdept','$role','$email','$manemail','$hremail','$leavetype','$Sdate','$Edate','$hours','$reason'
       )";
                 mysqli_query($conn, $leaveapply);
 
@@ -160,9 +166,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: leaveapply");
             } else {
                 //insert the details into the ApplyLeave table
-                $leaveapply = "insert into HR_DEPT.ApplyLeave(FirstName,LastName,EmpID,EmpDept,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
+                $leaveapply = "insert into HR_DEPT.ApplyLeave(FirstName,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
       values(
-      '$fname','$lname','$empnum','$empdept','$email','$manemail','$hremail','$leavetype','$Sdate','$Edate','$wkdays','$reason'
+      '$fname','$lname','$empnum','$empdept','$role','$email','$manemail','$hremail','$leavetype','$Sdate','$Edate','$wkdays','$reason'
       )";
                 mysqli_query($conn, $leaveapply);
 
@@ -211,14 +217,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" name="EmpDept" id="EmpDept" class="form-control" value="<?php echo $dept; ?>" required readonly/>
             </div>
             <?php
-            if(0==0){//TO-DO if person is manager, no need to send emails to themselves
-            ?>
-            <div class="form-group">
-                <label for="inputManEmail" class="control-label">Manager's Email</label>
-                <input type="email" name="ManEmail" id="ManEmail" class="form-control" value="<?php echo $manageremail; ?>"  required readonly/>
-                <span class="error"><?php echo $manemailError; ?></span>
-            </div>
-            <?php
+            if (0 == 0) {//TO-DO if person is manager, no need to send emails to themselves
+                ?>
+                <div class="form-group">
+                    <label for="inputManEmail" class="control-label">Manager's Email</label>
+                    <input type="email" name="ManEmail" id="ManEmail" class="form-control" value="<?php echo $manageremail; ?>"  required readonly/>
+                    <span class="error"><?php echo $manemailError; ?></span>
+                </div>
+                <?php
             }
             ?>
 

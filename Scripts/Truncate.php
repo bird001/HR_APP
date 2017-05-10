@@ -47,5 +47,17 @@ mysqli_query($conn, $sql13);
 $sql14 = "truncate table ApplyLeaveHR";
 mysqli_query($conn, $sql14);
 
+$sql15 = "truncate table ManagersDepartments";
+mysqli_query($conn, $sql15);
+
+$sql16 = "truncate table InventoryRequests";
+mysqli_query($conn, $sql16);
+
+$sql17 = "truncate table InventoryRequestsArchive";
+mysqli_query($conn, $sql17);
+
+$sql18 = "truncate table Inventory";
+mysqli_query($conn, $sql18);
+
 ?>
 
