@@ -1,7 +1,7 @@
 <?php
 include('../db/db3.php');
 include('../Validation/ValidateInput.php');
-include("../Templates/header.php");
+include("../Templates/header_dashboard.php");
 include("../RegistrationMod/Updates.php");
 
 
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="form-group">
                     <label for="inputEmpID" class="control-label">Employee ID</label>
-                    <input type="number" name="EmpID" id="EmpID" class="form-control" value="<?php //echo $empid     ?>" required/>
+                    <input type="number" name="EmpID" id="EmpID" class="form-control" value="<?php //echo $empid       ?>" required/>
                     <span class="error">
                         <?php
                         //if ($fname_result != 1) {
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="form-group">
                     <label for="inputEmpEmail" class="control-label">Employee Email</label>
-                    <input type="email" name="EmpEmail" id="EmpEmail" class="form-control" value="<?php //echo $empemail     ?>" required/>
+                    <input type="email" name="EmpEmail" id="EmpEmail" class="form-control" value="<?php //echo $empemail       ?>" required/>
                     <span class="error">
                         <?php
                         //if ($lname_result != 1) {
@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="form-group">
                     <label for="Depts" class="control-label">Employee Dept</label>
-                    <input type="text" name="Depts" id="Depts" class="form-control" value="<?php //echo $empnum     ?>" required/>
+                    <input type="text" name="Depts" id="Depts" class="form-control" value="<?php //echo $empnum       ?>" required/>
                     <span class="error">
                         <?php
                         //if ($lname_result != 1) {
@@ -96,6 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
     </div>
-</body>
-
+<?php
+  include("../Templates/footer_dashboard.php");
+?>
 

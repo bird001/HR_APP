@@ -1,7 +1,7 @@
 <?php
 include('../db/db3.php');
 include('../Validation/ValidateInput.php');
-include("../Templates/header.php");
+include("../Templates/header_dashboard.php");
 include("../RegistrationMod/Updates.php");
 
 
@@ -110,6 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
     </div>
-</body>
-
+<?php
+include("../Templates/footer_dashboard.php");
+?>
 

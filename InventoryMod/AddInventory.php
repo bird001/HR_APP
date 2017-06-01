@@ -1,5 +1,5 @@
 <?php
-include("../Templates/header.php");
+include("../Templates/header_dashboard.php");
 include("../InventoryMod/CrudOperations.php");
 include('../Validation/ValidateInput.php');
 
@@ -108,4 +108,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 
-<?php include("../Templates/footer.php"); ?>
+<?php include("../Templates/footer_dashboard.php"); ?>
