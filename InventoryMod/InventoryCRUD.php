@@ -6,7 +6,7 @@ include("../Templates/header.php");
 <script>
     function AddInventory() {
 //pop up window for uploading SchoolListinngs csv files
-        window.open("addinventory", "Add Inventory", "location=1,status=1,scrollbars=1,width=400,height=400");
+        window.open("addinventory", "Add Inventory", "location=1,status=1,scrollbars=1,width=500,height=500");
     }
 </script>
 
@@ -66,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <tr>
                 <th style="display:none">id_val</th><!--needed for sorting--> 
                 <th>Item Name</th>
+                <th>Item Desc</th>
                 <th>Item ID</th>
-                <th>Category</th>
                 <th>Item Amount</th>
                 <th>Last Updated</th>
             </tr>
@@ -77,13 +77,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "SELECT * FROM Inventory";
             $results = $dbh->query($sql);
             $rows = $results->fetchAll();
-            //NB... if you want to make all the rows editable, make the class name the same as the row name`
+            //NB... if you want to make all the rows editable, make the class name the same as the row name
             foreach ($rows as $row) {
                 echo '<tr name = "ViewInventory" id="' . $row['id_val'] . '">';
                 echo '<td class="if" style="display:none">' . $row['id_val'] . '</td>' .
                 '<td class="ItemName">' . $row['ItemName'] . '</td>' .
+                '<td class="ItemDesc">' . $row['ItemDesc'] . '</td>' .
                 '<td class="itid">' . $row['ItemID'] . '</td>' .
-                '<td class="Category">' . $row['Category'] . '</td>' .
                 '<td class="ItemAmount">' . $row['ItemAmount'] . '</td>'.
                 '<td class="itdate">' . $row['DateInputed'] . '</td>';
 

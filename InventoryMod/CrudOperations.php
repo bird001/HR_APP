@@ -1,10 +1,10 @@
 <?php
 
-function Create($itemname, $itemid, $itemcategory, $itemamount) {
+function Create($itemname, $itemdesc, $itemid, $itemcategory, $itemamount) {
     global $conn;
     $date_now = date("d-m-Y h:i A");
 
-    $create_query = "insert into Inventory (ItemName, ItemID, Category, ItemAmount, DateInputed) values ('$itemname', '$itemid', '$itemcategory', "
+    $create_query = "insert into Inventory (ItemName, ItemDesc, ItemID, Category, ItemAmount, DateInputed) values ('$itemname','$itemdesc', '$itemid', '$itemcategory', "
             . "'$itemamount', '$date_now')";
 
     mysqli_query($conn, $create_query);

@@ -21,6 +21,7 @@ function Request($empname, $email, $empid, $empdept, $itemname, $itemamount) {
 
     $itemid = $item_row['ItemID'];
     $itemcat = $item_row['Category'];
+    $itemdesc = $item_row['ItemDesc'];
     //-------------------------------------------------------------------------------------
     //get details of Inventory Manager----------------------------------------------------------
 
@@ -51,8 +52,8 @@ function Request($empname, $email, $empid, $empdept, $itemname, $itemamount) {
     //------------------------------------------------------------------------------------------
     //insert into table and update the respective managers
 
-    $invreq_query = "insert into InventoryRequests (EmpID, EmpName, EmpDept, EmpEmail, ItemID, ItemName, ItemCategory, AmountRequested, Manager, ManagerEmail, "
-            . "InventoryManager, InventoryManEmail) values ('$empid','$empname', '$empdept','$email','$itemid','$itemname','$itemcat','$itemamount','$managername',"
+    $invreq_query = "insert into InventoryRequests (EmpID, EmpName, EmpDept, EmpEmail, ItemID, ItemName, ItemDesc, ItemCategory, AmountRequested, Manager, ManagerEmail, "
+            . "InventoryManager, InventoryManEmail) values ('$empid','$empname', '$empdept','$email','$itemid','$itemname','$itemdesc','$itemcat','$itemamount','$managername',"
             . "'$manageremail','$invmanname','$invmanemail')";
     mysqli_query($conn, $invreq_query);
 }
@@ -100,7 +101,7 @@ function Approve(array $idArr) {
 
             //------------------------------------------------------------------------------------------------------
             //remove the request from the table and insert into an archive
-            $insertarchive = "insert into InventoryRequestsArchive (id_val, EmpID, EmpName, EmpDept, EmpEmail, ItemID, ItemName, ItemCategory, "
+            $insertarchive = "insert into InventoryRequestsArchive (id_val, EmpID, EmpName, EmpDept, EmpEmail, ItemID, ItemName, ItemDesc, ItemCategory, "
                     . "AmountRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject) "
                     . "select * from InventoryRequests where id_val = $id";
             mysqli_query($conn, $insertarchive);

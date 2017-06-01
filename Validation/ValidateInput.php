@@ -93,6 +93,34 @@ function ValidateName($name) {
     }
 }
 
+function ValidateAlphaNumeric($alphanum) {
+    if (empty($alphanum)) {
+        return "cannot be empty";
+    } else {
+        $alphanum = validate_input($alphanum);
+// check if name only contains letters and whitespace
+        if (!preg_match("/^[a-zA-Z()0-9 ]*$/", $alphanum)) {
+            return "only letters and white space";
+        } else {
+            return 1;
+        }
+    }
+}
+
+function ValidateNumeric($alphanum) {
+    if (empty($alphanum)) {
+        return "cannot be empty";
+    } else {
+        $alphanum = validate_input($alphanum);
+// check if name only contains letters and whitespace
+        if (!preg_match("/^[0-9 -]*$/", $alphanum)) {
+            return "only numbers and white space";
+        } else {
+            return 1;
+        }
+    }
+}
+
 function ValidatePosition($emppos) {
     if (empty($emppos)) {
         return "Position is required";

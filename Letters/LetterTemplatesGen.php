@@ -12,6 +12,7 @@ $idArr = $_POST['checked_id'];
 $nametitle = $_POST['RecName'];
 $companyname = $_POST['CompanyName'];
 $companyadd = $_POST['CompanyAdd'];
+$signee = $_POST['Signee'];
 
 //generate Job or Recommendation letter
 if (!empty($idArr)) {
@@ -60,7 +61,7 @@ if (!empty($idArr)) {
         foreach ($idArr as $id) {
 
             $result = mysqli_query($conn, "select * from Users where id_val = '$id' ");
-            $result2 = mysqli_query($conn, "select * from Users where EmpEmail = '$operator' ");
+            $result2 = mysqli_query($conn, "select * from Users where EmpID = '$signee' ");
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
             $row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
             $empname = $row['FirstName'] . " " . $row['LastName'];

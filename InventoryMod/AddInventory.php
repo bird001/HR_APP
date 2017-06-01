@@ -10,19 +10,21 @@ $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $itemname = $_POST['Iname'];
+    $itemdesc = $_POST['IDesc'];
     $itemid = $_POST['ItemID'];
     $itemcategory = $_POST['category'];
     $itemamount = $_POST['Amt'];
     $posttype = $_POST['crud'];
 
     //Validate
-    $itemNV = ValidateName($itemname);
-    $itemIV = ValidatePhone($itemid);
+    $itemNV = ValidateAlphaNumeric($itemname);
+    $itemIDV = ValidateAlphaNumeric($itemdesc);
+    $itemIV = ValidateNumeric($itemid);
     $itemAV = ValidatePhone($itemamount);
     
-    if ($itemNV == 1 && $itemIV == 1 && $itemAV == 1) { //check validation
+    if ($itemNV == 1 && $itemIV == 1 && $itemAV == 1 && $itemIDV == 1) { //check validation
         if ($posttype == 'Add') { //create a new type of item
-            Create($itemname, $itemid, $itemcategory, $itemamount);
+            Create($itemname, $itemdesc, $itemid, $itemcategory, $itemamount);
             
         }
     } else {
@@ -44,6 +46,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <?php
                     if ($itemNV != 1) {
                         echo $itemNV;
+                    }
+                    ?>
+                </span>
+            </div>
+            
+            <div class="form-group">
+                <label for="inputIDesc" class="control-label">Item Description</label>
+                <input type="text" name="IDesc" id="IDesc" class="form-control" placeholder="Paper for first floor"  required/>
+                <span class="error">
+                    <?php
+                    if ($itemIDV != 1) {
+                        echo $itemIDV;
                     }
                     ?>
                 </span>

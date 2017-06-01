@@ -69,8 +69,26 @@ include("../db/db3.php");
             <input type="text" name="CompanyAdd" id="CompanyAdd" class="form-control" placeholder="Blah" required/>
             <span class="error"><?php echo $companyaddError; ?></span>
         </div>
-        
-        
+        <div class="form-group">
+            <label for="inputSignee" class="control-label">Signee</label>
+            <select class="form-control" name="Signee" id="Signee" required>
+                <option>Select Signee</option>
+                <?php
+                $sql_signee = "select * from Users where EmpRole = 'Manager'";
+                $signee_results = $dbh->query($sql_signee);
+                $row_signee = $signee_results->fetchAll();
+
+
+                foreach ($row_signee as $row) {
+                    $position = $row['EmpPosition'];
+                    if ((strpos($position, 'General Manager') !== false) || (strpos($position, 'Financial Controller') !== false)) {
+                        echo '<option value = "'.$row['EmpID'].'">' . $row['FirstName'].' '.$row['LastName'] . '</option>';
+                    }
+                }
+                ?>
+            </select>
+        </div>
+
         <br>
         <br>
         <input type="submit" class="btn btn-primary" id="JobLetter" name="Letter" value="Job Letter"/>

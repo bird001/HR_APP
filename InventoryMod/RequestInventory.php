@@ -29,8 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $posttype = $_POST['request'];
 
 //Validate
-    $itemNV = ValidateName($itemname);
-    $itemAV = ValidatePhone($itemamount);
+    $itemNV = ValidateAlphaNumeric($itemname);
+    $itemAV = ValidateNumeric($itemamount);
     if ($itemNV == 1 && $itemAV == 1) {
         if ($posttype == 'Request') {
             //echo 'hello';
