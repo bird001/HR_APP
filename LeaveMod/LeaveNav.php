@@ -14,7 +14,7 @@ $role = $row['EmpRole'];
             <li><a href="leaveapply">Apply for Leave</a></li>
             <!--<li><a href="LeaveResumption.php">Resumption of Duty</a></li>-->
             <?php
-            if ($role == 'Manager' || $role == 'Supervisor') {
+            if ($role === 'Manager' || $role === 'Supervisor') {
                 ?>
                 <li><a  href="leaverequests">Leave Requests</a></li>
                 <?php
