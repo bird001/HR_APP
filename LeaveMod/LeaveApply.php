@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($leavetype === 'Department') {
                 //insert the details into the ApplyLeave table
-                $leaveapply = "insert into HR_DEPT.ApplyLeave(FirstName,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
+                $leaveapply = "insert into HR_DEPT.ApplyLeaveHR(FirstName,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
       values(
       '$fname','$lname','$empnum','$empdept','$role','$email','$manemail','$hremail','$leavetype','$Sdate','$Edate','$hours','$reason'
       )";
@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: leaveapply");
             } else {
                 //insert the details into the ApplyLeave table
-                $leaveapply = "insert into HR_DEPT.ApplyLeave(FirstName,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
+                $leaveapply = "insert into HR_DEPT.ApplyLeaveHR(FirstName,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
       values(
       '$fname','$lname','$empnum','$empdept','$role','$email','$manemail','$hremail','$leavetype','$Sdate','$Edate','$wkdays','$reason'
       )";
