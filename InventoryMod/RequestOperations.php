@@ -7,12 +7,12 @@ function Request($empname, $email, $empid, $empdept, $itemname, $itemamount) {
     global $conn;
 
     //get details of that employees manager
-    $query_empman = "select * from Users where EmpDept = '$empdept' and EmpRole = 'Manager'";
+    $query_empman = "select * from ManagersDepartments where Department = '$empdept'";
     $result_empman = mysqli_query($conn, $query_empman);
     $row_empman = mysqli_fetch_array($result_empman, MYSQLI_ASSOC);
 
     $manageremail = $row_empman['EmpEmail'];
-    $managername = $row_empman['FirstName'] . " " . $row_empman['LastName'];
+    $managername = $row_empman['Name'];
 
     //get details of items
     $query_items = "select * from Inventory where ItemName = '$itemname'";
@@ -26,28 +26,28 @@ function Request($empname, $email, $empid, $empdept, $itemname, $itemamount) {
     //get details of Inventory Manager----------------------------------------------------------
 
     if ($itemcat == 'StationarySupplies') {
-        $invman_query = "select * from Users where EmpPosition like '%HR Manager%'";
+        $invman_query = "select * from ManagersDepartments where Department like '%HR%'";
         $invman_results = mysqli_query($conn, $invman_query);
         $invman_row = mysqli_fetch_array($invman_results, MYSQLI_ASSOC);
 
         $invmanemail = $invman_row['EmpEmail'];
-        $invmanname = $invman_row['FirstName'] . " " . $invman_row['LastName'];
+        $invmanname = $invman_row['Name'];
     }
     if ($itemcat == 'TechSupplies') {
-        $invman_query = "select * from Users where EmpPosition like '%IT Manager%'";
+        $invman_query = "select * from ManagersDepartments where Department like '%IT%'";
         $invman_results = mysqli_query($conn, $invman_query);
         $invman_row = mysqli_fetch_array($invman_results, MYSQLI_ASSOC);
 
         $invmanemail = $invman_row['EmpEmail'];
-        $invmanname = $invman_row['FirstName'] . " " . $invman_row['LastName'];
+        $invmanname = $invman_row['Name'];
     }
     if ($itemcat == 'SanitarySupplies') {
-        $invman_query = "select * from Users where EmpPosition like '%Property Manager%'";
+        $invman_query = "select * from ManagersDepartments where Department like '%HR%'";
         $invman_results = mysqli_query($conn, $invman_query);
         $invman_row = mysqli_fetch_array($invman_results, MYSQLI_ASSOC);
 
         $invmanemail = $invman_row['EmpEmail'];
-        $invmanname = $invman_row['FirstName'] . " " . $invman_row['LastName'];
+        $invmanname = $invman_row['Name'];
     }
     //------------------------------------------------------------------------------------------
     //insert into table and update the respective managers
@@ -56,6 +56,9 @@ function Request($empname, $email, $empid, $empdept, $itemname, $itemamount) {
             . "InventoryManager, InventoryManEmail) values ('$empid','$empname', '$empdept','$email','$itemid','$itemname','$itemdesc','$itemcat','$itemamount','$managername',"
             . "'$manageremail','$invmanname','$invmanemail')";
     mysqli_query($conn, $invreq_query);
+    
+    //send email to direct manager
+    smtpmailer_InventoryRequest($empname,$empdept,$email,$itemname,$itemamount,$managername,$manageremail);
 }
 
 function Approve(array $idArr) {

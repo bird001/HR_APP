@@ -1,4 +1,5 @@
 <?php
+
 //include ('../db/db3.php');
 include('class.phpmailer.php');
 include('PHPMailerAutoload.php');
@@ -123,7 +124,6 @@ function smtpmailer_LeaveRejectMan($to, $from, $name, $dept, $type, $numdays, $s
     }
 }
 
-
 function smtpmailer_LeaveAcceptHR($to, $from, $name, $dept, $type, $numdays, $startdate, $enddate) {
 //global $error;
 
@@ -162,7 +162,6 @@ function smtpmailer_LeaveAcceptHR($to, $from, $name, $dept, $type, $numdays, $st
         //return true;
     }
 }
-
 
 function smtpmailer_LeaveRejectHR($to, $from, $name, $dept, $type, $numdays, $startdate, $enddate) {
 //global $error;
@@ -220,7 +219,7 @@ function smtpmailer_ApplyLeave($to, $from, $name, $dept, $type, $numdays, $start
     $mail->SetFrom(GUSER, 'Tip Friendly Society');
     //$mail->SetFrom(GUSER, $from);
     $mail->Subject = "Leave Application";
-    $mail->Body = "$name of the $dept Department has applied for $numdays [$type]. Starting at the $startdate to the $enddate."."<br>"
+    $mail->Body = "$name of the $dept Department has applied for $numdays [$type]. Starting at the $startdate to the $enddate." . "<br>"
             . "Please log into the HR Application in order to vet the leave application.";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
@@ -246,7 +245,7 @@ function smtpmailer_ApplyLeave($to, $from, $name, $dept, $type, $numdays, $start
 //smtpmailer_ApplyLeave('a.adams@tipfriendly.com', 'a.thomas@tipfriendly.com', 'Andrew Thomas', 'IT', 'Vacation', '8', '22-09-2016', '23-09-2016');
 
 
-function smtpmailer_OutstandingLeave($to, $name,$days) {
+function smtpmailer_OutstandingLeave($to, $name, $days) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -286,7 +285,7 @@ function smtpmailer_OutstandingLeave($to, $name,$days) {
     }
 }
 
-function smtpmailer_LoanApplication($to,$name,$dept) {
+function smtpmailer_LoanApplication($to, $name, $dept) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -301,7 +300,7 @@ function smtpmailer_LoanApplication($to,$name,$dept) {
     $mail->Username = GUSER;
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'Tip Friendly Society');
-    $mail->Subject = "Loan Application from ".$name." of the ".$dept." Department";
+    $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "Please Log into the HR Application tiphra.com/login";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
@@ -324,7 +323,7 @@ function smtpmailer_LoanApplication($to,$name,$dept) {
     }
 }
 
-function smtpmailer_AccountsApprove($to,$name,$dept) {
+function smtpmailer_AccountsApprove($to, $name, $dept) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -339,7 +338,7 @@ function smtpmailer_AccountsApprove($to,$name,$dept) {
     $mail->Username = GUSER;
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
-    $mail->Subject = "Loan Application from ".$name." of the ".$dept." Department";
+    $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "This application has been revised and approved by the Accounts Dept."
             . "Vet and proceed as necessary \n"
             . "tiphra.com/login";
@@ -364,7 +363,7 @@ function smtpmailer_AccountsApprove($to,$name,$dept) {
     }
 }
 
-function smtpmailer_GMApprove($to,$name,$dept) {
+function smtpmailer_GMApprove($to, $name, $dept) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -379,7 +378,7 @@ function smtpmailer_GMApprove($to,$name,$dept) {
     $mail->Username = GUSER;
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
-    $mail->Subject = "Loan Application from ".$name." of the ".$dept." Department";
+    $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "This application has been Vetted and approved by the AGM."
             . " Disburse the loan \n"
             . "tiphra.com/login";
@@ -404,7 +403,7 @@ function smtpmailer_GMApprove($to,$name,$dept) {
     }
 }
 
-function smtpmailer_GMApprove2($to,$name,$dept, $type, $amount) {
+function smtpmailer_GMApprove2($to, $name, $dept, $type, $amount) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -442,8 +441,7 @@ function smtpmailer_GMApprove2($to,$name,$dept, $type, $amount) {
     }
 }
 
-
-function smtpmailer_Disburse($to,$name,$dept, $type, $amount) {
+function smtpmailer_Disburse($to, $name, $dept, $type, $amount) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -480,7 +478,7 @@ function smtpmailer_Disburse($to,$name,$dept, $type, $amount) {
     }
 }
 
-function smtpmailer_Registration($to,$name,$dept,$password) {
+function smtpmailer_Registration($to, $name, $dept, $password) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -514,9 +512,42 @@ function smtpmailer_Registration($to,$name,$dept,$password) {
     }
 }
 
-function smtpmailer_InventoryRequestApprove($empname,$empdept,$empemail,$itemname,$itemamount,$manname,$manemail,$invmanname,$invmanemail) {
+function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail) {
 //global $error;
+    //email to employee--------------------------------------------------------------------------------
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    //$mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, $empemail);
+    $mailemp->Subject = "Inventory Request";
+    $mailemp->Body = "Dear $manname I, $empname, from your department, $empdept, am requesting $itemamount $itemname(s).<br>"
+            . "Please login at <a href = 'http://tiphra/login'>tiphrapp</a>";
+    $mailemp->AddAddress($manemail);
+    $mailemp->isHTML(true);
 
+    //--------------------------------------------------------------------------------------------------------
+
+    if (!$mailemp->send()) {
+        echo 'Try Again';
+        //echo 'Mailer Error: ' . $mailemp->ErrorInfo;
+        //echo 'Mailer Error: ' . $mailinv->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        //echo $error;
+    }
+}
+
+function smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail) {
+//global $error;
     //email to employee--------------------------------------------------------------------------------
     $mailemp = new PHPMailer;  // create a new object
     $mailemp->isSMTP(); // enable SMTP
@@ -535,7 +566,6 @@ function smtpmailer_InventoryRequestApprove($empname,$empdept,$empemail,$itemnam
     $mailemp->isHTML(true);
 
     //--------------------------------------------------------------------------------------------------------
-    
     //email to inventory manager------------------------------------------------------------------------------
     $mailinv = new PHPMailer;  // create a new object
     $mailinv->isSMTP(); // enable SMTP
@@ -553,7 +583,7 @@ function smtpmailer_InventoryRequestApprove($empname,$empdept,$empemail,$itemnam
             . " They will be by shortly";
     $mailinv->AddAddress($invmanemail);
     $mailinv->isHTML(true);
-    
+
     //--------------------------------------------------------------------------------------------------------
 
     if (!$mailemp->send() || !$mailinv->send()) {
@@ -566,13 +596,10 @@ function smtpmailer_InventoryRequestApprove($empname,$empdept,$empemail,$itemnam
         $error = 'Message sent!';
         //echo $error;
     }
-    
-    
 }
 
-function smtpmailer_InventoryRequestDeny($empname,$empdept,$empemail,$itemname,$itemamount,$manname,$manemail,$invmanname,$invmanemail) {
+function smtpmailer_InventoryRequestDeny($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail) {
 //global $error;
-
     //email to employee--------------------------------------------------------------------------------
     $mailemp = new PHPMailer;  // create a new object
     $mailemp->isSMTP(); // enable SMTP
@@ -591,7 +618,6 @@ function smtpmailer_InventoryRequestDeny($empname,$empdept,$empemail,$itemname,$
     $mailemp->isHTML(true);
 
     //--------------------------------------------------------------------------------------------------------
-    
     //email to inventory manager------------------------------------------------------------------------------
     $mailinv = new PHPMailer;  // create a new object
     $mailinv->isSMTP(); // enable SMTP
@@ -609,7 +635,7 @@ function smtpmailer_InventoryRequestDeny($empname,$empdept,$empemail,$itemname,$
             . " Do not provide this individual with such item";
     $mailinv->AddAddress($invmanemail);
     $mailinv->isHTML(true);
-    
+
     //--------------------------------------------------------------------------------------------------------
 
     if (!$mailemp->send() || !$mailinv->send()) {
@@ -622,13 +648,10 @@ function smtpmailer_InventoryRequestDeny($empname,$empdept,$empemail,$itemname,$
         $error = 'Message sent!';
         //echo $error;
     }
-    
-    
 }
 
-function smtpmailer_InventoryRequestLimited($empname,$empdept,$empemail,$itemname,$itemamount,$manname,$manemail,$invmanname,$invmanemail) {
+function smtpmailer_InventoryRequestLimited($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail) {
 //global $error;
-
     //email to employee--------------------------------------------------------------------------------
     $mailemp = new PHPMailer;  // create a new object
     $mailemp->isSMTP(); // enable SMTP
@@ -647,7 +670,6 @@ function smtpmailer_InventoryRequestLimited($empname,$empdept,$empemail,$itemnam
     $mailemp->isHTML(true);
 
     //-------------------------------------------------------------------------------------------------------
-    
     //--------------------------------------------------------------------------------------------------------
 
     if (!$mailemp->send()) {
@@ -659,8 +681,6 @@ function smtpmailer_InventoryRequestLimited($empname,$empdept,$empemail,$itemnam
         $error = 'Message sent!';
         //echo $error;
     }
-    
-    
 }
 
 function smtpmailer_test() {
