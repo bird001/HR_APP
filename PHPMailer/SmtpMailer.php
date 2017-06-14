@@ -683,6 +683,40 @@ function smtpmailer_InventoryRequestLimited($empname, $empdept, $empemail, $item
     }
 }
 
+function smtpmailer_PasswordChange($empname, $empemail, $emppass) {
+//global $error;
+    //email to employee--------------------------------------------------------------------------------
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    //$mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, 'TIP Friendly Society');
+    $mailemp->Subject = "Password Changed";
+    $mailemp->Body = "Dear $empname, your password for the HR Application has been changed to $emppass, your username remains your email address,  "
+            . "please log into the <a href = 'http://tiphra/login'>tiphrapp</a>" ;
+    $mailemp->AddAddress($empemail);
+    $mailemp->isHTML(true);
+
+    //-------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
+
+    if (!$mailemp->send()) {
+        echo 'Try Again';
+        //echo 'Mailer Error: ' . $mailemp->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        //echo $error;
+    }
+}
+
 function smtpmailer_test() {
 //global $error;
 

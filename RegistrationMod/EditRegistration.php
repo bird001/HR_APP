@@ -20,6 +20,11 @@ include("../Templates/header.php");
         //pop up window for uploading SchoolListinngs csv files
         window.open("editprofile", "Edit Profile", "location=1,status=1,scrollbars=1,width=400,height=550");
     }
+    
+    function ChangePassword() {
+        //pop up window for uploading SchoolListinngs csv files
+        window.open("changepassword", "Change Passowrd", "location=1,status=1,scrollbars=1,width=400,height=550");
+    }
 </script>
 <?php
 include("../Templates/navigation.php");
@@ -69,7 +74,8 @@ include("../RegistrationMod/RegNav.php");
             </tbody>                     
         </table>
         <!---->
-        <input class="btn btn-primary" type="submit" onclick='EditProfile();' name="EditProfile" id = "EditProfile" value="EditProfile"/>
+        <input class="btn btn-primary" type="submit" name="EditProfile" id = "EditProfile" value="EditProfile"/>
+        <input class="btn btn-primary" type="submit" name="EditProfile" id = "ChangePassword" value="ChangePassword"/>
         
     </form>
 </div>

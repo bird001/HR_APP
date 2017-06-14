@@ -221,7 +221,19 @@ function ValidateDatePast($date) {
         }
     }
 }
-ValidateDatePast(05/20/2017);
+//ValidateDatePast(05/20/2017);
+
+function ComparePasswords($pass1,$pass2){
+    if(empty($pass1) || empty($pass2)){
+        return "both feilds should be filled";
+    } else{
+        if($pass1 == $pass2){
+            return 1;
+        }else{
+            return "passwords do not match";
+        }
+    }
+}
 /*
   function ValidateID($name) {
 
