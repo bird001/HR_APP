@@ -66,5 +66,16 @@ if (isset($_GET['edit'])) {
 
         echo json_encode($response);
     }
+    
+    if ($tablename == 'LeaveHistory') {
+        $sql = "UPDATE ApplyLeaveHRArchive SET $column = :value, LastEdited = '$date_now', EditedBy = '$operator' WHERE id_val = :id";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':value', $newValue);
+        $stmt->bindParam(':id', $id);
+        $response['success'] = $stmt->execute();
+        $response['value'] = $newValue;
+
+        echo json_encode($response);
+    }
 }
 ?>
