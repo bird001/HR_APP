@@ -26,7 +26,7 @@ function Updates($fname, $lname, $empsex, $empid, $empemail, $status, $empdept, 
 function ChangePass($password,$empid){
     global $conn;
 
-    $updateuserstable = "update Users set EmpPass = '$password', PasswordChanged = 0 where EmpID = '$empid'";
+    $updateuserstable = "update Users set EmpPass = '$password', PasswordChanged = '0' where EmpID = '$empid'";
     mysqli_query($conn, $updateuserstable);
 }
 ?>

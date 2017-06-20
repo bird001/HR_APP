@@ -1,8 +1,8 @@
 <?php
-include("../Login/session.php");
+include("../Templates/header.php");
 include("../db/db2.php");
 include("../db/db3.php");
-include("../Templates/header.php");
+
 ?>
 <script type="text/javascript" src="requestcheckbox"></script>
 <script type = "text/javascript" charset="utf-8">
@@ -24,16 +24,16 @@ include("LeaveNav.php");
 
 <?php
 $email = $_SESSION['login_user'];
-$sql1 = "SELECT * FROM ApplyLeaveHR where ManagerEmail = '$email' or HREmail = '$email'";
-//$sql2 = "SELECT * FROM ApplyLeaveHR where HREmail = '$email'";
+$sql1 = "SELECT * FROM ApplyLeaveHR where ManagerEmail = '$email'";
+$sql2 = "SELECT * FROM ApplyLeaveHR where HREmail = '$email'";
 $result1 = mysqli_query($conn, $sql1);
-//$result2 = mysqli_query($conn, $sql2);
+$result2 = mysqli_query($conn, $sql2);
 $row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC);
-//$row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
+$row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 
 $manemail = $row1['ManagerEmail'];
-$hremail = $row1['HREmail'];
-$role = $row1['EmpRole'];
+$hremail = $row2['HREmail'];
+//$role = $row1['EmpRole'];
 ?>
 
 <?php
