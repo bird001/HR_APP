@@ -2,7 +2,6 @@
 include("../Templates/header.php");
 include("../db/db2.php");
 include("../db/db3.php");
-
 ?>
 <script type="text/javascript" src="requestcheckbox"></script>
 <script type = "text/javascript" charset="utf-8">
@@ -37,7 +36,8 @@ $hremail = $row2['HREmail'];
 ?>
 
 <?php
-if (($email === $manemail && empty($row1['ManagerResponse'])) || ($email === $hremail && !empty($row1['ManagerResponse']))) {
+//if user is employees manager
+if ($email === $manemail && empty($row1['ManagerResponse'])) {
     ?>
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="requestcheck" method="post" >
@@ -62,7 +62,65 @@ if (($email === $manemail && empty($row1['ManagerResponse'])) || ($email === $hr
                 <tbody>
                     <?php
                     $email = $_SESSION['login_user'];
-                    $sql = "SELECT * FROM ApplyLeaveHR where ManagerEmail = '$email' or HREmail = '$email'";
+                    $sql = "SELECT * FROM ApplyLeaveHR where ManagerEmail = '$email'";
+                    $results = $dbh->query($sql);
+                    $rows = $results->fetchAll();
+
+                    foreach ($rows as $row) {
+                        echo '<tr id="' . $row['id_val'] . '">';
+                        echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
+                        '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
+                        '<td class="name">' . $row['FirstName'] . " " . $row['LastName'] .
+                        '<td class="empnum">' . $row['EmpID'] . '</td>' .
+                        '<td class="empdept">' . $row['EmpDept'] . '</td>' .
+                        '<td class="type">' . $row['LeaveType'] . '</td>' .
+                        '<td class="dates">' . $row['StartDate'] . "-->" . $row['EndDate'] . '</td>';
+                        if ($row['LeaveType'] === 'Department') {
+                            echo '<td class="days">' . $row['NumDays'] . ' Hours' . '</td>';
+                        } else {
+                            echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
+                        }
+                        echo '<td class="reason">' . $row['Reason'] . '</td>';
+
+                        echo '</tr>';
+                    }
+                    ?>
+
+
+                </tbody>                     
+            </table>
+            <input class="btn btn-primary" type="submit" name="Submit" value="Accept"/> 
+            <input class="btn btn-primary" type="submit" name="Submit" value="Reject"/> 
+        </form>
+    </div>
+    <?php
+}
+if ($email === $hremail && !empty($row1['ManagerResponse'])) { //if manager has responded and HR user is logged in
+    ?>
+    <div class = "container-fluid datatables_wrapper">
+        <form name="bulk_action_form" action="requestcheck" method="post" >
+            <table id = "LeaveRequests" class = "table-hover table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="display:none">id_val</th><!--needed for sorting-->
+                        <th align = "center">
+                            <div align = "center">
+
+                            </div>
+                        </th>
+                        <th>Name</th>
+                        <th>Emp #</th>
+                        <th>Emp Dept</th>
+                        <th>Leave Type</th>
+                        <th>Dates</th>
+                        <th>Duration</th>
+                        <th>Reason</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $email = $_SESSION['login_user'];
+                    $sql = "SELECT * FROM ApplyLeaveHR where HREmail = '$email'";
                     $results = $dbh->query($sql);
                     $rows = $results->fetchAll();
 
