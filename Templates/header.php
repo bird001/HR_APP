@@ -22,6 +22,11 @@ include("../Login/session.php");
         <!--datatables table tools JS link-->
         <!--<script src = "http://cdn.datatables.net/tabletools/2.2.4/js/TableTools.js" type = "text/javascript"></script> -->
         <script src = "tabletoolslib" type = "text/javascript"></script>
+        
+        
+        <script src = "tabletoolsbuttonlib" type = "text/javascript"></script>
+        <script src = "buttonflashlib" type = "text/javascript"></script>
+        <script src = "pdfmakelib" type = "text/javascript"></script>
 
         <!--datatables CSS link-->
         <!--<link rel = "stylesheet" href = "http://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">-->
@@ -30,6 +35,8 @@ include("../Login/session.php");
         <!--datatables table tools CSS link-->
         <!--<link rel = "stylesheet" href = "http://cdn.datatables.net/tabletools/2.2.4/css/TableTools.css">-->
         <link rel = "stylesheet" href = "tabletoolsCSS">
+        
+        <link rel = "stylesheet" href = "tabletoolsbuttonCSS">
 
         <script src="newstickerlib"></script>
         <script src="newstapelib"></script>

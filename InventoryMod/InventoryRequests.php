@@ -45,14 +45,17 @@ $role = $row1['EmpRole'];
 $idArr = $_POST['checked_id'];
 $functiontype = $_POST['Request'];
 
-if($functiontype == 'Approve'){
+if ($functiontype == 'Approve') {
     Approve($idArr);
 }
-if($functiontype == 'Deny'){
+if ($functiontype == 'Deny') {
     Deny($idArr);
 }
 ?>
 
+<?php
+if ($dept === 'HR') {
+    ?>
 <div class = "container-fluid datatables_wrapper">
     <form name="bulk_action_form" action="#" method="post" >
         <table id = "InventoryRequests" class = "table-hover table-bordered" style="width:100%">
@@ -65,11 +68,13 @@ if($functiontype == 'Deny'){
                         </div>
                     </th>
                     <th>Name</th>
-                    <th>Employee ID</th>
                     <th>Department</th>
                     <th>Item Name</th>
+                    <th>Color</th>
+                    <th>Model</th>
                     <th>Item Category</th>
                     <th>Amount Requested</th>
+                    <th>Time Requested</th>
                 </tr>
             </thead>
             <tbody>
@@ -82,12 +87,14 @@ if($functiontype == 'Deny'){
                     echo '<tr id="' . $row['id_val'] . '">';
                     echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
                     '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
-                    '<td class="name">' . $row['EmpName'] .
-                    '<td class="empnum">' . $row['EmpID'] . '</td>' .
+                    '<td class="name">' . $row['EmpName'] . '</td>' .
                     '<td class="empdept">' . $row['EmpDept'] . '</td>' .
                     '<td class="type">' . $row['ItemName'] . '</td>' .
+                    '<td class="color">' . $row['Color'] . '</td>' .
+                    '<td class="model">' . $row['Model'] . '</td>' .
                     '<td class="dates">' . $row['ItemCategory'] . '</td>' .
-                    '<td class="days">' . $row['AmountRequested'] . '</td>';
+                    '<td class="days">' . $row['AmountRequested'] . '</td>'.
+                    '<td class="days">' . $row['TimeRequested'] . '</td>';
 
                     echo '</tr>';
                 }
@@ -96,14 +103,31 @@ if($functiontype == 'Deny'){
 
             </tbody>                     
         </table>
-        <!---->
-        <input class="btn btn-primary" type="submit" name="Request" id = "Approve" value="Approve"/> 
-
+        <input class="btn btn-primary" type="submit" name="Request" id = "Approve" value="Approve"/>
         <input class="btn btn-primary" type="submit" name="Request" id = "Deny" value="Deny"/> 
-
         <input class="btn btn-primary" type="button" onclick='ViewInventory()' name="request" value="View"/> 
     </form>
 </div>
 <br>
 <br>
+<?php
+}
+?>
+
+<?php
+if ($dept === 'IT') {
+    ?>
+
+<?php
+}
+?>
+
+<?php
+if ($dept === 'Maintenance') {
+    ?>
+
+<?php
+}
+?>
+
 <?php include("../Templates/footer_dashboard.php"); ?> 

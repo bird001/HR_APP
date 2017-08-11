@@ -34,8 +34,30 @@ if (isset($_GET['edit'])) {
         echo json_encode($response);
     }
     
-    if ($tablename == 'ViewInventory') {
-        $sql = "UPDATE Inventory SET $column = :value, DateInputed = '$date_now' WHERE id_val = :id";
+    if ($tablename == 'InventoryStationary') {
+        $sql = "UPDATE InventoryStationary SET $column = :value, LastUpdated = '$date_now' WHERE id_val = :id";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':value', $newValue);
+        $stmt->bindParam(':id', $id);
+        $response['success'] = $stmt->execute();
+        $response['value'] = $newValue;
+
+        echo json_encode($response);
+    }
+    
+    if ($tablename == 'InventoryTech') {
+        $sql = "UPDATE InventoryTech SET $column = :value, LastUpdated = '$date_now' WHERE id_val = :id";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':value', $newValue);
+        $stmt->bindParam(':id', $id);
+        $response['success'] = $stmt->execute();
+        $response['value'] = $newValue;
+
+        echo json_encode($response);
+    }
+    
+    if ($tablename == 'InventorySanitation') {
+        $sql = "UPDATE InventorySanitation SET $column = :value, LastUpdated = '$date_now' WHERE id_val = :id";
         $stmt = $dbh->prepare($sql);
         $stmt->bindParam(':value', $newValue);
         $stmt->bindParam(':id', $id);

@@ -13,15 +13,15 @@ $position = $row['EmpPosition'];
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
             <?php
-            if($dept == 'HR'){
+            //if($dept == 'HR'){
             ?>
             <li><a href="inventorycrud">Update Inventory</a></li> <!--Update/Add/Delete inventory items-->
             <?php 
-            }
+            //}
             ?>
             <li><a href="requestinventory">Request Inventory</a></li><!--Used to request inventory items from HR Dept-->
             <?php
-            if($dept == 'HR' || $role == 'Manager'){
+            if($role == 'Manager'){
             ?>
             <li><a href="inventoryrequests">Inventory Requests</a></li><!--Used to request inventory items from HR Dept-->
             <li><a href="inventoryreports">Reports</a></li><!--Generate reports based on specific parameters-->

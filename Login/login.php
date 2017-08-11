@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password = mysqli_real_escape_string($conn, $_POST['password']); //md5() to encrypt
         $role = mysqli_real_escape_string($conn, $_POST['EmpRole']);
 
-        $sql_usercheck = "SELECT * FROM Users WHERE EmpEmail='$email' and EmpPass='$password' and EmpRole='$role'";
+        $complete_email = $email.'@tipfriendly.com';
+        $sql_usercheck = "SELECT * FROM Users WHERE EmpEmail='$complete_email' and EmpPass='$password' and EmpRole='$role'";
         $result_usercheck = mysqli_query($conn, $sql_usercheck);
         $row_usercheck = mysqli_fetch_array($result_usercheck, MYSQLI_ASSOC);
 
@@ -32,11 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             from 
             HR_DEPT.Users 
             where 
-            EmpEmail = '$email'"; //a log of users that have logged into this app
+            EmpEmail = '$complete_email'"; //a log of users that have logged into this app
             mysqli_query($conn, $sql_users); //execute the statement
              
             
-            $_SESSION['login_user'] = $email;
+            $_SESSION['login_user'] = $complete_email;
             $_SESSION['login_pass'] = $password;
             $_SESSION['last_time'] = time();
 

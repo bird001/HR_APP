@@ -1,10 +1,20 @@
 <?php
 
-function Create($itemname, $itemdesc, $itemid, $itemcategory, $itemamount) {
+function CreateStationary($itemname, $color, $brand, $itemamount) {
     global $conn;
     $date_now = date("d-m-Y h:i A");
 
-    $create_query = "insert into Inventory (ItemName, ItemDesc, ItemID, Category, ItemAmount, DateInputed) values ('$itemname','$itemdesc', '$itemid', '$itemcategory', "
+    $create_query = "insert into InventoryStationary (Item, Color, Brand, Amount, LastUpdated) values ('$itemname','$color', '$brand', "
+            . "'$itemamount', '$date_now')";
+
+    mysqli_query($conn, $create_query);
+}
+
+function CreateTech($itemname, $color, $brand, $model, $itemamount) {
+    global $conn;
+    $date_now = date("d-m-Y h:i A");
+
+    $create_query = "insert into InventoryTech (Item, Color, Brand, Model, Amount, LastUpdated) values ('$itemname','$color', '$brand', '$model', "
             . "'$itemamount', '$date_now')";
 
     mysqli_query($conn, $create_query);
