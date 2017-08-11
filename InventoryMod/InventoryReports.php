@@ -13,7 +13,7 @@ include("../Templates/header.php");
             'aLengthMenu': [20, 50, 100, 200],
             'iDisplayLength': 20,
             'sPaginationType': "full_numbers",
-            'buttons': ['copy','print'
+            'buttons': ['excel','pdf','print'
             ]
                     //buttons to display
         });
