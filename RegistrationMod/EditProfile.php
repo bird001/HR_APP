@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $empsex = $row['EmpSex'];
                 $empdept = $row['EmpDept'];
                 $status = $row['EmpStatus'];
+                $location = $row['EmpLocation'];
                 $role = $row['EmpRole'];
                 $emppos = $row['EmpPosition'];
                 $empadd = $row['EmpAddress'];
@@ -53,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $empnum = $_POST['EmpNum'];
         $empemail = $_POST['EmpEmail'];
         $status = $_POST['EmpStatus'];
+        $location = $_POST['EmpLocation'];
         $role = $_POST['EmpRole'];
         $empdept = $_POST['EmpDept'];
         $emppos = $_POST['EmpPosition'];
@@ -84,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($empphone_result == 1 && $empemail_result == 1 && $lname_result == 1 && $fname_result == 1 && $empdob_result == 1 && $empdate_result == 1) {
 
 
-            Updates($fname, $lname, $empsex, $empid, $empemail, $status, $empdept, $role, $emppos, $empadd, $newDateDOB, $empphone, $newDateStart);
+            Updates($fname, $lname, $empsex, $empid, $empemail, $status, $location, $empdept, $role, $emppos, $empadd, $newDateDOB, $empphone, $newDateStart);
             echo "<script>window.close();</script>";
         }
     }
@@ -203,6 +205,17 @@ if ($functiontype == 'EditProfile') {
                             <option>Contract</option>
                             <option>SpecialTemporary</option>
                             <option>Temporary</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inputStatus" class="control-label">Location</label>
+                        <select class="form-control" name="EmpLocation" id="EmpLocation" required>
+                            <option selected><?php echo $location ?></option>
+                            <option>HQ</option>
+                            <option>Mandeville</option>
+                            <option>Ocho Rios</option>
+                            <option>Montego Bay</option>
                         </select>
                     </div>
 
