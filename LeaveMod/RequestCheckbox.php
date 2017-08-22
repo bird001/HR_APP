@@ -9,7 +9,7 @@ $idArr = $_POST['checked_id'];
 $functiontype = $_POST['Submit']; //get the type to determine what to execute
 
 $operator = $login_session;
-$result_man = mysqli_query($conn, "select * from ApplyLeaveHR where ManagerEmail = '$operator' or HREmail = '$operator'");
+$result_man = mysqli_query($conn, "select * from ApplyLeaveHR where ManagerEmail = '$operator' or HREmail = '$operator' or ManagerResponse is not null");
 $row_man = mysqli_fetch_array($result_man, MYSQLI_ASSOC);
 
 //$result_hr = mysqli_query($conn, "select * from ApplyLeaveHR where HREmail = '$operator'");
@@ -201,7 +201,7 @@ foreach ($idArr as $id) {
         //along with the removal of the record to be entered into the archive muhahaha!!
         if ($functiontype === 'Accept') {
             //----------------
-            $sql_getstuff = "SELECT * FROM ApplyLeaveHR where HREmail = '$operator' and id_val ='$id'"; //get the specific row of data
+            $sql_getstuff = "SELECT * FROM ApplyLeaveHR where id_val ='$id'"; //get the specific row of data
             $result = mysqli_query($conn, $sql_getstuff);
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
@@ -227,15 +227,15 @@ foreach ($idArr as $id) {
             mysqli_query($conn, $updateRemainingDays);
             //-------------------------------------------------------------------------------------------------------
             //update ApplyLeaveHRArchive---------------------------------------------------------------------------------------------------------
-            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,
+            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,
   StartDate,EndDate,NumDays,Reason,ManagerResponse)
   select
-  id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
+  id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
   from ApplyLeaveHR
   WHERE id_val = '$id'";
             mysqli_query($conn, $sql_insert_hr_archive); //connect to db and execute
             //update archive table with either accepted or rejected leave app
-            $sql_update_hr_archive = "UPDATE ApplyLeaveHRArchive SET HRResponse = 'Accepted' WHERE id_val = $id";
+            $sql_update_hr_archive = "UPDATE ApplyLeaveHRArchive SET HRResponse = 'Accepted', HREmail = '$operator' WHERE id_val = $id";
             mysqli_query($conn, $sql_update_hr_archive);
 
 
@@ -269,13 +269,13 @@ foreach ($idArr as $id) {
             }
 
             //delete from applyleavehr
-            $sql_delete_hr = "delete from ApplyLeaveHR where id_val = '$id'";
-            mysqli_query($conn, $sql_delete_hr);
+            //$sql_delete_hr = "delete from ApplyLeaveHR where id_val = '$id'";
+            //mysqli_query($conn, $sql_delete_hr);
             //----------------
             header("Location: leaverequests");
         } else {//if HR should reject
             //----------------
-            $sql_getstuff = "SELECT * FROM ApplyLeaveHR where HREmail = '$operator' and id_val ='$id'";
+            $sql_getstuff = "SELECT * FROM ApplyLeaveHR where id_val ='$id'";
             $result = mysqli_query($conn, $sql_getstuff);
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
@@ -289,15 +289,15 @@ foreach ($idArr as $id) {
 
 
             //update ApplyLeaveHRArchive---------------------------------------------------------------------------------------------------------
-            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,
+            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,
   StartDate,EndDate,NumDays,Reason,ManagerResponse)
   select
-  id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
+  id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
   from ApplyLeaveHR
   WHERE id_val = '$id'";
             mysqli_query($conn, $sql_insert_hr_archive); //connect to db and execute
             //update archive table with either accepted or rejected leave app
-            $sql_update_hr_archive = "UPDATE ApplyLeaveHRArchive SET HRResponse = 'Rejected' WHERE id_val = $id";
+            $sql_update_hr_archive = "UPDATE ApplyLeaveHRArchive SET HRResponse = 'Rejected', HREmail = '$operator' WHERE id_val = $id";
             mysqli_query($conn, $sql_update_hr_archive);
 
             //---------------------------------------------------------------------------------------------------------
@@ -310,8 +310,8 @@ foreach ($idArr as $id) {
             }
 
             //delete from applyleavehr
-            $sql_delete_hr = "delete from ApplyLeaveHR where id_val = '$id'";
-            mysqli_query($conn, $sql_delete_hr);
+            //$sql_delete_hr = "delete from ApplyLeaveHR where id_val = '$id'";
+            //mysqli_query($conn, $sql_delete_hr);
             //---------------
             header("Location: leaverequests");
         }
