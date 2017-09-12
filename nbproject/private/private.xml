@@ -2,11 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/var/www/HR_APP/HR_APP/Validation/ValidateInput.php</file>
-            <file>file:/var/www/HR_APP/HR_APP/Scripts/Truncate.php</file>
-            <file>file:/var/www/HR_APP/HR_APP/Login/login.php</file>
-            <file>file:/var/www/HR_APP/HR_APP/Scripts/UpdateDashboard.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

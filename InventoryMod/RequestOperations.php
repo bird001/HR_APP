@@ -19,7 +19,7 @@ function Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $i
     //-------------------------------------------------------------------------------------
 
 
-    if ($itemcat == 'stationary') {
+    if ($itemcat == 'Stationary') {
         //get details of items
         $query_items = "select * from InventoryStationary where Item = '$item'";
         $result_items = mysqli_query($conn, $query_items);
@@ -35,7 +35,7 @@ function Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $i
         $invmanemail = $invman_row['EmpEmail'];
         $invmanname = $invman_row['Name'];
     }
-    if ($itemcat == 'tech') {
+    if ($itemcat == 'Tech') {
         //get details of items
         $query_items = "select * from InventoryTech where Item = '$item' and Color = '$color' and Model = '$model'";
         $result_items = mysqli_query($conn, $query_items);
@@ -51,7 +51,7 @@ function Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $i
         $invmanemail = $invman_row['EmpEmail'];
         $invmanname = $invman_row['Name'];
     }
-    if ($itemcat == 'sanitary') {
+    if ($itemcat == 'Sanitary') {
         //get details of items
         $query_items = "select * from InventorySanitary where Item = '$item'";
         $result_items = mysqli_query($conn, $query_items);

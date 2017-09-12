@@ -1,5 +1,75 @@
 <?php
 include("../Templates/header.php");
+?>
+<script type="text/javascript">
+    function fetch_item(category)
+    {
+        $.ajax({
+            type: 'post',
+            url: 'inventoryoptions',
+            data: {
+                get_item: category
+            },
+            success: function (response) {
+                document.getElementById("Iname").innerHTML = response;
+            }
+        });
+    }
+
+    function fetch_model(type) {
+        var item = document.getElementById('Iname').value;
+        var cat = document.getElementById('InvCat').value;
+        $.ajax({
+            type: 'post',
+            url: 'inventoryoptions',
+            data: {
+                get_model: type,
+                get_item1: item,
+                get_cat1: cat
+            },
+            success: function (response) {
+                if (cat === 'Tech') {
+                    document.getElementById("model").removeAttribute("readonly");
+                    document.getElementById("model").innerHTML = response;
+                } else {
+                    document.getElementById("model").innerHTML = response;
+                    document.getElementById("model").setAttribute("readonly",true);
+                    
+                }
+            }
+        });
+    }
+
+    function fetch_color(type) {
+        var item = document.getElementById('Iname').value;
+        var cat = document.getElementById('InvCat').value;
+        $.ajax({
+            type: 'post',
+            url: 'inventoryoptions',
+            data: {
+                get_color: type,
+                get_item2: item,
+                get_cat2: cat
+            },
+            success: function (response) {
+                if (cat === 'Tech') {
+                    document.getElementById("color").removeAttribute("readonly");
+                    document.getElementById("color").innerHTML = response;
+                } else {
+                    document.getElementById("color").innerHTML = response;
+                    document.getElementById("color").setAttribute("readonly",true);
+                    
+                }
+            }
+        });
+    }
+    
+
+
+
+</script>
+
+<?php
 include("../Templates/navigation.php");
 include("../Templates/body.php");
 include("../InventoryMod/InventoryNav.php");
@@ -33,7 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $color = $_POST['color'];
     $itemamount = $_POST['Amt'];
     //$posttype = $_POST['request'];
-
 //Validate
     $floorNV = ValidateName($empfloor);
     $categoryNV = ValidateAlphaNumeric($itemcat);
@@ -41,10 +110,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $modelNV = ValidateAlphaNumeric($model);
     $colorNV = ValidateAlphaNumeric($color);
     $itemAV = ValidateNumeric($itemamount);
-    
+
     if ($floorNV == 1 && $categoryNV == 1 && $itemNV == 1 && $modelNV == 1 && $colorNV == 1 && $itemAV == 1) {
-            Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $itemcat, $item, $model, $color, $itemamount);
-        
+        Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $itemcat, $item, $model, $color, $itemamount);
     } else {
         echo "error";
         $itemNV;
@@ -99,10 +167,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <option value="Third">Third</option>
                     </select>
                     <?php
-                        if ($floorNV != 1) {
-                            echo $floorNV;
-                        }
-                        ?>
+                    if ($floorNV != 1) {
+                        echo $floorNV;
+                    }
+                    ?>
                 </div>
                 <?php
             } else {
@@ -111,16 +179,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="inputfloor" class="control-label">Floor</label>
                     <input type="text" name="floor" id="floor" class="form-control" value="Ground"  required readonly/>
                     <span class="error">
-                    <?php
+                        <?php
                         if ($floorNV != 1) {
                             echo $floorNV;
                         }
                         ?>
-                </span>
+                    </span>
                 </div>
                 <?php
             }
             ?>
+            <div class="form-group">
+                <label for="inputInvCat" class="control-label">Item Category</label>
+                <select class="form-control" name="InvCat" id="InvCat" required onchange="fetch_item(this.value);">
+                    <option disabled selected value> -- select category -- </option>
+                    <option value="Stationary">Stationary Supplies</option>
+                    <option value="Sanitary">Maintenance Supplies</option>
+                    <option value="Tech">IT Supplies</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="inputIName" class="control-label">Item</label>
+                <select class="form-control" name="Iname" id="Iname" required onchange="fetch_model(this.value);
+                        fetch_color(this.value);">
+                    <option disabled selected value> -- select item -- </option>
+                </select>
+                <span class="error">
+                    <?php
+//if ($itemNV != 1) {
+//  echo $itemNV;
+//}
+                    ?>
+                </span>
+            </div>
+            <!--
             <div class="form-group">
                 <label for="inputInvCat" class="control-label">Item Category</label>
                 <select class="form-control" name="InvCat" id="InvCat" required>
@@ -212,13 +305,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </script>
                 </select>
                 <span class="error">
-                    <?php
-                        if ($itemNV != 1) {
-                            echo $itemNV;
-                        }
-                        ?>
+            <?php
+//if ($itemNV != 1) {
+//  echo $itemNV;
+//}
+            ?>
                 </span>
             </div>
+            -->
             <!--
             <div class="form-group">
                 <label for="inputBrand" class="control-label">Brand</label>
@@ -235,10 +329,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <span class="error">
                     <?php
-                        if ($modelNV != 1) {
-                            echo $modelNV;
-                        }
-                        ?>
+                    if ($modelNV != 1) {
+                        echo $modelNV;
+                    }
+                    ?>
                 </span>
             </div>
 
@@ -249,10 +343,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <span class="error">
                     <?php
-                        if ($colorNV != 1) {
-                            echo $colorNV;
-                        }
-                        ?>
+                    if ($colorNV != 1) {
+                        echo $colorNV;
+                    }
+                    ?>
                 </span>
             </div>
 
@@ -261,10 +355,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="number" name="Amt" id="Amt" class="form-control" placeholder="500" required/>
                 <span class="error">
                     <?php
-                        if ($itemAV != 1) {
-                            echo $itemAV;
-                        }
-                        ?>
+                    if ($itemAV != 1) {
+                        echo $itemAV;
+                    }
+                    ?>
                 </span>
             </div>
             <input class="btn btn-primary" type="submit" name="request" value="Request"/> 

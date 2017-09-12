@@ -290,11 +290,11 @@ foreach ($idArr as $id) {
 
             //update ApplyLeaveHRArchive---------------------------------------------------------------------------------------------------------
             $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,
-  StartDate,EndDate,NumDays,Reason,ManagerResponse)
-  select
-  id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
-  from ApplyLeaveHR
-  WHERE id_val = '$id'";
+                StartDate,EndDate,NumDays,Reason,ManagerResponse)
+                select
+                id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
+                from ApplyLeaveHR
+                WHERE id_val = '$id'";
             mysqli_query($conn, $sql_insert_hr_archive); //connect to db and execute
             //update archive table with either accepted or rejected leave app
             $sql_update_hr_archive = "UPDATE ApplyLeaveHRArchive SET HRResponse = 'Rejected', HREmail = '$operator' WHERE id_val = $id";
