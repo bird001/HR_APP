@@ -44,8 +44,8 @@ if ($dept === 'HR') {
                 <tr>
                     <th style="display:none">id_val</th><!--needed for sorting--> 
                     <th>Item</th>
-                    <th>Brand</th>
                     <th>Color</th>
+                    <th>Brand</th>
                     <th>Amount</th>
                     <th>Last Updated</th>
                 </tr>
