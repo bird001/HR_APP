@@ -7,7 +7,7 @@ function Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $i
     global $conn;
 
     //get details of that employees manager
-    $query_empman = "select * from ManagersDepartments where Department = '$empdept'";
+    $query_empman = "select * from ManagersDepartments where Department like '%$empdept%'";
     $result_empman = mysqli_query($conn, $query_empman);
     $row_empman = mysqli_fetch_array($result_empman, MYSQLI_ASSOC);
 
@@ -76,9 +76,9 @@ function Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $i
         mysqli_query($conn, $invreq_query);
 
         //send email to direct manager
-        //smtpmailer_InventoryRequest($empname, $empdept, $email, $itemname, $itemamount, $managername, $manageremail);
+        smtpmailer_InventoryRequest($empname, $empdept, $email, $itemname, $itemamount, $managername, $manageremail);
     } else {
-        echo "The item '" . $item . "' is currently not in the catalog";
+        echo "The item '" . $item ." $color"." $model". "' is currently not in the catalog";
     }
 }
 

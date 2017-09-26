@@ -53,9 +53,6 @@ if ($functiontype == 'Deny') {
 }
 ?>
 
-<?php
-if ($dept === 'HR') {
-    ?>
 <div class = "container-fluid datatables_wrapper">
     <form name="bulk_action_form" action="#" method="post" >
         <table id = "InventoryRequests" class = "table-hover table-bordered" style="width:100%">
@@ -93,7 +90,7 @@ if ($dept === 'HR') {
                     '<td class="color">' . $row['Color'] . '</td>' .
                     '<td class="model">' . $row['Model'] . '</td>' .
                     '<td class="dates">' . $row['ItemCategory'] . '</td>' .
-                    '<td class="days">' . $row['AmountRequested'] . '</td>'.
+                    '<td class="days">' . $row['AmountRequested'] . '</td>' .
                     '<td class="days">' . $row['TimeRequested'] . '</td>';
 
                     echo '</tr>';
@@ -110,24 +107,6 @@ if ($dept === 'HR') {
 </div>
 <br>
 <br>
-<?php
-}
-?>
 
-<?php
-if ($dept === 'IT') {
-    ?>
-
-<?php
-}
-?>
-
-<?php
-if ($dept === 'Maintenance') {
-    ?>
-
-<?php
-}
-?>
 
 <?php include("../Templates/footer_dashboard.php"); ?> 
