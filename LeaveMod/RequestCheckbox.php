@@ -49,10 +49,10 @@ foreach ($idArr as $id) {
             mysqli_query($conn, $updateRemainingDays);
             //-------------------------------------------------------------------------------------------------------
             //update ApplyLeaveHRArchive---------------------------------------------------------------------------------------------------------
-            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,
+            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,
   StartDate,EndDate,NumDays,Reason,ManagerResponse)
   select
-  Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
+  id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
   from ApplyLeaveHR
   WHERE id_val = '$id'";
             mysqli_query($conn, $sql_insert_hr_archive); //connect to db and execute
@@ -111,10 +111,10 @@ foreach ($idArr as $id) {
 
 
             //update ApplyLeaveHRArchive---------------------------------------------------------------------------------------------------------
-            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,
+            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,
   StartDate,EndDate,NumDays,Reason,ManagerResponse)
   select
-  Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
+  id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
   from ApplyLeaveHR
   WHERE id_val = '$id'";
             mysqli_query($conn, $sql_insert_hr_archive); //connect to db and execute
@@ -227,10 +227,10 @@ foreach ($idArr as $id) {
             mysqli_query($conn, $updateRemainingDays);
             //-------------------------------------------------------------------------------------------------------
             //update ApplyLeaveHRArchive---------------------------------------------------------------------------------------------------------
-            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,
+            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,
   StartDate,EndDate,NumDays,Reason,ManagerResponse)
   select
-  Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
+  id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
   from ApplyLeaveHR
   WHERE id_val = '$id'";
             mysqli_query($conn, $sql_insert_hr_archive); //connect to db and execute
@@ -269,8 +269,8 @@ foreach ($idArr as $id) {
             }
 
             //delete from applyleavehr
-            //$sql_delete_hr = "delete from ApplyLeaveHR where id_val = '$id'";
-            //mysqli_query($conn, $sql_delete_hr);
+            $sql_delete_hr = "delete from ApplyLeaveHR where id_val = '$id'";
+            mysqli_query($conn, $sql_delete_hr);
             //----------------
             header("Location: leaverequests");
         } else {//if HR should reject
@@ -289,10 +289,10 @@ foreach ($idArr as $id) {
 
 
             //update ApplyLeaveHRArchive---------------------------------------------------------------------------------------------------------
-            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,
+            $sql_insert_hr_archive = "insert into ApplyLeaveHRArchive(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,
                 StartDate,EndDate,NumDays,Reason,ManagerResponse)
                 select
-                Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
+                id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,LeaveType,StartDate,EndDate,NumDays,Reason,ManagerResponse
                 from ApplyLeaveHR
                 WHERE id_val = '$id'";
             mysqli_query($conn, $sql_insert_hr_archive); //connect to db and execute
@@ -310,8 +310,8 @@ foreach ($idArr as $id) {
             }
 
             //delete from applyleavehr
-            //$sql_delete_hr = "delete from ApplyLeaveHR where id_val = '$id'";
-            //mysqli_query($conn, $sql_delete_hr);
+            $sql_delete_hr = "delete from ApplyLeaveHR where id_val = '$id'";
+            mysqli_query($conn, $sql_delete_hr);
             //---------------
             header("Location: leaverequests");
         }
