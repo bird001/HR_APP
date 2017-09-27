@@ -172,10 +172,13 @@ function Approve(array $idArr) {
 
                 //------------------------------------------------------------------------------------------------------
                 //remove the request from the table and insert into an archive
-                $insertarchive = "insert into InventoryRequestsArchive (id_val, EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
+                $insertarchive = "insert into InventoryRequestsArchive (EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
                         . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
                         . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject) "
-                        . "select * from InventoryRequests where id_val = '$id'";
+                        . "select EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
+                        . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
+                        . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject "
+                        . "from InventoryRequests where id_val = '$id'";
                 mysqli_query($conn, $insertarchive);
 
                 $remove = "delete from InventoryRequests where id_val = '$id'";
@@ -229,10 +232,13 @@ function Deny(array $idArr) {
 
 
         //remove the request from the table and insert into an archive
-        $insertarchive = "insert into InventoryRequestsArchive (id_val, EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
+        $insertarchive = "insert into InventoryRequestsArchive (EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
                 . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
                 . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject) "
-                . "select * from InventoryRequests where id_val = '$id'";
+                . "select EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
+                . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
+                . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager,"
+                . " InventoryManEmail, ManagerAcceptReject from InventoryRequests where id_val = '$id'";
         mysqli_query($conn, $insertarchive);
 
         $remove = "delete from InventoryRequests where id_val = $id";
