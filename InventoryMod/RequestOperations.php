@@ -109,7 +109,7 @@ function Approve(array $idArr) {
         $invmanname = $approve_row['InventoryManager'];
         $invmanemail = $approve_row['InventoryManEmail'];
 
-        if ($itemcat === 'stationary') {
+        if ($itemcat === 'Stationary') {
 
             $getinventory = "select * from InventoryStationary where id_val = $itemid";
             $getinventoryresults = mysqli_query($conn, $getinventory);
@@ -147,7 +147,7 @@ function Approve(array $idArr) {
             }
         }
 
-        if ($itemcat === 'tech') {
+        if ($itemcat === 'Tech') {
 
             $getinventory = "select * from InventoryTech where id_val = $itemid";
             $getinventoryresults = mysqli_query($conn, $getinventory);
