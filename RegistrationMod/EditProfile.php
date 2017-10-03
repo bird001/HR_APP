@@ -193,6 +193,7 @@ if ($functiontype == 'EditProfile') {
                             <option>Marketing</option>
                             <option>Processing</option>
                             <option>HR</option>
+                            <option>Branch</option>
                         </select>
                     </div>
 
