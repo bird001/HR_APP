@@ -206,7 +206,7 @@ function smtpmailer_ApplyLeave($to, $from, $name, $dept, $type, $numdays, $start
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
-    //$url = "<html><a href='http://localhost/HR_APP/HR_APP/LeaveMod/LeaveRequests.php'>Leave Requests</a></html>";
+    $url = "<html><a href = 'http://tiphra/login'>tiphrapp</a></html>";
     $mail->isSMTP(); // enable SMTP
     //$mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
     $mail->SMTPAuth = true;  // authentication enabled
@@ -220,7 +220,7 @@ function smtpmailer_ApplyLeave($to, $from, $name, $dept, $type, $numdays, $start
     //$mail->SetFrom(GUSER, $from);
     $mail->Subject = "Leave Application";
     $mail->Body = "$name of the $dept Department has applied for $numdays [$type]. Starting at the $startdate to the $enddate." . "<br>"
-            . "Please log into the HR Application in order to vet the leave application.";
+            . "Please log into the HR Application ".$url." in order to vet the leave application.";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -249,7 +249,7 @@ function smtpmailer_OutstandingLeave($to, $name, $days) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
-    //$url = "<html><a href='http://localhost/HR_APP/HR_APP/LeaveMod/LeaveApply.php'>Leave Apply</a></html>";
+    $url = "<html><a href = 'http://tiphra/login'>tiphrapp</a></html>";
     $mail->isSMTP(); // enable SMTP
     //$mail->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
     $mail->SMTPAuth = true;  // authentication enabled
@@ -263,7 +263,7 @@ function smtpmailer_OutstandingLeave($to, $name, $days) {
     $mail->Subject = "Outstanding Leave";
     $mail->Body = "Dear $name it has been noted that you have accumulated $days outstanding leave day(s) over a three year period."
             . "Please rectify by going on leave ASAP to clear off the days. \n"
-            . "tiphra.com/login";
+            . "login at ".$url;
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -289,7 +289,7 @@ function smtpmailer_LoanApplication($to, $name, $dept) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
-    //$url = "<html><a href='http://localhost/HR_APP/HR_APP/LeaveMod/LeaveApply.php'>Leave Apply</a></html>";
+    $url = "<html><a href = 'http://tiphra/login'>tiphrapp</a></html>";
     $mail->isSMTP(); // enable SMTP
     //$mail->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
     $mail->SMTPAuth = true;  // authentication enabled
@@ -301,7 +301,7 @@ function smtpmailer_LoanApplication($to, $name, $dept) {
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'Tip Friendly Society');
     $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
-    $mail->Body = "Please Log into the HR Application tiphra.com/login";
+    $mail->Body = "Please Log into the HR Application login at ". $url;
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -327,7 +327,7 @@ function smtpmailer_AccountsApprove($to, $name, $dept) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
-    //$url = "<html><a href='http://localhost/HR_APP/HR_APP/LeaveMod/LeaveApply.php'>Leave Apply</a></html>";
+    $url = "<html><a href = 'http://tiphra/login'>tiphrapp</a></html>";
     $mail->isSMTP(); // enable SMTP
     //$mail->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
     $mail->SMTPAuth = true;  // authentication enabled
@@ -341,7 +341,7 @@ function smtpmailer_AccountsApprove($to, $name, $dept) {
     $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "This application has been revised and approved by the Accounts Dept."
             . "Vet and proceed as necessary \n"
-            . "tiphra.com/login";
+            . "login at ". $url;
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -367,7 +367,7 @@ function smtpmailer_GMApprove($to, $name, $dept) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
-    //$url = "<html><a href='http://localhost/HR_APP/HR_APP/LeaveMod/LeaveApply.php'>Leave Apply</a></html>";
+    $url = "<html><a href = 'http://tiphra/login'>tiphrapp</a></html>";
     $mail->isSMTP(); // enable SMTP
     //$mail->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
     $mail->SMTPAuth = true;  // authentication enabled
@@ -381,7 +381,7 @@ function smtpmailer_GMApprove($to, $name, $dept) {
     $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "This application has been Vetted and approved by the AGM."
             . " Disburse the loan \n"
-            . "tiphra.com/login";
+            . "login at ". $url;
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);

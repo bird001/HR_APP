@@ -51,6 +51,9 @@ if ($functiontype == 'Approve') {
 if ($functiontype == 'Deny') {
     Deny($idArr);
 }
+if ($functiontype == 'Delivered') {
+    Delivered($idArr);
+}
 ?>
 
 <div class = "container-fluid datatables_wrapper">
@@ -72,6 +75,7 @@ if ($functiontype == 'Deny') {
                     <th>Item Category</th>
                     <th>Amount Requested</th>
                     <th>Time Requested</th>
+                    <th>Item Delivered</th>
                 </tr>
             </thead>
             <tbody>
@@ -91,7 +95,8 @@ if ($functiontype == 'Deny') {
                     '<td class="model">' . $row['Model'] . '</td>' .
                     '<td class="dates">' . $row['ItemCategory'] . '</td>' .
                     '<td class="days">' . $row['AmountRequested'] . '</td>' .
-                    '<td class="days">' . $row['TimeRequested'] . '</td>';
+                    '<td class="days">' . $row['TimeRequested'] . '</td>'.
+                    '<td class="days">' . $row['ItemDelivered'] . '</td>';
 
                     echo '</tr>';
                 }
@@ -102,7 +107,8 @@ if ($functiontype == 'Deny') {
         </table>
         <input class="btn btn-primary" type="submit" name="Request" id = "Approve" value="Approve"/>
         <input class="btn btn-primary" type="submit" name="Request" id = "Deny" value="Deny"/> 
-        <input class="btn btn-primary" type="button" onclick='ViewInventory()' name="request" value="View"/> 
+        <input class="btn btn-primary" type="submit" name="Request" id = "Delivered" value="Delivered"/> 
+        <!--<input class="btn btn-primary" type="button" onclick='ViewInventory()' name="request" value="View"/> -->
     </form>
 </div>
 <br>

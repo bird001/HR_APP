@@ -76,9 +76,9 @@ function Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $i
         mysqli_query($conn, $invreq_query);
 
         //send email to direct manager
-        smtpmailer_InventoryRequest($empname, $empdept, $email, $itemname, $itemamount, $managername, $manageremail);
+        smtpmailer_InventoryRequest($empname, $empdept, $email, $item, $itemamount, $managername, $manageremail);
     } else {
-        echo "The item '" . $item ." $color"." $model". "' is currently not in the catalog";
+        echo "The item '" . $item . " $color" . " $model" . "' is currently not in the catalog";
     }
 }
 
@@ -123,27 +123,10 @@ function Approve(array $idArr) {
                 smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail);
 
                 //update Inventory Request table
-                $updateinvreq = "update InventoryRequests set ManagerAcceptReject = 'Accepted' where id_val = $id";
+                $updateinvreq = "update InventoryRequests set ManagerAcceptReject = 'Accepted', ItemDelivered = 'No' where id_val = $id";
                 mysqli_query($conn, $updateinvreq);
-
-                //update the Inventory-------------------------------------------------------------------------------
-                $newamt = $invamt - $amtreq;
-
-                $updateinventory = "update InventoryStationary set Amount = '$newamt' where id_val  = $itemid";
-                mysqli_query($conn, $updateinventory);
-
-                //------------------------------------------------------------------------------------------------------
-                //remove the request from the table and insert into an archive
-                $insertarchive = "insert into InventoryRequestsArchive (id_val, EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
-                        . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
-                        . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject) "
-                        . "select * from InventoryRequests where id_val = '$id'";
-                mysqli_query($conn, $insertarchive);
-
-                $remove = "delete from InventoryRequests where id_val = '$id'";
-                mysqli_query($conn, $remove);
             } else {
-                smtpmailer_InventoryRequestLimited($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail);
+                smtpmailer_InventoryRequestLimited($empname, $empdept, $empemail, $itemname, $amtreq, $manname, $manemail, $invmanname, $invmanemail);
             }
         }
 
@@ -158,34 +141,110 @@ function Approve(array $idArr) {
             if ($invamt >= $amtreq) {
 
                 //send emails to relevant personnel
-                smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail);
+                smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $amtreq, $manname, $manemail, $invmanname, $invmanemail);
 
                 //update Inventory Request table
-                $updateinvreq = "update InventoryRequests set ManagerAcceptReject = 'Accepted' where id_val = $id";
+                $updateinvreq = "update InventoryRequests set ManagerAcceptReject = 'Accepted',ItemDelivered = 'No' where id_val = $id";
                 mysqli_query($conn, $updateinvreq);
-
-                //update the Inventory-------------------------------------------------------------------------------
-                $newamt = $invamt - $amtreq;
-
-                $updateinventory = "update InventoryTech set Amount = '$newamt' where id_val  = $itemid";
-                mysqli_query($conn, $updateinventory);
-
                 //------------------------------------------------------------------------------------------------------
-                //remove the request from the table and insert into an archive
-                $insertarchive = "insert into InventoryRequestsArchive (EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
-                        . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
-                        . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject) "
-                        . "select EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
-                        . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
-                        . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject "
-                        . "from InventoryRequests where id_val = '$id'";
-                mysqli_query($conn, $insertarchive);
-
-                $remove = "delete from InventoryRequests where id_val = '$id'";
-                mysqli_query($conn, $remove);
             } else {
                 smtpmailer_InventoryRequestLimited($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail);
             }
+        }
+
+        if ($itemcat === 'sanitary') {
+            //TO-DO
+        }
+    }
+}
+
+function Delivered(array $idArr) {
+    global $conn;
+
+    foreach ($idArr as $id) {
+        //
+        $approve_query = "select * from InventoryRequests where id_val = '$id' ";
+        $approve_result = mysqli_query($conn, $approve_query);
+        $approve_row = mysqli_fetch_array($approve_result, MYSQLI_ASSOC);
+
+        $empid = $approve_row['EmpID'];
+        $empname = $approve_row['EmpName'];
+        $empdept = $approve_row['EmpDept'];
+        $empemail = $approve_row['EmpEmail'];
+        $emplocation = $approve_row['EmpLocation'];
+        $itemid = $approve_row['ItemID'];
+        $itemname = $approve_row['ItemName'];
+        $model = $approve_row['Model'];
+        $color = $approve_row['Color'];
+        $itemcat = $approve_row['ItemCategory'];
+        $empfloor = $approve_row['EmpFloor'];
+        $amtreq = $approve_row['AmountRequested'];
+        $timereq = $approve_row['TimeRequested'];
+        $manname = $approve_row['Manager'];
+        $manemail = $approve_row['ManagerEmail'];
+        $invmanname = $approve_row['InventoryManager'];
+        $invmanemail = $approve_row['InventoryManEmail'];
+
+        if ($itemcat === 'Stationary') {
+
+            $getinventory = "select * from InventoryStationary where id_val = $itemid";
+            $getinventoryresults = mysqli_query($conn, $getinventory);
+            $getinventoryrow = mysqli_fetch_array($getinventoryresults, MYSQLI_ASSOC);
+
+            $invamt = $getinventoryrow['Amount'];
+
+            //update Inventory Request table
+            $updateinvreq = "update InventoryRequests set ItemDelivered = 'Delivered' where id_val = $id";
+            mysqli_query($conn, $updateinvreq);
+
+            //update the Inventory-------------------------------------------------------------------------------
+            $newamt = $invamt - $amtreq;
+
+            $updateinventory = "update InventoryStationary set Amount = '$newamt' where id_val  = $itemid";
+            mysqli_query($conn, $updateinventory);
+
+            //------------------------------------------------------------------------------------------------------
+            //remove the request from the table and insert into an archive
+            $insertarchive = "insert into InventoryRequestsArchive (id_val,EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
+                    . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
+                    . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, "
+                    . "InventoryManEmail, ManagerAcceptReject, ItemDelivered) "
+                    . "select * from InventoryRequests where id_val = '$id'";
+            mysqli_query($conn, $insertarchive);
+
+            $remove = "delete from InventoryRequests where id_val = '$id'";
+            mysqli_query($conn, $remove);
+        }
+
+
+        if ($itemcat === 'Tech') {
+
+            $getinventory = "select * from InventoryTech where id_val = $itemid";
+            $getinventoryresults = mysqli_query($conn, $getinventory);
+            $getinventoryrow = mysqli_fetch_array($getinventoryresults, MYSQLI_ASSOC);
+
+            $invamt = $getinventoryrow['Amount'];
+
+            //update Inventory Request table
+            $updateinvreq = "update InventoryRequests set ItemDelivered = 'Delivered' where id_val = $id";
+            mysqli_query($conn, $updateinvreq);
+
+            //update the Inventory-------------------------------------------------------------------------------
+            $newamt = $invamt - $amtreq;
+
+            $updateinventory = "update InventoryTech set Amount = '$newamt' where id_val  = $itemid";
+            mysqli_query($conn, $updateinventory);
+
+            //------------------------------------------------------------------------------------------------------
+            //remove the request from the table and insert into an archive
+            $insertarchive = "insert into InventoryRequestsArchive (id_val,EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
+                    . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
+                    . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject, ItemDelivered) "
+                    . "select * from InventoryRequests where id_val = '$id'";
+            mysqli_query($conn, $insertarchive);
+
+            $remove = "delete from InventoryRequests where id_val = '$id'";
+            mysqli_query($conn, $remove);
         }
 
         if ($itemcat === 'sanitary') {
@@ -227,18 +286,15 @@ function Deny(array $idArr) {
         smtpmailer_InventoryRequestDeny($empname, $empdept, $empemail, $itemname, $amtreq, $manname, $manemail, $invmanname, $invmanemail);
 
         //update Inventory Request table
-        $updateinvreq = "update InventoryRequests set ManagerAcceptReject = 'Rejected' where id_val = $id";
+        $updateinvreq = "update InventoryRequests set ManagerAcceptReject = 'Rejected', ItemDelivered = 'No' where id_val = $id";
         mysqli_query($conn, $updateinvreq);
 
 
         //remove the request from the table and insert into an archive
-        $insertarchive = "insert into InventoryRequestsArchive (EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
+        $insertarchive = "insert into InventoryRequestsArchive (id_val,EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
                 . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
-                . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject) "
-                . "select EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, "
-                . "ItemID, ItemName, Model, Color, ItemCategory, EmpFloor,"
-                . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager,"
-                . " InventoryManEmail, ManagerAcceptReject from InventoryRequests where id_val = '$id'";
+                . "AmountRequested, TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail, ManagerAcceptReject, ItemDelivered) "
+                . "select * from InventoryRequests where id_val = '$id'";
         mysqli_query($conn, $insertarchive);
 
         $remove = "delete from InventoryRequests where id_val = $id";

@@ -48,6 +48,7 @@ include("../InventoryMod/RequestOperations.php");
                 <th>Item Category</th>
                 <th>Manager</th>
                 <th>Status</th>
+                <th>Delivery Status</th>
             </tr>
         </thead>
         <tbody>
@@ -71,7 +72,8 @@ include("../InventoryMod/RequestOperations.php");
                 '<td class="itmcol">' . $row['Color'] . '</td>' .
                 '<td class="itemcat">' . $row['ItemCategory'] . '</td>' .
                 '<td class="man">' . $row['Manager'] . '</td>' .
-                '<td class="stat">' . $row['ManagerAcceptReject'] . '</td>';
+                '<td class="stat">' . $row['ManagerAcceptReject'] . '</td>'.
+                '<td class="itmdel">' . $row['ItemDelivered'] . '</td>';
 
                 echo '</tr>';
             }
