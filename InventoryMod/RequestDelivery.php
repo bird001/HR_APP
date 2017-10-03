@@ -4,12 +4,6 @@ include("../db/db2.php");
 include("../db/db3.php");
 include("../Templates/header.php");
 ?>
-<script>
-    function ViewInventory() {
-        //pop up window for uploading SchoolListinngs csv files
-        window.open("viewinventory", "View Inventory", "location=1,status=1,scrollbars=1,width=400,height=550");
-    }
-</script>
 
 <script type = "text/javascript" charset="utf-8">
 
@@ -20,8 +14,6 @@ include("../Templates/header.php");
 
         $(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
     });
-
-    //window.alert("blah");
 </script>
 <?php
 include("../Templates/navigation.php");
@@ -45,12 +37,6 @@ $role = $row1['EmpRole'];
 $idArr = $_POST['checked_id'];
 $functiontype = $_POST['Request'];
 
-if ($functiontype == 'Approve') {
-    Approve($idArr);
-}
-if ($functiontype == 'Deny') {
-    Deny($idArr);
-}
 if ($functiontype == 'Delivered') {
     Delivered($idArr);
 }
@@ -80,7 +66,8 @@ if ($functiontype == 'Delivered') {
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM InventoryRequests where ManagerEmail = '$email'";
+                $sql = "SELECT * FROM InventoryRequests where InventoryManEmail = '$email' and ManagerAcceptReject = 'Accepted'"
+                        . "and ItemDelivered = 'No'";
                 $results = $dbh->query($sql);
                 $rows = $results->fetchAll();
 
@@ -105,10 +92,8 @@ if ($functiontype == 'Delivered') {
 
             </tbody>                     
         </table>
-        <input class="btn btn-primary" type="submit" name="Request" id = "Approve" value="Approve"/>
-        <input class="btn btn-primary" type="submit" name="Request" id = "Deny" value="Deny"/> 
-        <!--<input class="btn btn-primary" type="submit" name="Request" id = "Delivered" value="Delivered"/> -->
-        <!--<input class="btn btn-primary" type="button" onclick='ViewInventory()' name="request" value="View"/> -->
+        <input class="btn btn-primary" type="submit" name="Request" id = "Delivered" value="Delivered"/>
+        
     </form>
 </div>
 <br>

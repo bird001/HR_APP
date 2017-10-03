@@ -23,7 +23,8 @@ $position = $row['EmpPosition'];
             <?php
             if($role == 'Manager' || $dept == 'HR'){
             ?>
-            <li><a href="inventoryrequests">Inventory Requests</a></li><!--Used to request inventory items from HR Dept-->
+            <li><a href="inventoryrequests">Requests To Be Approved</a></li><!--Used to request inventory items from HR Dept-->
+            <li><a href="requestdelivery">Requests To Be Delivered</a></li><!--Used to request inventory items from HR Dept-->
             <li><a href="inventoryreports">Reports</a></li><!--Generate reports based on specific parameters-->
             
             <?php
