@@ -128,11 +128,13 @@ if ($fnameSet == 1 && $lnameSet == 1 && $startdateSet == 1 && $enddateSet == 1 &
         
         $kmrate = $row_rates['ManagerMilage'];
         
-        $totalkm = $kmrate * ($kilometers*1.4);
+        //$totalkm = $kmrate * ($kilometers*1.4);
+        $totalkm = $kmrate * ($kilometers);
     } else{
         $kmrate = $row_rates['EmployeeMilage'];//if not a manager then standard employee rate of $40/km
         
-        $totalkm = $kmrate * ($kilometers*1.4); //calculate the amount for the trip
+        //$totalkm = $kmrate * ($kilometers*1.4); //calculate the amount for the trip
+        $totalkm = $kmrate * ($kilometers); //calculate the amount for the trip
     }
     
     

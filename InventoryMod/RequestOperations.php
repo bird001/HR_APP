@@ -116,11 +116,11 @@ function Approve(array $idArr) {
             $getinventoryrow = mysqli_fetch_array($getinventoryresults, MYSQLI_ASSOC);
 
             $invamt = $getinventoryrow['Amount'];
-
+            $cc='e.welsh@tipfriendly.com';//need to make this dynamic TO-DO
             if ($invamt >= $amtreq) {
 
                 //send emails to relevant personnel
-                smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail);
+                smtpmailer_InventoryRequestApprove($cc, $empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail);
 
                 //update Inventory Request table
                 $updateinvreq = "update InventoryRequests set ManagerAcceptReject = 'Accepted', ItemDelivered = 'No' where id_val = $id";
@@ -137,11 +137,11 @@ function Approve(array $idArr) {
             $getinventoryrow = mysqli_fetch_array($getinventoryresults, MYSQLI_ASSOC);
 
             $invamt = $getinventoryrow['Amount'];
-
+            $cc='a.thomas@tipfriendly.com';//need to make this dynamic TO-DO
             if ($invamt >= $amtreq) {
 
                 //send emails to relevant personnel
-                smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $amtreq, $manname, $manemail, $invmanname, $invmanemail);
+                smtpmailer_InventoryRequestApprove($cc, $empname, $empdept, $empemail, $itemname, $amtreq, $manname, $manemail, $invmanname, $invmanemail);
 
                 //update Inventory Request table
                 $updateinvreq = "update InventoryRequests set ManagerAcceptReject = 'Accepted',ItemDelivered = 'No' where id_val = $id";

@@ -6,13 +6,13 @@ $email = $_SESSION['login_user'];
 $result = mysqli_query($conn, "select * from Users where EmpEmail = '$email' ");
 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 $role = $row['EmpRole'];
+$dept = $row['EmpDept'];
 ?>
 
 <nav id="primary-navigation" class="row">
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
             <li><a href="leaveapply">Apply for Leave</a></li>
-            <!--<li><a href="LeaveResumption.php">Resumption of Duty</a></li>-->
             <?php
             if ($role === 'Manager' || $role === 'Supervisor') {
                 ?>
@@ -20,6 +20,15 @@ $role = $row['EmpRole'];
                 <?php
             }
             ?>
+            <?php
+            if($dept === 'HR') {
+                ?>
+                <li><a href = "leavehistory">Leave History</a></li>
+                <li><a href = "retractedleave">Retracted Leave</a></li>
+                <?php
+            }
+            ?>
+
         </ul>
     </div>
 </nav>

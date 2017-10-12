@@ -37,6 +37,7 @@ $sql3 = "select * from Users where EmpEmail = '$email'";
 $result3 = mysqli_query($conn, $sql3);
 $row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC);
 $dept = $row3['EmpDept'];
+$role = $row3['EmpRole'];
 ?>
 
 <?php
@@ -103,7 +104,7 @@ if ($email === $hremail && !empty($row2['ManagerResponse'])) { //if manager has 
     ?>
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="requestcheck" method="post" >
-            <table id = "LeaveRequests" class = "table-hover table-bordered" style="width:75%">
+            <table id = "LeaveRequests" class = "table-hover table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th style="display:none">id_val</th><!--needed for sorting-->
@@ -157,12 +158,12 @@ if ($email === $hremail && !empty($row2['ManagerResponse'])) { //if manager has 
     </div>
     <?php
 }
-/*
-if ($dept === 'HR') { //if manager has responded and HR user is logged in
+
+if ($dept === 'HR' && $role === 'Supervisor') { //if manager has responded and HR user is logged in
     ?>
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="requestcheck" method="post" >
-            <table id = "LeaveRequests" class = "table-hover table-bordered" style="width:50%">
+            <table id = "LeaveRequests" class = "table-hover table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th style="display:none">id_val</th><!--needed for sorting-->
@@ -216,7 +217,7 @@ if ($dept === 'HR') { //if manager has responded and HR user is logged in
     </div>
     <?php
 }
- */
+
 ?>
 <br>
 <br>

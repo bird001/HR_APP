@@ -63,6 +63,7 @@ function smtpmailer_LeaveAcceptMan($to, $from, $name, $dept, $type, $numdays, $s
     $mail->Subject = "Leave Application Finalization";
     $mail->Body = "Accepted $name of the $dept Department for $type leave application for $numdays from $startdate to $enddate, please review and finalize";
     $mail->AddAddress($to);
+    $mail->addCC('e.welsh@tipfriendly.com');// need to work on this, do not leave it static
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
 
@@ -104,7 +105,7 @@ function smtpmailer_LeaveRejectMan($to, $from, $name, $dept, $type, $numdays, $s
     $mail->Body = "I rejected the leave application of"
             . " $name of the $dept Department for $type leave application for $numdays from $startdate to $enddate, please review and finalize";
     $mail->AddAddress($to);
-    //$mail->addAttachment($attatch);
+    $mail->addCC('e.welsh@tipfriendly.com');// need to work on this, do not leave it static
     $mail->isHTML(true);
 
 
@@ -319,6 +320,57 @@ function smtpmailer_LeaveReminder($to, $name, $days, $type,$daysto, $startdate) 
 
         //exit;
         //return true;
+    }
+}
+
+function smtpmailer_RetractLeave($empname, $empemail, $leavetype, $empdept, $manemail, $numdays, $startdate, $enddate) {
+//global $error;
+    //email to employee--------------------------------------------------------------------------------
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    $mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, 'Tip Friendly Society');
+    $mailemp->Subject = "Leave Retraction";
+    $mailemp->Body = "Dear $empname your $leavetype for $numdays days from $startdate to $enddate has been retracted.";
+    $mailemp->AddAddress($empemail);
+    $mailemp->isHTML(true);
+
+    //--------------------------------------------------------------------------------------------------------
+    //email to inventory manager------------------------------------------------------------------------------
+    $mailman = new PHPMailer;  // create a new object
+    $mailman->isSMTP(); // enable SMTP
+    $mailman->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailman->SMTPAuth = true;  // authentication enabled
+    $mailman->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailman->SMTPAutoTLS = false;
+    $mailman->Host = 'smtp.gmail.com';
+    $mailman->Port = 25;
+    $mailman->Username = GUSER;
+    $mailman->Password = GPWD;
+    $mailman->SetFrom(GUSER, 'Tip Friendly Society');
+    $mailman->Subject = "Leave Retraction";
+    $mailman->Body = "An employee $empname, of the $empdept Department has opted to retract $leavetype for $numdays days from $startdate to $enddate";
+    $mailman->AddAddress($manemail);
+    $mailman->isHTML(true);
+
+    //--------------------------------------------------------------------------------------------------------
+
+    if (!$mailemp->send() || !$mailman->send()) {
+        echo 'Try Again';
+        echo 'Mailer Error: ' . $mailemp->ErrorInfo;
+        echo 'Mailer Error: ' . $mailman->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        //echo $error;
     }
 }
 
@@ -583,7 +635,7 @@ function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $
     }
 }
 
-function smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail) {
+function smtpmailer_InventoryRequestApprove($cc,$empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail) {
 //global $error;
     //email to employee--------------------------------------------------------------------------------
     $mailemp = new PHPMailer;  // create a new object
@@ -619,6 +671,7 @@ function smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $item
     $mailinv->Body = "Dear $invmanname I, $manname, have approved for $empname to receive $itemamount $itemname from you."
             . " They will be by shortly";
     $mailinv->AddAddress($invmanemail);
+    $mailinv->addCC($cc);
     $mailinv->isHTML(true);
 
     //--------------------------------------------------------------------------------------------------------

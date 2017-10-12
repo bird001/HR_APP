@@ -19,7 +19,6 @@ $position = $row['EmpPosition'];
             <li><a href="managercrud">CRUD Manager</a></li>
             <li><a href="leavecrud">CRUD Leave</a></li>
             <li><a href="loancrud">CRUD Loan Types</a></li>
-            <li><a href="leavehistory">Leave History</a></li>
             
             <?php
             }

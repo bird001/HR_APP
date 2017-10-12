@@ -1,6 +1,6 @@
 <?php
-include("../Login/session.php");
-include("../db/db3.php");
+//include("../Login/session.php");
+//include("../db/db3.php");
 ?>
 
 <?php include("../Templates/header.php"); ?>

@@ -1,40 +1,33 @@
 <?php
-include('../db/db2.php');
+//include('../db/db2.php');
 include('../Validation/ValidateInput.php');
 include('../PHPMailer/SmtpMailer.php');
 include("../Templates/header.php");
 ?>
-<script type="text/javascript" src="editrow"></script>
-<script type="text/javascript" src="deleterow"></script>
-
-
-<script>
-    function AddLeave() {
-//pop up window for uploading SchoolListinngs csv files
-        window.open("addleave", "Add Leave", "location=1,status=1,scrollbars=1,width=600,height=900");
-    }
-</script>
+<script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
 <script type = "text/javascript" charset="utf-8">
     $(document).ready(function () {
-        $('#LeaveHistory').dataTable({
-            "aLengthMenu": [20, 50, 100, 200],
-            "iDisplayLength": 20,
-            "sPaginationType": "full_numbers"
+        $('#RetractedLeave').dataTable({
+            'dom': 'lBfrtip', 
+            'aLengthMenu': [20, 50, 100, 200],
+            'iDisplayLength': 20,
+            'sPaginationType': 'full_numbers',
+            'buttons': ['excel','pdf','print']
         });
 
-        $(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
+        //$(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
     });
 </script>
 
 <?php
 include("../Templates/navigation.php");
 include("../Templates/body.php");
-include("../OperationsMod/OperationsNav.php");
+include("../LeaveMod/LeaveNav.php");
 ?>
 
 
 <div class = "container-fluid datatables_wrapper">
-    <table id = "LeaveHistory" class = "table-hover table-bordered" style="width:150%">
+    <table id = "RetractedLeave" class = "table-hover table-bordered" style="width:150%">
         <thead>
             <tr>
                 <th style="display:none">id_val</th><!--needed for sorting-->
@@ -47,12 +40,15 @@ include("../OperationsMod/OperationsNav.php");
                 <th>Number of Days</th>
                 <th>Managers Response</th>
                 <th>HR Response</th>
+                <th>Date Retracted</th>
+                <th>Retracted By</th>
+                <th>Reason Retracted</th>
             </tr>
         </thead>
         <tbody>
             <?php
             $email = $_SESSION['login_user'];
-            $sql = "SELECT * FROM ApplyLeaveHRArchive";
+            $sql = "SELECT * FROM RetractedLeave";
             $results = $dbh->query($sql);
             $rows = $results->fetchAll();
 
@@ -62,12 +58,15 @@ include("../OperationsMod/OperationsNav.php");
                 '<td class="fname">' . $row['FirstName'] . ' ' . $row['LastName'] . '</td>' .
                 '<td class="emid">' . $row['EmpID'] . '</td>' .
                 '<td class="empdebt">' . $row['EmpDept'] . '</td>' .
-                '<td class="leavetype">' . $row['LeaveType'] . '</td>' . 
-                '<td class="startdate">' . $row['StartDate'] . '</td>' .       
-                '<td class="enddat">' . $row['EndDate'] . '</td>' .       
-                '<td class="numdays">' . $row['NumDays'] . '</td>' .       
-                '<td class="managerresponse">' . $row['ManagerResponse'] . '</td>' .       
-                '<td class="hrresponse">' . $row['HRResponse'] . '</td>';       
+                '<td class="leavetype">' . $row['LeaveType'] . '</td>' .
+                '<td class="startdate">' . $row['StartDate'] . '</td>' .
+                '<td class="enddat">' . $row['EndDate'] . '</td>' .
+                '<td class="numdays">' . $row['NumDays'] . '</td>' .
+                '<td class="managerresponse">' . $row['ManagerResponse'] . '</td>' .
+                '<td class="hrresponse">' . $row['HRResponse'] . '</td>'.
+                '<td class="hrresponse">' . $row['DateRetracted'] . '</td>'.
+                '<td class="hrresponse">' . $row['RetractedBy'] . '</td>'.
+                '<td class="hrresponse">' . $row['ReasonRetracted'] . '</td>';
 
                 echo '</tr>';
             }
@@ -76,17 +75,9 @@ include("../OperationsMod/OperationsNav.php");
 
         </tbody>                     
     </table>
-    <button class="btn btn-primary" onclick="AddLeave();">Add Leave</button>
-
 </div>
 <br>
 <br>
-
-
-
-
-
-
 <?php
 include("../Templates/footer_dashboard.php");
 ?>
