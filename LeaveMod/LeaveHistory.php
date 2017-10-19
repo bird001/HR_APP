@@ -33,9 +33,11 @@ include("../Templates/header.php");
             }
         });
         var reason_value = $('#TextReason').val();
+        var numdays_value = $('#NumberDays').val();
         //var reason_value = document.getElementById('TextReason').value;
         //alert(checkbox_value);
         //alert(reason_value);
+        //alert(numdays_value);
 
         
         $.ajax({
@@ -43,7 +45,8 @@ include("../Templates/header.php");
             url: 'retractleaveops',
             data: {
                 get_id: checkbox_value,
-                get_reason: reason_value
+                get_reason: reason_value,
+                get_numdays: numdays_value
             }
         });
 
@@ -129,6 +132,10 @@ include("../LeaveMod/LeaveNav.php");
         <div id = "dvReason" name="dvReason" class="form-group" style="width:500px;display: none">
             <label for="LabelReason" class="control-label">Reason</label>
             <input type="text" id="TextReason" class="form-control"/>
+            <br>
+            <label for="LabelNumDays" class="control-label">Number of Days to Retract</label>
+            <input type="number" id="NumberDays" class="form-control"/>
+            
         </div>
 
     </div>

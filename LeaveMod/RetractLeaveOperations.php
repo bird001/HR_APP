@@ -8,6 +8,7 @@ if (isset($_POST['get_id'])) {
     
     $id = $_POST['get_id'];
     $reason = $_POST['get_reason'];
+    $numdays = $_POST['get_numdays'];
     $idArr = explode(',', $id);
     
     foreach($idArr as $row){
@@ -20,7 +21,7 @@ if (isset($_POST['get_id'])) {
         
         $empid = $archive_row['EmpID'];
         $empname = $archive_row['FirstName']." ".$archive_row['LastName'];
-        $numdays = $archive_row['NumDays'];
+        //$numdays = $archive_row['NumDays'];
         $empdept = $archive_row['EmpDept'];
         $empemail = $archive_row['EmpEmail'];
         $manageremail = $archive_row['ManagerEmail'];
@@ -47,14 +48,13 @@ if (isset($_POST['get_id'])) {
         $operator = $login_session;
         
         $insert_query = "insert into RetractedLeave(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,
-                    StartDate,EndDate,NumDays,Reason,ManagerResponse,HRResponse, DateRetracted)
+                    StartDate,EndDate,Reason,ManagerResponse,HRResponse, DateRetracted)
                     select
-                    id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,
-                    NumDays,Reason,ManagerResponse,HRResponse,'$now' from ApplyLeaveHRArchive
+                    id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,Reason,ManagerResponse,HRResponse,'$now' from ApplyLeaveHRArchive
                     WHERE id_val = '$row'";
         mysqli_query($conn, $insert_query);
         
-        $update_retracted = "update RetractedLeave set RetractedBy = '$operator', ReasonRetracted='$reason' where id_val = '$row'";
+        $update_retracted = "update RetractedLeave set RetractedBy = '$operator',NumDays = '$numdays',ReasonRetracted='$reason' where id_val = '$row'";
         mysqli_query($conn, $update_retracted);
         
         //send email to employee and said employee's manager detailing what was done
