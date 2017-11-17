@@ -32,6 +32,11 @@ $ref2phone = $_POST['RefPhone2'];
 $ref2phone = $_POST['RefPhone2'];
 $dateapplied = $_POST['DateA'];
 
+$valFname = ValidateName($fname);
+$valLname = ValidateName($lname);
+$valEmpnum = ValidateNumeric($empnum);
+$valAddress = ValidateAlphaNumeric($empadd);
+//do the rest of this validation
 if (empty($loanamount)) {
     $loanamountError = "Loan Amount is required";
 } else {
@@ -45,43 +50,11 @@ if (empty($loanamount)) {
     }
 }
 
-if (empty($purpose)) {
-    $purposeError = "Purpose is required";
-    $purposeSet = 0;
-} else {
-    $purposeSet = 1;
-}
-/*
-  if (empty($ref1name)) {
-  $ref1nameError = "Reference Name is required";
-  } else {
-  $ref1name = validate_input($ref1name);
-  // check if Lname only contains letters and whitespace
-  if (!preg_match("/^[a-z A-Z]*$/", $ref1name)) {
-  $ref1nameError = "Only Letters allowed"; //LastName
-  $ref1nameSet = 0;
-  } else {
-  $ref1nameSet = 1;
-  }
-  }
-
-  if (empty($ref1add)) {
-  $ref1addError = "Reference Name is required";
-  } else {
-  $ref1add = validate_input($ref1add);
-  // check if Lname only contains letters and whitespace
-  if (!preg_match("/^[a-z A-Z]*$/", $ref1add)) {
-  $ref1addError = "Only Letters allowed"; //LastName
-  $ref1addSet = 0;
-  } else {
-  $ref1addSet = 1;
-  }
-  }
- */
+$valPurpose = ValidateAlphaNumeric($purpose);
 
 //TO-DO validation for all input, gonna create a validation function tailored to each...
 
-if ($loanamountSet == 1 && $purposeSet == 1) {
+if ($loanamountSet == 1 && $valPurpose == 1 && $valLname == 1 && $valFname == 1) {
 
     $loanapply = "insert into LoanApplication(EmpName, EmpID, EmpDept, EmpAddress, EmpPhone, LoanType, LoanID, AmountRequested, Purpose, "
             . "MonthlyRepayment, RepaymentPeriod,InterestPerAnnum, DateApplied, RefName1, RefAdd1, RefPhone1, RefName2, RefAdd2, RefPhone2) "
@@ -91,11 +64,16 @@ if ($loanamountSet == 1 && $purposeSet == 1) {
     mysqli_query($conn, $loanapply);
 
     $accmanemail = "select EmpEmail from Users where EmpDept = 'Accounts' and EmpRole = 'Manager'";
+    $accsupemail = "select EmpEmail from Users where EmpDept = 'Accounts' and EmpRole = 'Supervisor'";
+    //$accmanemail = "call GetAccountsManager";
     $result_accman = mysqli_query($conn, $accmanemail);
+    $result_accsup = mysqli_query($conn, $accsupemail);
     $row_accman = mysqli_fetch_array($result_accman, MYSQLI_ASSOC);
-    $accman = $row_accman['EmpEmail']; //gets the email address of the Accounts manager and sends an email when someone applies for a loan
-
-    smtpmailer_LoanApplication($accman, $name, $empdept);
+    $row_accsup = mysqli_fetch_array($result_accsup, MYSQLI_ASSOC);
+    $accman = $row_accman['EmpEmail']; //Accounts manager email
+    $accsup = $row_accsup['EmpEmail']; //Accounts supervisor email
+    
+    smtpmailer_LoanApplication($accsup, $accman, $name, $empdept);
 
     header("Location: loanapplication");
 } else {

@@ -513,7 +513,8 @@ function MealTravel($name, $dept, $date, $date2, $dest, $purpose, $meal) {
     //header("Location:../Letters/generateDLetter.php");
 }
 
-function LoanAppAccounts($array, $empname, $empid, $empdept, $empadd, $empnum, $loantype, $amount, $purpose, $monthlyrepayment, $term, $interest, $dateA, $refname1, $refadd1, $refnum1, $refname2, $refadd2, $refnum2, $approved, $approveddate, $vetted, $vetteddate) {
+function LoanAppAccounts($array, $empname, $empid, $empdept, $empadd, $empnum, $loantype, $amount, $purpose, $monthlyrepayment, $term, $interest, 
+        $dateA, $refname1, $refadd1, $refnum1, $refname2, $refadd2, $refnum2, $verifiedby, $verifieddate, $approvedby, $approveddate, $vettedby, $vetteddate) {
 
 
     $pdf = new HeaderLoan();
@@ -608,8 +609,8 @@ function LoanAppAccounts($array, $empname, $empid, $empdept, $empadd, $empnum, $
     $pdf->Cell($w, $h, "Total Loan Repayment: $" . $totalrepay, $border, $ln, R);
     $pdf->write(5, "\n");
     $pdf->write(5, "\n");
-    $pdf->Cell(5, $h, "Approved By: " . $approved, $border, $ln, L);
-    $pdf->Cell($w, $h, "Date: " . $approveddate, $border, $ln, R);
+    $pdf->Cell(5, $h, "Approved By: " . $verifiedby, $border, $ln, L);
+    $pdf->Cell($w, $h, "Date: " . $verifieddate, $border, $ln, R);
     $pdf->write(5, "\n");
     $pdf->Cell($w, $h, "__________________________________________________________________________________________", $border, $ln);
     $pdf->write(5, "\n");
@@ -625,9 +626,12 @@ function LoanAppAccounts($array, $empname, $empid, $empdept, $empadd, $empnum, $
     $pdf->Cell($w, $h, "Witness:_________________", $border, $ln, R);
     $pdf->write(5, "\n");
     $pdf->write(5, "\n");
-    $pdf->Cell(5, $h, "Approved by: " . $vetted, $border, $ln, L);
+    $pdf->Cell(5, $h, "Approved by: " . $approvedby, $border, $ln, L);
+    $pdf->Cell($w, $h, "Date: " . $approveddate, $border, $ln, R);
+    $pdf->write(5, "\n");
+    $pdf->write(5, "\n");
+    $pdf->Cell(5, $h, "Vetted by: " . $vettedby, $border, $ln, L);
     $pdf->Cell($w, $h, "Date: " . $vetteddate, $border, $ln, R);
-
     //TO-DO put in the signing of the contract @ the end of the loan app form
 
 

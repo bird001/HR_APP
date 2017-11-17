@@ -20,16 +20,42 @@ include("../Templates/header.php");
         location.reload();//reload to display changes
     }
 </script>
-
+<script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
 <script type = "text/javascript" charset="utf-8">
     $(document).ready(function () {
-        $('#LoanPayments').dataTable();
+        $('#LoanPayments').dataTable({
+            'dom': 'lBfrtip',
+            'aLengthMenu': [20, 50, 100, 200],
+            'iDisplayLength': 20,
+            'sPaginationType': 'full_numbers',
+            'buttons': [
+                {extend: 'excel',
+                    title: 'LoanStatement',
+                    exportOptions: {
 
-        $(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                    }
+                },
+                {extend: 'pdf',
+                    title: 'LoanStatement',
+                    exportOptions: {
+
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                    }
+                }
+            ]
+        });
+
+        //$(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
     });
 </script>
 
-
+<script>
+    function GenerateReports() {
+//pop up window for uploading SchoolListinngs csv files
+        window.open("generatereports", "Generate Reports", "location=1,status=1,scrollbars=1,width=900,height=900");
+    }
+</script>
 <?php
 include("../Templates/navigation.php");
 include("../Templates/body.php");
@@ -49,7 +75,6 @@ $empid = $row1['EmpID'];
 ?>
 <br>
 <div class = "container-fluid datatables_wrapper">
-    <!--<form name="bulk_action_form" action="#" method="post" >-->
     <table id = "LoanPayments" class = "table-hover table-bordered" style="width:100%">
         <thead>
             <tr>
@@ -58,7 +83,8 @@ $empid = $row1['EmpID'];
                 <th>Loan Type</th>
                 <th>Beginning Balance</th>
                 <th>Monthly Repayment($)</th>
-                <th>Repayment Period(Months)</th>
+                <!--<th>Repayment Period(Months)</th>-->
+                <th>Term(Months)</th>
                 <th>Payment</th>
                 <th>Date of Payment</th>
                 <th>Principal</th>
@@ -121,7 +147,7 @@ $empid = $row1['EmpID'];
                         <td class="empnum"><?php echo $row['LoanType']; ?> </td>
                         <td class="bal"><?php echo $row['StartBalance']; ?> </td>
                         <td class="type"> <?php echo $row['MonthlyRepayment']; ?></td>
-                        <td class="dates"> <?php echo $row['RepaymentPeriod']; ?></td>
+                        <td class="shrink"> <?php echo $row['RepaymentPeriod']; ?></td>
                         <td class="days"> <?php echo $row['Payment']; ?></td>
                         <td class="days"> <?php echo $row['PaymentDate']; ?> </td>
                         <td class="days"> <?php echo $row['PrincipalRepaid']; ?></td>
@@ -135,11 +161,10 @@ $empid = $row1['EmpID'];
 
         </tbody>                     
     </table>
-    <!--</form>-->
 </div>
 <br>
 <br>
-
+<button class="btn btn-danger" onclick="GenerateReports();">Generate Reports</button>
 
 
 
