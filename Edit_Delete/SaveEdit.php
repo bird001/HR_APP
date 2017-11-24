@@ -5,7 +5,7 @@ include '../db/db3.php';
 include('../Login/session.php');
 
 echo $column = $_POST['column'];
-echo $newValue = $_POST['editval'];
+echo $newValue = $_POST['editval']; //the payment amount
 echo $id = $_POST['id'];
 echo $name = $_POST['name'];
 
@@ -53,13 +53,23 @@ if ($name == 'LoanPayments') {//for the LoanPayment table
         $endbal = $balance - $balancerepaid;
     }
 
+    if ($newValue < $loanrepayment) {
+        $sql = "UPDATE LoanApproved SET $column = :value, PaymentDate = '$paymentTime', InterestRepaid = '$interestrepaid',"
+                . " PrincipalRepaid = '$balancerepaid', EndBalance = '$endbal', Editable = '1', Refreshable = '0', OutstandingPayments = '1' WHERE id_val = :id";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':value', $newValue);
+        $stmt->bindParam(':id', $id);
+        $response['success'] = $stmt->execute();
+        $response['value'] = $newValue;
+    } else {
 
-    $sql = "UPDATE LoanApproved SET $column = :value, PaymentDate = '$paymentTime', InterestRepaid = '$interestrepaid',"
-            . " PrincipalRepaid = '$balancerepaid', EndBalance = '$endbal', Editable = '1', Refreshable = '0' WHERE id_val = :id";
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(':value', $newValue);
-    $stmt->bindParam(':id', $id);
-    $response['success'] = $stmt->execute();
-    $response['value'] = $newValue;
+        $sql = "UPDATE LoanApproved SET $column = :value, PaymentDate = '$paymentTime', InterestRepaid = '$interestrepaid',"
+                . " PrincipalRepaid = '$balancerepaid', EndBalance = '$endbal', Editable = '1', Refreshable = '0', OutstandingPayments = '0' WHERE id_val = :id";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':value', $newValue);
+        $stmt->bindParam(':id', $id);
+        $response['success'] = $stmt->execute();
+        $response['value'] = $newValue;
+    }
 }
 ?>

@@ -12,9 +12,9 @@ $position = $row['EmpPosition'];
 <nav id="primary-navigation" class="row">
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
-            <li><a href="travelsubsistence">Traveling & Subsistence</a></li>
-            <li><a href="mealtravel">Meal & Travel</a></li>
-            <li><a href="loanapplication">Loan Application</a></li>
+            <li><a href="travelsubsistence">Traveling/Subsistence</a></li>
+            <li><a href="mealtravel">Meal/Travel</a></li>
+            <li><a href="loanapplication">Loan App</a></li>
             <?php
             if(($dept == "Accounts" && $role == "Manager") || ($dept == "Accounts" && $role == "Supervisor") || 
                     (strpos($position, 'Assistant General Manager') !== false) ||
@@ -26,6 +26,7 @@ $position = $row['EmpPosition'];
             }
             ?>
             <li><a href="loanpayment">Loan Payment</a></li>
+            <li><a href="generatereports">Generate Reports</a></li>
             <!--
             <li><a href="#">Salary Advance</a></li>
             <li><a href="#">Payment Authorization</a></li>

@@ -14,7 +14,7 @@ $get_arr = $conn->query($sql_get);
 
 $dayofmonth = date("d");
 
-if ($dayofmonth == '25') {
+if ($dayofmonth == '21') {
 
     while ($row = $get_arr->fetch_assoc()) {
 
@@ -45,7 +45,7 @@ if ($dayofmonth == '25') {
         if ($term != '0' && $loanendbalance != '0') {
 
             $newterm = $term - 1;
-            if ($amountpaid >= $monthlyrepayment) {//if the client pays the correect sum of money
+            if ($amountpaid >= $monthlyrepayment) {//if the client pays the correct sum of money
                 $sql_insert_new_approved = "INSERT INTO LoanApproved(EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
                         MonthlyRepayment, ActualRepayment, RepaymentPeriod, InterestPerAnnum, StartBalance, Editable)
                         VALUES ('$empname','$empid','$loantype','$loanid','$loanamount','$datedisbursed','$actualrepayment',
@@ -72,7 +72,7 @@ if ($dayofmonth == '25') {
                 mysqli_query($conn, $sql_update_refresh);
             }
         } else {
-            //TO-DO remove from LoanApproved table and place into the archive table, loan has been paid off
+            //remove from LoanApproved table and place into the archive table, loan has been paid off
             $sql_moveto_archive = "INSERT INTO LoanApprovedArchive(id_val, EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed, MonthlyRepayment,"
                     . " ActualRepayment, Payment, PaymentDate, InterestRepaid, PrincipalRepaid, RepaymentPeriod, InterestPerAnnum, StartBalance,"
                     . " EndBalance)"

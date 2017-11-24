@@ -49,12 +49,12 @@ include("../Templates/header.php");
         //$(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
     });
 </script>
-
 <script>
-    function GenerateReports() {
-//pop up window for uploading SchoolListinngs csv files
-        window.open("generatereports", "Generate Reports", "location=1,status=1,scrollbars=1,width=900,height=900");
+    function BulkLoanUpload() {
+        //pop up window for uploading SchoolListinngs csv files
+        window.open("bulkloan", "Multiple Registrations", "location=1,status=1,scrollbars=1,width=400,height=400");
     }
+
 </script>
 <?php
 include("../Templates/navigation.php");
@@ -136,7 +136,7 @@ $empid = $row1['EmpID'];
                         <td class="days"> <?php echo $row['PrincipalRepaid']; ?></td>
                         <td class="days"> <?php echo $row['InterestRepaid']; ?></td>
                         <td class="days"> <?php echo $row['EndBalance']; ?></td>
-
+                    </tr>
 
                         <?php
                     } else {
@@ -153,6 +153,7 @@ $empid = $row1['EmpID'];
                         <td class="days"> <?php echo $row['PrincipalRepaid']; ?></td>
                         <td class="days"> <?php echo $row['InterestRepaid']; ?></td>
                         <td class="days"> <?php echo $row['EndBalance']; ?></td>
+                    </tr>
                         <?php
                     }
                 }
@@ -164,9 +165,9 @@ $empid = $row1['EmpID'];
 </div>
 <br>
 <br>
-<button class="btn btn-danger" onclick="GenerateReports();">Generate Reports</button>
-
-
+<input class="btn btn-primary" onclick='BulkLoanUpload();' type="button" name="Submit" id = "Bulk" value="Bulk"/>
+<br>
+<br>
 
 <?php
 include("../Templates/footer_dashboard.php");

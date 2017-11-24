@@ -81,9 +81,9 @@ if (isset($_GET['edit'])) {
 
     if ($tablename == 'CRUDLoans') {
         $loanchangedate = date("F d, Y");
-        $insert_loantype_archive = "insert into LoanTypesArchive(LoanName,LoanID,InterestPerAnnum,TimeToPay,Type,ChangeDate)
+        $insert_loantype_archive = "insert into LoanTypesArchive(LoanName,LoanID,InterestPerAnnum,TimeToPay,Type,ChangeDate,ChangedBy)
                                 select
-                                LoanName, LoanID,InterestPerAnnum,TimeToPay,Type,'$loanchangedate'
+                                LoanName, LoanID,InterestPerAnnum,TimeToPay,Type,'$loanchangedate','$operator'
                                 from LoanTypes
                                 WHERE id_val = '$id'";
         mysqli_query($conn, $insert_loantype_archive); //connect to db and execute

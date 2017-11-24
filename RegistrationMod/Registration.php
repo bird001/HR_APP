@@ -187,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             //-------------------------------------------------------------------------------------------
 
-            //smtpmailer_Registration($empemail, $fname . " " . $lname, $empdept, $emppass); //send email with password to person
+            smtpmailer_Registration($empemail, $fname . " " . $lname, $empdept, $emppass); //send email with password to person
         }
     }
 }

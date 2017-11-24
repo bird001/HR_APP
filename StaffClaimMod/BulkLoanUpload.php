@@ -47,102 +47,7 @@ if ($_FILES[uploaded_file][size] > 0) {
                         '" . $empstart . "','" . $emppass . "', NOW(), '0')";
                 mysqli_query($conn, $registration);
                 //--------------------------------------------------------------------------------------------------------------------------------
-                //begin calculation of leave days---------------------------------------------------------------------------------------------------------------
-                $yearsOfEmp = dateDifferenceYears($empstartdate, date("Y-m-d"));
-                //vacation days for managers
-
-                if ($yearsOfEmp >= '0' && $yearsOfEmp <= '5' && $emprole === 'Manager') {
-                    $vacationDays = "15";
-                }
-
-                if ($yearsOfEmp >= '6' && $yearsOfEmp <= '10' && $emprole === 'Manager') {
-                    $vacationDays = "20";
-                }
-
-                if ($yearsOfEmp >= 11 && $yearsOfEmp <= 15 && $emprole === 'Manager') {
-                    $vacationDays = "25";
-                }
-
-                if ($yearsOfEmp >= 16 && $emprole === 'Manager') {
-                    $vacationDays = "30";
-                }
-
-                //vacation days for non managerial
-                if ($yearsOfEmp >= 0 && $yearsOfEmp <= 5 && $emprole !== 'Manager') {
-                    $vacationDays = "10";
-                }
-
-                if ($yearsOfEmp >= 6 && $yearsOfEmp <= 10 && $emprole !== 'Manager') {
-                    $vacationDays = "15";
-                }
-
-                if ($yearsOfEmp >= 11 && $emprole !== 'Manager') {
-                    $vacationDays = "20";
-                }
-
-
-                //sick days 
-                if ($yearsOfEmp >= 0 && $yearsOfEmp <= 5) {
-                    $sickDays = "10";
-                }
-
-                if ($yearsOfEmp >= 6) {
-                    $sickDays = "15";
-                }
-
-                //study days
-
-                if ($yearsOfEmp >= 0 && $yearsOfEmp <= 3) {
-                    $studyDays = "5";
-                }
-
-                if ($yearsOfEmp >= 5) {
-                    $studyDays = "10";
-                }
-
-                //Maternity days
-
-                if ($empsex == "F") {
-                    $maternityDays = "60";
-                }else{
-                    $maternityDays = "0";
-                }
-
-
-                $juryDutyDays = "3";
-
-                $bereavementDays = "3";
-
-                $deptDays = "72";
-
-                //insert into Leave table------------------------------------------------------------------------------
-                $leave = "insert into HR_DEPT.Leaves(EmpFName,EmpLName,EmpID,EmpEmail,YearsOfEmployment,Vacation,Sick,Department,Maternity,Study,Bereavement,JuryDuty,
-                EmpStartDate,EmpStatus,EmpRole,EmpSex)
-                values(
-                '$fname','$lname','$empid','$empmail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
-                      '$empstart','$empstatus','$emprole','$empsex'
-                    )";
-                mysqli_query($conn, $leave);
-                //----------------------------------------------------------------------------------------------------------
-                //insert into DLetter tables, disciplinary------------------------------------------------------
-                $dletter = "insert into HR_DEPT.DLetters(EmpFName,EmpLName,EmpEmail,EmpID)
-                    values(
-                        '$fname','$lname','$empmail','$empid'
-                        )";
-
-                mysqli_query($conn, $dletter);
-                //-----------------------------------------------------------------------------------------
-                
-                //insert into managers table-----------------------------------------------------------------
-                $name = $fname." ".$lname;
-                if($emprole == "Manager"){
-                $managers = "insert into ManagersDepartments (Name,EmpID,EmpEmail,Department) values('$name','$empid','$empmail',"
-                        . "'$empdept')";
-                mysqli_query($conn, $managers);
-                }
-                //-------------------------------------------------------------------------------------------
-                
-                smtpmailer_Registration($empmail, $fname." ".$lname, $empdept, $emppass); //send email to person
+               
             }
         }
     } else {
@@ -178,4 +83,4 @@ if ($_FILES[uploaded_file][size] > 0) {
             </form>
         </div>
     </body>
-</html> 
+</html>
