@@ -106,18 +106,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      * 
      */
 
-    if (ValidateDatePast($startdate) === 1) {
-        $startdateSet = 1;
-    } else {
-        $startdateSet = 0;
-        $startdateError = ValidateDatePast($startdate);
-    }
+    if($leavetype !== 'Sick') {
+        if (ValidateDatePast($startdate) === 1) {
+            $startdateSet = 1;
+        } else {
+            $startdateSet = 0;
+            $startdateError = ValidateDatePast($startdate);
+        }
 
-    if (ValidateDatePast($enddate) === 1) {
+        if (ValidateDatePast($enddate) === 1) {
+            $enddateSet = 1;
+        } else {
+            $enddateSet = 0;
+            $enddateError = ValidateDatePast($enddate);
+        }
+    } else{
+        $startdateSet = 1;
         $enddateSet = 1;
-    } else {
-        $enddateSet = 0;
-        $enddateError = ValidateDatePast($enddate);
     }
 
     if (empty($reason)) {

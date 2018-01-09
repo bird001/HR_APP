@@ -167,11 +167,11 @@ foreach ($idArr as $id) {
                 $gmname = $row_gm['Name'];
                 $agmdenialdate = date("F d, Y"); //date the assistant general manager approved
 
-                
+
                 $denial = "update LoanApplication set ApprovedBy = '$operatorname', ApprovedStatus = 'Denied', ApprovedReason = '$reason', "
                         . "DateApproved= '$agmdenialdate' where id_val = '$id'";
                 mysqli_query($conn, $denial);
-                
+
                 //notify the General Manager
                 smtpmailer_AGMDenial($gmemail, $empname, $empdept);
 
@@ -220,6 +220,84 @@ foreach ($idArr as $id) {
             }
         }
     }
+
+    if ($functiontype == 'AbsenceApprove') {
+        //Assistant General Manager Final Approve when General Manager Absent
+        $accman = "select EmpEmail from Users where EmpDept = 'Accounts' and EmpRole = 'Manager'"; //select the Accounts Managers Email
+        $result_accman = mysqli_query($conn, $accman);
+        $row_accman = mysqli_fetch_array($result_accman, MYSQLI_ASSOC);
+        $accmanemail = $row_accman['EmpEmail']; //gets the email address of the Accounts manager and sends an email when someone applies for a loan
+        $accmanname = $row_accman['FirstName'] . " " . $row_accman['LastName'];
+        $gmapprovedate = date("F d, Y"); //date the assistant general manager approved
+
+        $approval = "update LoanApplication set VettedBy = '$operatorname', VettedStatus = 'Approved', VettedReason = '$reason', "
+                . "DateVetted = '$gmapprovedate', GMAbsent = 'yes' where id_val = '$id'";
+        mysqli_query($conn, $approval);
+
+        //notify the General Manager
+        smtpmailer_GMApproveAccounts($accmanemail, $empname, $empdept);
+        smtpmailer_GMApproveEmployee($empemail, $empname, $empdept, $loantype, $amount);
+
+
+        //move all loan applicatins to a archive table for reference and auditing
+        $sql_insert_loan_archive = "insert into LoanApplicationArchive(id_val,EmpName, EmpID, EmpDept, EmpAddress, EmpPhone, LoanType, LoanID, AmountRequested, Purpose, "
+                . "MonthlyRepayment, RepaymentPeriod,InterestPerAnnum, DateApplied, RefName1, RefAdd1, RefPhone1, RefName2, RefAdd2, RefPhone2, 
+                        VerifiedBy, DateVerified, ApprovedBy,ApprovedStatus,ApprovedReason, DateApproved, VettedBy, VettedStatus, VettedReason, DateVetted, GMAbsent)
+                                select
+                                id_val,EmpName, EmpID, EmpDept, EmpAddress, EmpPhone, LoanType, LoanID, AmountRequested, Purpose,
+                                MonthlyRepayment, RepaymentPeriod,InterestPerAnnum, DateApplied, RefName1, RefAdd1, RefPhone1, 
+                                    RefName2, RefAdd2, RefPhone2, VerifiedBy, DateVerified, ApprovedBy, ApprovedStatus, ApprovedReason, DateApproved, 
+                                    VettedBy, VettedStatus, VettedReason, DateVetted,GMAbsent
+                                from LoanApplication
+                                WHERE id_val = '$id'";
+        mysqli_query($conn, $sql_insert_loan_archive); //connect to db and execute
+        //update archive table with either accepted or rejected leave app
+        $sql_update_loan_archive = "UPDATE LoanApplicationArchive SET Status = 'Approved' WHERE id_val = $id";
+        mysqli_query($conn, $sql_update_loan_archive);
+
+        header("Location: loanrequests");
+    }
+
+    if ($functiontype == 'AbsenceDeny') {
+        $accman = "select EmpEmail from Users where EmpDept = 'Accounts' and EmpRole = 'Manager'"; //select the Accounts Managers Email
+        $result_accman = mysqli_query($conn, $accman);
+        $row_accman = mysqli_fetch_array($result_accman, MYSQLI_ASSOC);
+        $accmanemail = $row_accman['EmpEmail']; //gets the email address of the Accounts manager and sends an email when someone applies for a loan
+        $accmanname = $row_accman['FirstName'] . " " . $row_accman['LastName'];
+        $gmdenialdate = date("F d, Y"); //date the assistant general manager approved
+
+        $denial = "update LoanApplication set VettedBy = '$operatorname', VettedStatus = 'Denied', VettedReason = '$reason', "
+                . "DateVetted = '$gmdenialdate', GMAbsent = 'yes' where id_val = '$id'";
+        mysqli_query($conn, $denial);
+
+        //notify the General Manager
+        smtpmailer_GMDenialAccounts($accmanemail, $empname, $empdept);
+        smtpmailer_GMDenialEmployee($empemail, $empname, $empdept, $loantype, $amount);
+
+
+        //move all loan applicatins to a archive table for reference and auditing
+        $sql_insert_loan_archive = "insert into LoanApplicationArchive(id_val,EmpName, EmpID, EmpDept, EmpAddress, EmpPhone, LoanType, LoanID, AmountRequested, Purpose, "
+                . "MonthlyRepayment, RepaymentPeriod,InterestPerAnnum, DateApplied, RefName1, RefAdd1, RefPhone1, RefName2, RefAdd2, RefPhone2, 
+                        VerifiedBy, DateVerified, ApprovedBy,ApprovedStatus,ApprovedReason, DateApproved, VettedBy, VettedStatus, VettedReason, DateVetted, GMAbsent)
+                                select
+                                id_val,EmpName, EmpID, EmpDept, EmpAddress, EmpPhone, LoanType, LoanID, AmountRequested, Purpose,
+                                MonthlyRepayment, RepaymentPeriod,InterestPerAnnum, DateApplied, RefName1, RefAdd1, RefPhone1, 
+                                    RefName2, RefAdd2, RefPhone2, VerifiedBy, DateVerified, ApprovedBy, ApprovedStatus, ApprovedReason, DateApproved, 
+                                    VettedBy, VettedStatus, VettedReason, DateVetted, GMAbsent
+                                from LoanApplication
+                                WHERE id_val = '$id'";
+        mysqli_query($conn, $sql_insert_loan_archive); //connect to db and execute
+        //update archive table with either accepted or rejected leave app
+        $sql_update_loan_archive = "UPDATE LoanApplicationArchive SET Status = 'Denied' WHERE id_val = $id";
+        mysqli_query($conn, $sql_update_loan_archive);
+
+        //remove this data from the loan application table
+        $removeloanapp = "delete from LoanApplication where id_val = '$id'";
+        mysqli_query($conn, $removeloanapp); //execute the query to remove the loan app
+
+        header("Location: loanrequests");
+    }
+
 
 
     if ($functiontype == 'Disburse') {
