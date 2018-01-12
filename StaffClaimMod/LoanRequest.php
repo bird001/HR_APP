@@ -196,7 +196,7 @@ $role = $row1['EmpRole'];
                 if(strpos($position, 'Assistant General Manager') !== false){
             ?>
             <label for="LabelGMAbsent" class="control-label">General Manager Absent</label>
-            <input type="checkbox" name = "checked_id[]" class = "checkbox" id = "absentcheck">
+            <input type="checkbox" name = "absentcheck" class = "checkbox" id = "absentcheck">
             <br>
             <br>
             <div id = "dvGMAbsent" name="dvGMAbsent" class="form-group" style="width:500px;display: none">

@@ -12,18 +12,18 @@ $get_arr = $conn->query($sql_get);
 while ($row = $get_arr->fetch_assoc()) {
 
     $empemail = $row['EmpEmail'];
-    echo $startdate = date("Y", strtotime($row['EmpStartDate']));
+    $startdate = date("Y", strtotime($row['EmpStartDate']));
     //$startdate1 = date("Y", $startdate);
-    echo $yearsofemp = $row['YearsOfEmployment'];
+    $yearsofemp = $row['YearsOfEmployment'];
     $role = $row['EmpRole'];
     $vacationDaysRemain = $row['Vacation']; //get vacation days that haven't been used
     $vacationOutstanding = $row['VacationOutstanding']; //get vacation days that haven't been used
-    echo $now = date("Y");
+    $now = date("Y");
     $empsex = $row['EmpSex'];
     $outstandingleave = $row['OutstandingLeave_Years'];
 
     //echo $yearsOfService = dateDifferenceYears($startdate, $now); //calculates the years of service 
-    echo $yearsOfService = $now - $startdate; //calculates the years of service 
+    $yearsOfService = $now - $startdate; //calculates the years of service 
     //$yearsOfService = dateDifferenceYears($startdate, "11-08-2016");//for testing
 
 
