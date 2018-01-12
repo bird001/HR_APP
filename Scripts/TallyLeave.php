@@ -22,7 +22,8 @@ while ($row = $get_arr->fetch_assoc()) {
     $empsex = $row['EmpSex'];
     $outstandingleave = $row['OutstandingLeave_Years'];
 
-    echo $yearsOfService = dateDifferenceYears($startdate, $now); //calculates the years of service 
+    //echo $yearsOfService = dateDifferenceYears($startdate, $now); //calculates the years of service 
+    echo $yearsOfService = $now - $startdate; //calculates the years of service 
     //$yearsOfService = dateDifferenceYears($startdate, "11-08-2016");//for testing
 
 
