@@ -8,8 +8,10 @@ function Updates($fname, $lname, $empsex, $empid, $empemail, $status, $location,
             . "EmpDOB = '$dob', EmpPhone = '$empphone', EmpStartDate = '$startdate' where EmpID = '$empid'";
     mysqli_query($conn, $updateuserstable);
     
-    $actualempnum = $empnum - 1;
-    $updateleavestable = "update Leaves set EmpFName = '$fname', EmpLName = '$lname', EmpEmail='$empemail', EmpStartDate = '$startdate'"
+    //$actualempnum = $empnum - 1;
+    
+    $updateleavestable = "update Leaves set EmpFName = '$fname', EmpLName = '$lname', EmpEmail= '$empemail', EmpStartDate = '$startdate',"
+            . " EmpStatus = '$status', EmpRole = '$role', EmpSex = '$empsex'"
             . " where EmpID = '$empid'";
     mysqli_query($conn, $updateleavestable);
     
