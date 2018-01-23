@@ -1,0 +1,15 @@
+-keep loans open for an entire month
+
+-allow close off functionality
+
+-include low inventory alerts
+
+-send emails when inventory is low
+
+-monitor purchases and instock items
+
+-override for loans for AGM when/if GM is not available
+
+-each branch responsible for their own inv
+
+-revamp inv table

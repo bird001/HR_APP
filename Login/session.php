@@ -11,6 +11,7 @@ $ses_sql = mysqli_query($conn, "select * from Users where EmpEmail ='$user_check
 $row = mysqli_fetch_array($ses_sql, MYSQLI_ASSOC);
 $login_session = $row['EmpEmail'];
 $login_name = $row['FirstName']." ".$row['LastName'];
+$login_dept = $row['EmpDept'];
 
 
 if (isset($_SESSION["login_user"])) {// ensures user times out after a certain time

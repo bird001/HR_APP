@@ -1,15 +1,8 @@
 <?php
 include("../Templates/header.php");
 ?>
-<script type="text/javascript" src="editrow"></script>
+<!--<script type="text/javascript" src="editrow"></script>-->
 
-<script>
-    function AddInventory() {
-        var dept = $("#Dept").val();
-        //pop up window for uploading SchoolListinngs csv files
-        window.open("addinventory?dept=" + dept, "Add Inventory", "location=1,status=1,scrollbars=1,width=500,height=500");
-    }
-</script>
 
 <script type = "text/javascript" charset="utf-8">
 
@@ -39,9 +32,17 @@ $dept = $row['EmpDept'];
 if ($dept === 'HR') {
     ?>
     <div class = "container-fluid datatables_wrapper">
+        <form name="bulk_action_form" action="invcrudops" method="post" target="popup" 
+          onsubmit="window.open('about:blank','popup','width=600,height=990');" >
         <table id = "ViewInventory" name ="ViewInventory" class = "table-hover table-bordered" style="width:100%">
             <thead>
                 <tr>
+                    <th style="display:none">id_val</th><!--needed for sorting-->
+                    <th align = "center">
+                        <div align = "center">
+
+                        </div>
+                    </th>
                     <th style="display:none">id_val</th><!--needed for sorting--> 
                     <th>Item</th>
                     <th>Color</th>
@@ -57,8 +58,9 @@ if ($dept === 'HR') {
                 $rows = $results->fetchAll();
                 //NB... if you want to make all the rows editable, make the class name the same as the row name
                 foreach ($rows as $row) {
-                    echo '<tr name = "InventoryStationary" id="' . $row['id_val'] . '">';
-                    echo '<td class="if" style="display:none">' . $row['id_val'] . '</td>' .
+                    echo '<tr id="' . $row['id_val'] . '">';
+                    echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
+                    '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
                     '<td class="Item">' . $row['Item'] . '</td>' .
                     '<td class="Color">' . $row['Color'] . '</td>' .
                     '<td class="Brand">' . $row['Brand'] . '</td>' .
@@ -72,7 +74,10 @@ if ($dept === 'HR') {
 
             </tbody>                     
         </table>
+            <br>
         <button class="btn btn-primary" id="Dept" value="<?php echo $dept ?>" onclick="AddInventory();">Add Inventory</button>
+        <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="UpdateInventory"/>
+        </form>
     </div>
     <?php
 }
@@ -82,9 +87,17 @@ if ($dept === 'HR') {
 if ($dept === 'IT') {
     ?>
     <div class = "container-fluid datatables_wrapper">
+        <form name="bulk_action_form" action="invcrudops" method="post" target="popup" 
+          onsubmit="window.open('about:blank','popup','width=600,height=990');" >
         <table id = "ViewInventory" name ="ViewInventory" class = "table-hover table-bordered" style="width:100%">
             <thead>
                 <tr>
+                    <th style="display:none">id_val</th><!--needed for sorting-->
+                    <th align = "center">
+                        <div align = "center">
+
+                        </div>
+                    </th>
                     <th style="display:none">id_val</th><!--needed for sorting--> 
                     <th>Item</th>
                     <th>Color</th>
@@ -101,8 +114,9 @@ if ($dept === 'IT') {
                 $rows = $results->fetchAll();
                 //NB... if you want to make all the rows editable, make the class name the same as the row name
                 foreach ($rows as $row) {
-                    echo '<tr name = "InventoryTech" id="' . $row['id_val'] . '">';
-                    echo '<td class="if" style="display:none">' . $row['id_val'] . '</td>' .
+                    echo '<tr id="' . $row['id_val'] . '">';
+                    echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
+                    '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
                     '<td class="Item">' . $row['Item'] . '</td>' .
                     '<td class="Color">' . $row['Color'] . '</td>' .
                     '<td class="Brand">' . $row['Brand'] . '</td>' .
@@ -117,7 +131,10 @@ if ($dept === 'IT') {
 
             </tbody>                     
         </table>
+            <br>
         <button class="btn btn-primary" id="Dept" value ="<?php echo $dept; ?>" onclick="AddInventory();">Add Inventory</button>
+        <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="UpdateInventory"/>
+        </form>
     </div>
     <?php
 }
@@ -127,9 +144,17 @@ if ($dept === 'IT') {
 if ($dept === 'Maintenance') {
     ?>
     <div class = "container-fluid datatables_wrapper">
+        <form name="bulk_action_form" action="invcrudops" method="post" target="popup" 
+          onsubmit="window.open('about:blank','popup','width=600,height=990');">
         <table id = "ViewInventory" name ="ViewInventory" value ="<?php echo $dept; ?>" class = "table-hover table-bordered" style="width:100%">
             <thead>
                 <tr>
+                    <th style="display:none">id_val</th><!--needed for sorting-->
+                    <th align = "center">
+                        <div align = "center">
+
+                        </div>
+                    </th>
                     <th style="display:none">id_val</th><!--needed for sorting--> 
                     <th>Item</th>
                     <th>Brand</th>
@@ -144,8 +169,9 @@ if ($dept === 'Maintenance') {
                 $rows = $results->fetchAll();
                 //NB... if you want to make all the rows editable, make the class name the same as the row name
                 foreach ($rows as $row) {
-                    echo '<tr name = "InventorySanitary" id="' . $row['id_val'] . '">';
-                    echo '<td class="if" style="display:none">' . $row['id_val'] . '</td>' .
+                    echo '<tr id="' . $row['id_val'] . '">';
+                    echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
+                    '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
                     '<td class="Item">' . $row['Item'] . '</td>' .
                     '<td class="Brand">' . $row['Brand'] . '</td>' .
                     '<td class="Amount">' . $row['Amount'] . '</td>' .
@@ -158,7 +184,10 @@ if ($dept === 'Maintenance') {
 
             </tbody>                     
         </table>
+            <br>
         <button class="btn btn-primary" id="Dept" value ="<?php echo $dept; ?>" onclick="AddInventory();">Add Inventory</button>
+        <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="UpdateInventory"/>
+        </form>>
     </div>
     <?php
 }
