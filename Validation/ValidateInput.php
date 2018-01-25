@@ -85,7 +85,7 @@ function ValidateName($name) {
     } else {
         $name = validate_input($name);
 // check if name only contains letters and whitespace
-        if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+        if (!preg_match("/^[a-zA-Z -]*$/", $name)) {
             return "only letters and white space";
         } else {
             return 1;
