@@ -3,7 +3,12 @@ include("../Templates/header.php");
 ?>
 <!--<script type="text/javascript" src="editrow"></script>-->
 
-
+<!--<script type = "text/javascript" charset="utf-8">
+    function AddInventory() {
+//pop up window for uploading SchoolListinngs csv files
+        window.open("addinventory", "Add Inventory", "location=1,status=1,scrollbars=1,width=400,height=400");
+    }
+</script>-->
 <script type = "text/javascript" charset="utf-8">
 
     $(document).ready(function () {
@@ -13,6 +18,8 @@ include("../Templates/header.php");
     });
 
 </script>
+
+
 <?php
 include("../Templates/navigation.php");
 include("../Templates/body.php");
@@ -75,8 +82,9 @@ if ($dept === 'HR') {
             </tbody>                     
         </table>
             <br>
-        <button class="btn btn-primary" id="Dept" value="<?php echo $dept ?>" onclick="AddInventory();">Add Inventory</button>
+        <!--<button class="btn btn-primary" id="Dept" value="<?php echo $dept ?>" onclick="AddInventory();">Add Inventory</button>-->
         <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="UpdateInventory"/>
+        <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="AddInventory"/>
         </form>
     </div>
     <?php
@@ -185,7 +193,7 @@ if ($dept === 'Maintenance') {
             </tbody>                     
         </table>
             <br>
-        <button class="btn btn-primary" id="Dept" value ="<?php echo $dept; ?>" onclick="AddInventory();">Add Inventory</button>
+       <!-- <button class="btn btn-primary" id="Dept" value ="<?php echo $dept; ?>" onclick="AddInventory();">Add Inventory</button>-->s
         <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="UpdateInventory"/>
         </form>>
     </div>
