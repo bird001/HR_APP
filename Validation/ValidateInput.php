@@ -108,7 +108,7 @@ function ValidateAlphaNumeric($alphanum) {
 }
 
 function ValidateNumeric($alphanum) {
-    if (empty($alphanum)) {
+    if (empty($alphanum) && !isset($alphanum)) {
         return "cannot be empty";
     } else {
         $alphanum = validate_input($alphanum);
