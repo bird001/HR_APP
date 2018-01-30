@@ -10,6 +10,7 @@
 
 -override for loans for AGM when/if GM is not available
 
--each branch responsible for their own inv
+-each branch responsible for their own inv management(add and update)--done
 
--revamp inv table
+-each branch inv request should be targeted towards the branch supervisors
+    -recognize the employee location and send request directly to the branch supervisor

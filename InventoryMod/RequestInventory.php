@@ -33,8 +33,8 @@ include("../Templates/header.php");
                     document.getElementById("model").innerHTML = response;
                 } else {
                     document.getElementById("model").innerHTML = response;
-                    document.getElementById("model").setAttribute("readonly",true);
-                    
+                    document.getElementById("model").setAttribute("readonly", true);
+
                 }
             }
         });
@@ -57,13 +57,13 @@ include("../Templates/header.php");
                     document.getElementById("color").innerHTML = response;
                 } else {
                     document.getElementById("color").innerHTML = response;
-                    document.getElementById("color").setAttribute("readonly",true);
-                    
+                    document.getElementById("color").setAttribute("readonly", true);
+
                 }
             }
         });
     }
-    
+
 
 
 
@@ -213,114 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
                 </span>
             </div>
-            <!--
-            <div class="form-group">
-                <label for="inputInvCat" class="control-label">Item Category</label>
-                <select class="form-control" name="InvCat" id="InvCat" required>
-                    <option disabled selected value> -- select category -- </option>
-                    <option value="stationary">Stationary Supplies</option>
-                    <option value="sanitary">Sanitary Supplies</option>
-                    <option value = "tech">IT Supplies</option>
-                </select>
-                <script>
-                    $(document).ready(function () {
 
-                        $("#InvCat").change(function () {
-                            var val = $(this).val();
-                            if (val == "tech") {
-                                $("#Iname").html("\
-                                        <option disabled selected value> -- select item -- </option>\n\
-                                        <option value='toner'>Toner</option>\n\
-                                        <option value='keyboard'>KeyBoard</option>\n\
-                                        <option value='mouse'>Mouse</option>\n\
-                                        <option value='cpu'>CPU</option>\n\
-                                        <option value='monitor'>Monitor</option>"
-                                        );
-                            } else if (val == "sanitary") {//to-do 
-                                $("#Iname").html("<option value='n/a'>n/a</option>");
-                            } else if (val == "stationary") {
-                                $("#Iname").html("\
-                                            <option disabled selected value> -- select item -- </option>\
-                                            <option value='stapler'>Stapler</option>\
-                                            <option value='staples'>Staples</option>\
-                                            <option value='pens'>Pens</option>\
-                                            <option value='pencil'>Pencil</option>\
-                                            <option value='ruler'>Ruler</option>\
-                                            <option value='legalpaper'>Legal Paper</option>\
-                                            <option value='letterpaper'>Letter Paper</option>\
-                                            <option value='letteropener'>Letter Opener</option>\
-                                            <option value='notepad'>Note Pad</option>\
-                                            <option value='legalpad'>Legal Pad</option>\
-                                            <option value='4quire'>4 Quire Books</option>\
-                                            ");
-                            }
-                        });
-                    });
-                </script>
-            </div>
-
-            <div class="form-group">
-                <label for="inputIName" class="control-label">Item</label>
-                <select class="form-control" name="Iname" id="Iname" required>
-                    <option disabled selected value> -- select category -- </option>
-
-                    <script>
-                        $(document).ready(function () {
-
-                            $("#Iname").change(function () {
-                                var val = $(this).val();
-                                if (val == "toner") {
-                                    $("#color").removeAttr("readonly");
-                                    $("#color").html("\
-                                        <option disabled selected value> -- select item -- </option>\
-                                        <option value='black'>Black</option>\n\
-                                        <option value='blue'>Blue</option>\n\
-                                        <option value='red'>Red</option>\n\
-                                        <option value='yellow'>Yellow</option>\n\
-                                        <option value='tri'>Tri-Color</option>\n\
-                                            ");
-                                    $("#model").removeAttr("readonly");
-                                    $("#model").html("\
-                                        <option disabled selected value> -- select item -- </option>\
-                                        <option value='4002i'>TaskAlpha4002i</option>\n\
-                                        <option value='3552ci'>TaskAlpha3552ci</option>\n\
-                                        <option value='5002i'>TaskAlpha5002i</option>\n\
-                                        <option value='393'>OKI390 Series</option>\n\
-                                            ");
-                                } else {
-                                    $("#color").attr("readonly", true);
-                                    $("#color").html("\
-                                        <option selected value='N/A'>N/A</option>\
-                                        ");
-
-                                    $("#model").attr("readonly", true);
-                                    $("#model").html("\
-                                        <option selected value='N/A'>N/A</option>\
-                                        ");
-
-                                }
-
-                            });
-                        });
-                    </script>
-                </select>
-                <span class="error">
-            <?php
-//if ($itemNV != 1) {
-//  echo $itemNV;
-//}
-            ?>
-                </span>
-            </div>
-            -->
-            <!--
-            <div class="form-group">
-                <label for="inputBrand" class="control-label">Brand</label>
-                <select class="form-control" name="brand" id="brand" readonly required>
-                    <option selected value="n/a">N/A</option>
-                </select>
-            </div>
-            -->
 
             <div class="form-group">
                 <label for="inputModel" class="control-label">Model</label>

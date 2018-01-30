@@ -95,21 +95,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $empid = $_POST['EmpID'];
         $pass1 = $_POST['EmpPass1'];
         $pass2 = $_POST['EmpPass2'];
-        
+
         $getcredentials = "select * from Users where EmpID = '$empid'";
         $credentials_results = mysqli_query($conn, $getcredentials);
         $credentials_row = mysqli_fetch_array($credentials_results, MYSQLI_ASSOC);
 
         $empemail = $credentials_row['EmpEmail'];
-        $empname = $credentials_row['FirstName'].' '.$credentials_row['LastName'];
+        $empname = $credentials_row['FirstName'] . ' ' . $credentials_row['LastName'];
         $passcompare = ComparePasswords($pass1, $pass2);
-        
+
         if ($passcompare == 1) {
             ChangePass($pass1, $empid);
             smtpmailer_PasswordChange($empname, $empemail, $pass1);
             echo "<script>window.close();</script>";
         }
-        
     }
 }
 ?>
@@ -208,11 +207,21 @@ if ($functiontype == 'EditProfile') {
                             <option>Temporary</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="inputStatus" class="control-label">Location</label>
                         <select class="form-control" name="EmpLocation" id="EmpLocation" required>
-                            <option selected><?php echo $location ?></option>
+                            <?php
+                            if (!empty($location)) {
+                                ?>
+                                <option selected><?php echo $location ?></option>
+                                <?php
+                            } else {
+                                ?>
+                                 <option>---Select Location---</option>
+                                <?php
+                            }
+                            ?>
                             <option>HQ</option>
                             <option>Mandeville</option>
                             <option>Ocho Rios</option>
@@ -240,11 +249,11 @@ if ($functiontype == 'EditProfile') {
                         <label for="inputPosition" class="control-label">Position</label>
                         <input type="text" name="EmpPosition" id="EmpPosition" class="form-control" value="<?php echo $emppos ?>" required/>
                         <span class="error"> 
-                            <?php
-                            if ($emppos_result != 1) {
-                                echo $emppos_result;
-                            }
-                            ?>
+    <?php
+    if ($emppos_result != 1) {
+        echo $emppos_result;
+    }
+    ?>
                         </span>
                     </div>
 
@@ -257,11 +266,11 @@ if ($functiontype == 'EditProfile') {
                         <label for="inputDOB" class="control-label">D.O.B</label>
                         <input type="text" name="EmpDOB" id="EmpDOB" class="form-control" value="<?php echo $empdob ?>" required/>
                         <span class="error"> 
-                            <?php
-                            if ($empdob_result != 1) {
-                                echo $empdob_result;
-                            }
-                            ?>
+    <?php
+    if ($empdob_result != 1) {
+        echo $empdob_result;
+    }
+    ?>
                         </span>
                     </div>
 
@@ -269,11 +278,11 @@ if ($functiontype == 'EditProfile') {
                         <label for="inputPhone" class="control-label">Phone</label>
                         <input type="tel" name="EmpPhone" id="EmpPhone" class="form-control" value="<?php echo $empphone ?>" required/>
                         <span class="error"> 
-                            <?php
-                            if ($empphone_result != 1) {
-                                echo $empphone_result;
-                            }
-                            ?>
+    <?php
+    if ($empphone_result != 1) {
+        echo $empphone_result;
+    }
+    ?>
                         </span>
                     </div>
 
@@ -281,11 +290,11 @@ if ($functiontype == 'EditProfile') {
                         <label for="inputEmpStartDate" class="control-label">Date of Employment</label>
                         <input type="text" name="EmpStartDate" id="EmpStartDate" class="form-control" value="<?php echo $empstart ?>" required/>
                         <span class="error"> 
-                            <?php
-                            if ($empdate_result != 1) {
-                                echo $empdate_result;
-                            }
-                            ?>
+    <?php
+    if ($empdate_result != 1) {
+        echo $empdate_result;
+    }
+    ?>
                         </span>
                     </div>
                     <input class="btn btn-primary" type="submit" name="EditProfile" id ="EditProfile" value="Update"/> 
@@ -321,11 +330,11 @@ if ($functiontype == 'EditProfile') {
                         <label for="inputEmpPass2" class="control-label">Password Confirm</label>
                         <input type="password" name="EmpPass2" id="EmpPass2" class="form-control" required/>
                         <span class="error"> 
-                             <?php
-                            if ($passcompare != 1) {
-                                echo $passcompare;
-                            }
-                            ?>
+    <?php
+    if ($passcompare != 1) {
+        echo $passcompare;
+    }
+    ?>
                         </span>
                     </div>
                     <input class="btn btn-primary" type="submit" name="EditProfile" id ="EditProfile" value="ChangePass"/>

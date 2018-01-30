@@ -1,14 +1,6 @@
 <?php
 include("../Templates/header.php");
 ?>
-<!--<script type="text/javascript" src="editrow"></script>-->
-
-<!--<script type = "text/javascript" charset="utf-8">
-    function AddInventory() {
-//pop up window for uploading SchoolListinngs csv files
-        window.open("addinventory", "Add Inventory", "location=1,status=1,scrollbars=1,width=400,height=400");
-    }
-</script>-->
 <script type = "text/javascript" charset="utf-8">
 
     $(document).ready(function () {
@@ -60,7 +52,7 @@ if ($dept === 'HR') {
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM InventoryStationary";
+                $sql = "SELECT * FROM InventoryStationary where Location = '$login_location'";
                 $results = $dbh->query($sql);
                 $rows = $results->fetchAll();
                 //NB... if you want to make all the rows editable, make the class name the same as the row name
@@ -82,7 +74,6 @@ if ($dept === 'HR') {
             </tbody>                     
         </table>
             <br>
-        <!--<button class="btn btn-primary" id="Dept" value="<?php echo $dept ?>" onclick="AddInventory();">Add Inventory</button>-->
         <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="UpdateInventory"/>
         <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="AddInventory"/>
         </form>
@@ -117,7 +108,7 @@ if ($dept === 'IT') {
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM InventoryTech";
+                $sql = "SELECT * FROM InventoryTech where Location = '$login_location'";
                 $results = $dbh->query($sql);
                 $rows = $results->fetchAll();
                 //NB... if you want to make all the rows editable, make the class name the same as the row name
@@ -140,8 +131,8 @@ if ($dept === 'IT') {
             </tbody>                     
         </table>
             <br>
-        <button class="btn btn-primary" id="Dept" value ="<?php echo $dept; ?>" onclick="AddInventory();">Add Inventory</button>
         <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="UpdateInventory"/>
+        <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="AddInventory"/>
         </form>
     </div>
     <?php
@@ -193,8 +184,8 @@ if ($dept === 'Maintenance') {
             </tbody>                     
         </table>
             <br>
-       <!-- <button class="btn btn-primary" id="Dept" value ="<?php echo $dept; ?>" onclick="AddInventory();">Add Inventory</button>-->s
         <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="UpdateInventory"/>
+        <input class="btn btn-primary" type="submit" name="InvOp" id = "InvOp" value="AddInventory"/>
         </form>>
     </div>
     <?php

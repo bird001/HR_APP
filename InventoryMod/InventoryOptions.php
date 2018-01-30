@@ -2,10 +2,11 @@
 
 include("../db/db2.php");
 include("../db/db3.php");
+include("../Login/session.php");
 
 if (isset($_POST['get_item'])) {
     $invcategory = $_POST['get_item'];
-    $invselect = "select distinct Item from Inventory" . $invcategory;
+    $invselect = "select distinct Item from Inventory" . $invcategory . " where Location = '$login_location'";
     $find = mysqli_query($conn, $invselect);
 
     echo "<option disabled selected value> -- select item -- </option>";

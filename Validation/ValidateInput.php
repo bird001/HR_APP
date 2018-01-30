@@ -99,7 +99,7 @@ function ValidateAlphaNumeric($alphanum) {
     } else {
         $alphanum = validate_input($alphanum);
 // check if name only contains letters and whitespace
-        if (!preg_match("#^[a-zA-Z()0-9 /]*$#", $alphanum)) {
+        if (!preg_match("#^[a-zA-Z()0-9 -/]*$#", $alphanum)) {
             return "only letters and white space";
         } else {
             return 1;
