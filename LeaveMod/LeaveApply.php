@@ -185,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "error";
         }
     } else {
-        $daysError = "Not Enough Days/Hours";
+        $daysError = "ERROR!!! Not Enough Days/Hours";
     }
 }
 ?>
@@ -246,6 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option>Sick</option>
                     <option>Department</option>
                     <option>VacationOutstanding</option>
+                    <option>ContractBreak</option>
                     <option>Bereavement</option>
                     <option>JuryDuty</option>
                     <option>Maternity</option>
@@ -258,15 +259,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group">  
                 <label for="inputStartDate" class="control-label">FROM</label>
                 <input type="datetime-local" name="StartDate" id="StartDate" class="form-control"  required/>
-                <span class="error"><?php echo $startdateError; ?></span>
-                <span class="error"><?php echo $daysError; ?></span>
+                <span class="error danger"><?php echo $startdateError; ?></span>
+                <span class="error danger"><?php echo $daysError; ?></span>
             </div>
 
             <div class="form-group">  
                 <label for="inputEndDate" class="control-label">TO</label>
                 <input type="datetime-local" name="EndDate" id="EndDate" class="form-control"  required/>
-                <span class="error"><?php echo $enddateError; ?></span>
-                <span class="error"><?php echo $daysError; ?></span>
+                <span class="error danger"><?php echo $enddateError; ?></span>
+                <span class="error danger" ><?php echo $daysError; ?></span>
             </div>
 
             <div class="form-group">

@@ -134,6 +134,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $bereavementDays = "3";
 
         $deptDays = "72";
+        
+        $contractbreak = '15';
 
 
 
@@ -160,10 +162,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mysqli_query($conn, $dletter);
             //-----------------------------------------------------------------------------------------
             //insert into Leave table------------------------------------------------------------------------------
-            $leave = "insert into HR_DEPT.Leaves(EmpFName,EmpLName,EmpID,EmpEmail,YearsOfEmployment,Vacation,Sick,Department,Maternity,Study,Bereavement,JuryDuty,
+            $leave = "insert into HR_DEPT.Leaves(EmpFName,EmpLName,EmpID,EmpEmail,YearsOfEmployment,Vacation,ContractBreak,Sick,Department,Maternity,Study,Bereavement,JuryDuty,
           EmpStartDate,EmpStatus,EmpRole,EmpSex)
           values(
-          '$fname','$lname','$empid','$empemail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
+          '$fname','$lname','$empid','$empemail','$yearsOfEmp','$vacationDays','$contractbreak','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
           '$newDateStart','$status','$role','$empsex'
           )";
             mysqli_query($conn, $leave);

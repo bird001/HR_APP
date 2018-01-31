@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <form action="" method="post" class = "form-group" align="left">
                             <div class="form-group">
-                                <label for="inputEmail" class="control-label">Email</label>
+                                <label for="inputEmail" class="control-label">UserName</label>
                                 <input type="text" name="email" id="email" class="form-control" placeholder="j.hancokck@tipfriendly.com" required/>
                             </div>  
 

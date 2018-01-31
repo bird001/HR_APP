@@ -29,6 +29,7 @@ include("../db/db3.php");
                     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                     "Vacation Days: " . $row['Vacation'] . "<br>" .
                             "Oustanding Vacation Days: " . $row['VacationOutstanding'] . "<br>" .
+                            "Contract Break: " . $row['ContractBreak'] . "<br>" .
                             "Sick Days: " . $row['Sick'] . "<br>" .
                             "Maternity Days: " . $row['Maternity'] . "<br>" .
                             "Study Days: " . $row['Study'] . "<br>" .
@@ -42,10 +43,17 @@ include("../db/db3.php");
 
 
                         </div>
-                        
-                         <div class="form-group">
+
+                        <div class="form-group">
                             <label for="VacationDaysOut" class="control-label">Outstanding Vacation</label>
                             <label for="VacationDaysOut" class="form-control"><?php echo $row['VacationOutstanding']; ?></label>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="VacationDaysOut" class="control-label">Contract Break</label>
+                            <label for="VacationDaysOut" class="form-control"><?php echo $row['ContractBreak']; ?></label>
 
 
                         </div>

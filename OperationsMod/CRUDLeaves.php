@@ -35,6 +35,7 @@ include("../OperationsMod/OperationsNav.php");
                 <th>ID#</th>
                 <th>Vacation</th>
                 <th>Vacation Outstanding</th>
+                <th>Contract Break</th>
                 <th>Sick</th>
                 <th>Dept</th>
                 <th>Maternity</th>
@@ -58,6 +59,7 @@ include("../OperationsMod/OperationsNav.php");
                 '<td class="emid">' . $row['EmpID'] . '</td>' .
                 '<td class="Vacation">' . $row['Vacation'] . '</td>' .
                 '<td class="VacationOutstanding">' . $row['VacationOutstanding'] . '</td>' .
+                '<td class="ContractBreak">' . $row['ContractBreak'] . '</td>' .
                 '<td class="Sick">' . $row['Sick'] . '</td>' .
                 '<td class="Department">' . $row['Department'] . '</td>' .
                 '<td class="Maternity">' . $row['Maternity'] . '</td>' .

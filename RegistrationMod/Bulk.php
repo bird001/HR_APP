@@ -114,12 +114,14 @@ if ($_FILES[uploaded_file][size] > 0) {
                 $bereavementDays = "3";
 
                 $deptDays = "72";
+                
+                $contractbreak = '15';
 
                 //insert into Leave table------------------------------------------------------------------------------
-                $leave = "insert into HR_DEPT.Leaves(EmpFName,EmpLName,EmpID,EmpEmail,YearsOfEmployment,Vacation,Sick,Department,Maternity,Study,Bereavement,JuryDuty,
+                $leave = "insert into HR_DEPT.Leaves(EmpFName,EmpLName,EmpID,EmpEmail,YearsOfEmployment,Vacation,ContractBreak,Sick,Department,Maternity,Study,Bereavement,JuryDuty,
                 EmpStartDate,EmpStatus,EmpRole,EmpSex)
                 values(
-                '$fname','$lname','$empid','$empmail','$yearsOfEmp','$vacationDays','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
+                '$fname','$lname','$empid','$empmail','$yearsOfEmp','$vacationDays','$contractbreak','$sickDays','$deptDays','$maternityDays','$studyDays','$bereavementDays','$juryDutyDays',
                       '$empstart','$empstatus','$emprole','$empsex'
                     )";
                 mysqli_query($conn, $leave);
