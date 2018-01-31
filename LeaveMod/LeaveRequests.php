@@ -42,7 +42,7 @@ $role = $row3['EmpRole'];
 
 <?php
 //if user is employees manager
-if ($email === $manemail && empty($row1['ManagerResponse'])) {
+if ($email === $manemail) {
     ?>
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="requestcheck" method="post" >
@@ -72,22 +72,24 @@ if ($email === $manemail && empty($row1['ManagerResponse'])) {
                     $rows = $results->fetchAll();
 
                     foreach ($rows as $row) {
-                        echo '<tr id="' . $row['id_val'] . '">';
-                        echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
-                        '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
-                        '<td class="name">' . $row['FirstName'] . " " . $row['LastName'] .
-                        '<td class="empnum">' . $row['EmpID'] . '</td>' .
-                        '<td class="empdept">' . $row['EmpDept'] . '</td>' .
-                        '<td class="type">' . $row['LeaveType'] . '</td>' .
-                        '<td class="dates">' . $row['StartDate'] . "-->" . $row['EndDate'] . '</td>';
-                        if ($row['LeaveType'] === 'Department') {
-                            echo '<td class="days">' . $row['NumDays'] . ' Hours' . '</td>';
-                        } else {
-                            echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
-                        }
-                        echo '<td class="reason">' . $row['Reason'] . '</td>';
+                        if (empty($row['ManagerResponse'])) {
+                            echo '<tr id="' . $row['id_val'] . '">';
+                            echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
+                            '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
+                            '<td class="name">' . $row['FirstName'] . " " . $row['LastName'] .
+                            '<td class="empnum">' . $row['EmpID'] . '</td>' .
+                            '<td class="empdept">' . $row['EmpDept'] . '</td>' .
+                            '<td class="type">' . $row['LeaveType'] . '</td>' .
+                            '<td class="dates">' . $row['StartDate'] . "-->" . $row['EndDate'] . '</td>';
+                            if ($row['LeaveType'] === 'Department') {
+                                echo '<td class="days">' . $row['NumDays'] . ' Hours' . '</td>';
+                            } else {
+                                echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
+                            }
+                            echo '<td class="reason">' . $row['Reason'] . '</td>';
 
-                        echo '</tr>';
+                            echo '</tr>';
+                        }
                     }
                     ?>
 
@@ -100,7 +102,7 @@ if ($email === $manemail && empty($row1['ManagerResponse'])) {
     </div>
     <?php
 }
-if ($email === $hremail && !empty($row2['ManagerResponse'])) { //if manager has responded and HR user is logged in
+if ($email === $hremail) { //if manager has responded and HR user is logged in
     ?>
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="requestcheck" method="post" >
@@ -130,22 +132,24 @@ if ($email === $hremail && !empty($row2['ManagerResponse'])) { //if manager has 
                     $rows = $results->fetchAll();
 
                     foreach ($rows as $row) {
-                        echo '<tr id="' . $row['id_val'] . '">';
-                        echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
-                        '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
-                        '<td class="name">' . $row['FirstName'] . " " . $row['LastName'] .
-                        '<td class="empnum">' . $row['EmpID'] . '</td>' .
-                        '<td class="empdept">' . $row['EmpDept'] . '</td>' .
-                        '<td class="type">' . $row['LeaveType'] . '</td>' .
-                        '<td class="dates">' . $row['StartDate'] . "-->" . $row['EndDate'] . '</td>';
-                        if ($row['LeaveType'] === 'Department') {
-                            echo '<td class="days">' . $row['NumDays'] . ' Hours' . '</td>';
-                        } else {
-                            echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
-                        }
-                        echo '<td class="reason">' . $row['Reason'] . '</td>';
+                        if (!empty($row['ManagerResponse'])) {
+                            echo '<tr id="' . $row['id_val'] . '">';
+                            echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
+                            '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
+                            '<td class="name">' . $row['FirstName'] . " " . $row['LastName'] .
+                            '<td class="empnum">' . $row['EmpID'] . '</td>' .
+                            '<td class="empdept">' . $row['EmpDept'] . '</td>' .
+                            '<td class="type">' . $row['LeaveType'] . '</td>' .
+                            '<td class="dates">' . $row['StartDate'] . "-->" . $row['EndDate'] . '</td>';
+                            if ($row['LeaveType'] === 'Department') {
+                                echo '<td class="days">' . $row['NumDays'] . ' Hours' . '</td>';
+                            } else {
+                                echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
+                            }
+                            echo '<td class="reason">' . $row['Reason'] . '</td>';
 
-                        echo '</tr>';
+                            echo '</tr>';
+                        }
                     }
                     ?>
 
@@ -189,22 +193,24 @@ if ($dept === 'HR' && $role === 'Supervisor') { //if manager has responded and H
                     $rows = $results->fetchAll();
 
                     foreach ($rows as $row) {
-                        echo '<tr id="' . $row['id_val'] . '">';
-                        echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
-                        '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
-                        '<td class="name">' . $row['FirstName'] . " " . $row['LastName'] .
-                        '<td class="empnum">' . $row['EmpID'] . '</td>' .
-                        '<td class="empdept">' . $row['EmpDept'] . '</td>' .
-                        '<td class="type">' . $row['LeaveType'] . '</td>' .
-                        '<td class="dates">' . $row['StartDate'] . "-->" . $row['EndDate'] . '</td>';
-                        if ($row['LeaveType'] === 'Department') {
-                            echo '<td class="days">' . $row['NumDays'] . ' Hours' . '</td>';
-                        } else {
-                            echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
-                        }
-                        echo '<td class="reason">' . $row['Reason'] . '</td>';
+                        if (!empty($row['ManagerResponse'])) {
+                            echo '<tr id="' . $row['id_val'] . '">';
+                            echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
+                            '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
+                            '<td class="name">' . $row['FirstName'] . " " . $row['LastName'] .
+                            '<td class="empnum">' . $row['EmpID'] . '</td>' .
+                            '<td class="empdept">' . $row['EmpDept'] . '</td>' .
+                            '<td class="type">' . $row['LeaveType'] . '</td>' .
+                            '<td class="dates">' . $row['StartDate'] . "-->" . $row['EndDate'] . '</td>';
+                            if ($row['LeaveType'] === 'Department') {
+                                echo '<td class="days">' . $row['NumDays'] . ' Hours' . '</td>';
+                            } else {
+                                echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
+                            }
+                            echo '<td class="reason">' . $row['Reason'] . '</td>';
 
-                        echo '</tr>';
+                            echo '</tr>';
+                        }
                     }
                     ?>
 
@@ -217,7 +223,6 @@ if ($dept === 'HR' && $role === 'Supervisor') { //if manager has responded and H
     </div>
     <?php
 }
-
 ?>
 <br>
 <br>
