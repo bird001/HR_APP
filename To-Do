@@ -14,3 +14,7 @@
 
 -each branch inv request should be targeted towards the branch supervisors
     -recognize the employee location and send request directly to the branch supervisor
+    -create table to save additions and updates to inventory stock
+
+-account for public holidays when employees applying for leave.
+    -do not count public holidays as business days

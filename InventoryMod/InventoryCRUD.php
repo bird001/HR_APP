@@ -52,7 +52,8 @@ if ($dept === 'HR') {
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM InventoryStationary where Location = '$login_location'";
+                //$sql = "SELECT * FROM InventoryStationary where Location = '$login_location'";
+                $sql = "SELECT * FROM InventoryStationary";
                 $results = $dbh->query($sql);
                 $rows = $results->fetchAll();
                 //NB... if you want to make all the rows editable, make the class name the same as the row name
@@ -108,7 +109,8 @@ if ($dept === 'IT') {
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM InventoryTech where Location = '$login_location'";
+                //$sql = "SELECT * FROM InventoryTech where Location = '$login_location'";
+                $sql = "SELECT * FROM InventoryTech";
                 $results = $dbh->query($sql);
                 $rows = $results->fetchAll();
                 //NB... if you want to make all the rows editable, make the class name the same as the row name
