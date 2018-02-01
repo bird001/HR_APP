@@ -52,7 +52,7 @@ include("../Templates/header.php");
                 get_cat2: cat
             },
             success: function (response) {
-                if (cat === 'Tech') {
+                if (cat === 'Tech' || cat === 'Stationary') {
                     document.getElementById("color").removeAttribute("readonly");
                     document.getElementById("color").innerHTML = response;
                 } else {
