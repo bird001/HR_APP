@@ -2,19 +2,19 @@
 
 -allow close off functionality
 
--include low inventory alerts
+-include low inventory alerts -- done
 
--send emails when inventory is low
+-send emails when inventory is low -- done
 
--monitor purchases and instock items
+-monitor purchases and instock items-- done
 
--override for loans for AGM when/if GM is not available
+-override for loans for AGM when/if GM is not available--done
 
 -each branch responsible for their own inv management(add and update)--done
 
--each branch inv request should be targeted towards the branch supervisors
+-each branch inv request should be targeted towards the branch supervisors. -- TO-DO
     -recognize the employee location and send request directly to the branch supervisor
     -create table to save additions and updates to inventory stock
 
--account for public holidays when employees applying for leave.
+-account for public holidays when employees applying for leave. --TO-DO
     -do not count public holidays as business days

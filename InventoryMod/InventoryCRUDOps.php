@@ -63,12 +63,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $functiontype == 'Update') {
             $update_query = "update InventoryStationary set Item = '$itemname', Color = '$itemcolor', Brand = '$itembrand', "
                     . "Amount = $stock, LastUpdated = '$dateupdated' where id_val = '$itemid'";
             mysqli_query($conn, $update_query);
+
+            if ($newstock == 0) {//check what kind of change was made and track changes
+                $track_inv = "insert into InventoryTracker (Item, Color, Brand, Model, InStock, Purchased, UpdatedStock, Location, "
+                        . "Department, UpdatedBy, Action) values('$itemname','$itemcolor','$itembrand','N/A','$instock','$newstock',"
+                        . "'$stock','$login_location','$operator_dept','$operator', 'Item Details Changed')";
+                mysqli_query($conn, $track_inv);
+            } else {
+                $track_inv = "insert into InventoryTracker (Item, Color, Brand, Model, InStock, Purchased, UpdatedStock, Location, "
+                        . "Department, UpdatedBy, Action) values('$itemname','$itemcolor','$itembrand','N/A','$instock','$newstock',"
+                        . "'$stock','$login_location','$operator_dept','$operator', 'Item Stock Updated')";
+                mysqli_query($conn, $track_inv);
+            }
             echo "<script>window.close();</script>";
         }
         if ($operator_dept === 'IT') {
             $update_query = "update InventoryTech set Item = '$itemname', Color = '$itemcolor', Brand = '$itembrand', "
                     . "Model = '$itemmodel', Amount = $stock, LastUpdated = '$dateupdated' where id_val = '$itemid'";
-            mysqli_query($conn, $update_query);
+            mysqli_query($conn, $track_inv);
+
+            if ($newstock == 0) {//check what kind of change was made and track changes
+                $track_inv = "insert into InventoryTracker (Item, Color, Brand, Model, InStock, Purchased, UpdatedStock, Location, "
+                        . "Department, UpdatedBy, Action) values('$itemname','$itemcolor','$itembrand','N/A','$instock','$newstock',"
+                        . "'$stock','$login_location','$operator_dept','$operator', 'Item Details Changed')";
+                mysqli_query($conn, $track_inv);
+            } else {
+                $track_inv = "insert into InventoryTracker (Item, Color, Brand, Model, InStock, Purchased, UpdatedStock, Location, "
+                        . "Department, UpdatedBy, Action) values('$itemname','$itemcolor','$itembrand','N/A','$instock','$newstock',"
+                        . "'$stock','$login_location','$operator_dept','$operator', 'Item Stock Updated')";
+                mysqli_query($conn, $track_inv);
+            }
             echo "<script>window.close();</script>";
         }
     }
@@ -108,14 +132,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $functiontype == 'Create') {
         if ($operator_dept === 'HR') {
             $insert_query = "insert into InventoryStationary (Item, Color, Brand, Amount, LastUpdated, Location) values "
                     . "('$itemname', '$itemcolor', '$itembrand', '$stock','$dateupdated','$login_location')";
-                    
+
             mysqli_query($conn, $insert_query);
+
+            //check what kind of change was made and track changes
+            $track_inv = "insert into InventoryTracker (Item, Color, Brand, Model, InStock, Purchased, UpdatedStock, Location, "
+                    . "Department, UpdatedBy, Action) values('$itemname','$itemcolor','$itembrand','N/A','$instock','$newstock',"
+                    . "'$stock','$login_location','$operator_dept','$operator', 'Item Added')";
+            mysqli_query($conn, $track_inv);
             echo "<script>window.close();</script>";
         }
         if ($operator_dept === 'IT') {
             $insert_query = "insert into InventoryTech (Item, Color, Brand, Model, Amount, LastUpdated, Location) values"
                     . " ('$itemname', '$itemcolor', '$itembrand','$itemmodel', '$stock', '$dateupdated', '$login_location')";
             mysqli_query($conn, $insert_query);
+
+            //check what kind of change was made and track changes
+            $track_inv = "insert into InventoryTracker (Item, Color, Brand, Model, InStock, Purchased, UpdatedStock, Location, "
+                    . "Department, UpdatedBy, Action) values('$itemname','$itemcolor','$itembrand','N/A','$instock','$newstock',"
+                    . "'$stock','$login_location','$operator_dept','$operator', 'Item Added')";
+            mysqli_query($conn, $track_inv);
             echo "<script>window.close();</script>";
         }
     }
@@ -133,13 +169,13 @@ if ($functiontype === 'AddInventory') {
                     <div class="form-group">
                         <label for="inputItemName" class="control-label">Item Name</label>
                         <input type="text" name="Itemname" id="Itemname" class="form-control" value="<?php echo $itemname ?>" required/>
-                        
+
                     </div>
 
                     <div class="form-group">
                         <label for="inputItemcolor" class="control-label">Color</label>
                         <input type="text" name="Color" id="Color" class="form-control" value="<?php echo $itemcolor ?>" required/>
-                        
+
                     </div>
                     <?php
                     if ($operator_dept === 'IT') {
@@ -147,7 +183,7 @@ if ($functiontype === 'AddInventory') {
                         <div class="form-group">
                             <label for="inputItemModel" class="control-label">Model</label>
                             <input type="text" name="Model" id="Model" class="form-control" value="<?php echo $itemmodel ?>" required/>
-                            
+
                         </div>
                         <?php
                     }
@@ -156,7 +192,7 @@ if ($functiontype === 'AddInventory') {
                     <div class="form-group">
                         <label for="inputBrand" class="control-label">Brand</label>
                         <input type="text" name="Brand" id="Brand" class="form-control" value="<?php echo $itembrand ?>" required/>
-                        
+
                     </div>
 
                     <div class="form-group">

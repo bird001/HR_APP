@@ -932,6 +932,40 @@ function smtpmailer_InventoryRequestLimited($empname, $empdept, $empemail, $item
     }
 }
 
+function smtpmailer_LowInvAlert($address, $addresscc, $itemname, $itemamount, $itemcolor, $itembrand, $itemmodel) {
+//global $error;
+    //email to employee--------------------------------------------------------------------------------
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    //$mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, 'TIP Friendly Society');
+    $mailemp->Subject = "Inventory Low";
+    $mailemp->Body = "Name: $itemname <br> Color: $itemcolor <br> Brand: $itembrand <br> Model: $itemmodel <br> InStock: $itemamount <br> Status: Critically Low";
+    $mailemp->AddAddress($address);
+    $mailemp->addCC($addresscc);
+    $mailemp->isHTML(true);
+
+    //-------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
+
+    if (!$mailemp->send()) {
+        echo 'Try Again';
+        //echo 'Mailer Error: ' . $mailemp->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        //echo $error;
+    }
+}
+
 function smtpmailer_PasswordChange($empname, $empemail, $emppass) {
 //global $error;
     //email to employee--------------------------------------------------------------------------------
