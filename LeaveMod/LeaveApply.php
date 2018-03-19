@@ -137,8 +137,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //check date and calculate the working days
     $newSdate = new DateTime(date("Y-m-d", strtotime($startdate)));
     $newEdate = new DateTime(date("Y-m-d", strtotime($enddate)));
-    $wkdays = getWeekdayDifference($newSdate, $newEdate);
-
+    
+    $wkdays = getWeekdayDifference($newSdate, $newEdate);// remove weekends and holidays from day sets
+    
     $Sdate = date("d-m-Y", strtotime($startdate));
     $Edate = date("d-m-Y", strtotime($enddate));
 //check date and calculate hours

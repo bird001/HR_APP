@@ -7,17 +7,15 @@ include("../Templates/header.php");
         $('#ViewInventory').dataTable({
             "sPaginationType": "full_numbers" //show pagination buttons
         });
+
+        $(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
     });
-
 </script>
-
 
 <?php
 include("../Templates/navigation.php");
 include("../Templates/body.php");
 include("../InventoryMod/InventoryNav.php");
-include("../InventoryMod/CrudOperations.php");
-include('../Validation/ValidateInput.php');
 
 $email = $_SESSION['login_user'];
 $sql = "SELECT * FROM Users where EmpEmail = '$email' ";
@@ -33,7 +31,7 @@ if ($dept === 'HR') {
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="invcrudops" method="post" target="popup" 
           onsubmit="window.open('about:blank','popup','width=600,height=990');" >
-        <table id = "ViewInventory" name ="ViewInventory" class = "table-hover table-bordered" style="width:100%">
+        <table id = "ViewInventory" class = "table-hover table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th style="display:none">id_val</th><!--needed for sorting-->

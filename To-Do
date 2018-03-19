@@ -12,9 +12,14 @@
 
 -each branch responsible for their own inv management(add and update)--done
 
+-look into datatables not showing search bar at the request inv table
+
 -each branch inv request should be targeted towards the branch supervisors. -- TO-DO
     -recognize the employee location and send request directly to the branch supervisor
     -create table to save additions and updates to inventory stock
 
 -account for public holidays when employees applying for leave. --TO-DO
     -do not count public holidays as business days
+        solutions: -use a calender api to pull the holiday dates yearly, 
+                    store them in a file, and compare the selected leave dates to them.
+                    -

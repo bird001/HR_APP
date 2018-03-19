@@ -44,7 +44,7 @@ if (isset($_POST['get_id'])) {
         
         
         //Add record to Retracted Leave table
-        $now = date('d-m-Y');
+        $now = date('d-m-Y h:i:s');
         $operator = $login_session;
         
         $insert_query = "insert into RetractedLeave(id_val,Firstname,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,

@@ -1,7 +1,7 @@
 <?php
 
 //include("../Login/session.php");
-//include("../db/db3.php");
+include("../db/db3.php");
 
 function validate_input($data) {
     $data = trim($data);
@@ -63,20 +63,68 @@ function getHourDifference($date_1, $date_2) {
     return $hours;
 }
 
-function getWeekdayDifference(\DateTime $startDate, \DateTime $endDate) {
+function getWeekdayDifference(\DateTime $startDate, \DateTime $endDate) {// used to remove weekends from leave application
     $isWeekday = function (\DateTime $date) {
-        return $date->format('N') < 6;
+        return $date->format('N') < 6; //format('N') gets the day of the week (1 - Monday, 7 - Sunday)
     };
-
+    $Sdate = new DateTime(date("Y-m-d", strtotime(date_format($startDate, "Y-m-d"))));
+    $Edate = new DateTime(date("Y-m-d", strtotime(date_format($endDate, "Y-m-d"))));
+    
     $days = $isWeekday($endDate) ? 1 : 0;
+    
+    while ($Sdate->diff($Edate)->days > 0) {
 
-    while ($startDate->diff($endDate)->days > 0) {
-        $days += $isWeekday($startDate) ? 1 : 0;
-        $startDate = $startDate->add(new \DateInterval("P1D"));
+        //if function here to check if date is within holiday calender library
+        //set that holiday date to 6 or 7, representing sat or sunday, this will exclude it from th days count
+        $days += $isWeekday($Sdate) ? 1 : 0; //if day is less than 6 then add 1 to days, if greater then add 0
+        $Sdate = $Sdate->add(new \DateInterval("P1D")); // adds 1 day to start date until it is equal to end date
     }
 
-    return $days;
+    //return $days; // output days
+    return getHolidays($startDate, $endDate, $days); // output days
 }
+
+function isDateBetweenDates(\DateTime $date, \DateTime $startDate, \DateTime $endDate) {//function created to check if date is within
+    if($date > $startDate && $date < $endDate){                                         //a specific date range
+        return "True";
+    } else {
+        return "False";
+    }
+
+}
+
+function getHolidays(\DateTime $startDate, \DateTime $endDate, $days) {
+    $year = date("Y"); //gets current year
+    $myfile = fopen("../LeaveMod/Years/" . $year, "r") or die("Unable to open file!"); //open and read from year file
+    //Output one line until end-of-file
+    while (!feof($myfile)) {
+        $holidays = fgets($myfile);//get individual days from file
+        $Holiday = new DateTime(date("Y-m-d", strtotime($holidays)));// transform string to date object
+        if(isDateBetweenDates($Holiday, $startDate, $endDate) === "True"){//check if day in file is within range
+            $days -= 1;// if it is within the range, then remove it from the total days to be removed from employees
+                            //leave days
+        }
+    }
+    //echo $days;
+    return $days;
+    
+    fclose($myfile);// close file
+}
+//some tests for the removal of holiday days
+/*
+$sdate = "26-03-2018";
+$edate = "04-04-2018";
+//$specdate = "20-03-2018";
+$newSdate = new DateTime(date("Y-m-d", strtotime($sdate)));
+$newEdate = new DateTime(date("Y-m-d", strtotime($edate)));
+//$newspecdate = new DateTime(date("Y-m-d", strtotime($specdate)));
+//$wkdays = getWeekdayDifference($newSdate, $newEdate);
+//echo getWeekdayDifference($newSdate, $newEdate);
+//echo getHolidays($newSdate, $newEdate, '8');
+//echo isDateBetweenDates($newspecdate, $newSdate, $newEdate);
+ * 
+ */
+
 
 //Form Validation
 function ValidateName($name) {
@@ -187,7 +235,6 @@ function ValidateDOB($dob) {
     }
 }
 
-
 function ValidateDate($date) {
 
     if (empty($date)) {
@@ -221,19 +268,21 @@ function ValidateDatePast($date) {
         }
     }
 }
+
 //ValidateDatePast(05/20/2017);
 
-function ComparePasswords($pass1,$pass2){
-    if(empty($pass1) || empty($pass2)){
+function ComparePasswords($pass1, $pass2) {
+    if (empty($pass1) || empty($pass2)) {
         return "both feilds should be filled";
-    } else{
-        if($pass1 == $pass2){
+    } else {
+        if ($pass1 == $pass2) {
             return 1;
-        }else{
+        } else {
             return "passwords do not match";
         }
     }
 }
+
 /*
   function ValidateID($name) {
 

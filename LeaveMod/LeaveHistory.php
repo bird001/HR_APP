@@ -24,44 +24,46 @@ include("../Templates/header.php");
 
     function retract_leave()
     {
+        if ($('#TextReason').val() == '' || $('#NumberDays').val() == ''){
+            alert('Inputs cannot be left blank\nEnter Reason and number of days');
+        } else{
+            var checkbox_value = "";
+            $(":checkbox").each(function () {
+                var ischecked = $(this).is(":checked");
+                if (ischecked) {
+                    checkbox_value += $(this).val() + ",";
+                }
+            });
+            var reason_value = $('#TextReason').val();
+            var numdays_value = $('#NumberDays').val();
+            //var reason_value = document.getElementById('TextReason').value;
+            //alert(checkbox_value);
+            //alert(reason_value);
+            //alert(numdays_value);
 
-        var checkbox_value = "";
-        $(":checkbox").each(function () {
-            var ischecked = $(this).is(":checked");
-            if (ischecked) {
-                checkbox_value += $(this).val() + ",";
-            }
-        });
-        var reason_value = $('#TextReason').val();
-        var numdays_value = $('#NumberDays').val();
-        //var reason_value = document.getElementById('TextReason').value;
-        //alert(checkbox_value);
-        //alert(reason_value);
-        //alert(numdays_value);
 
-        
-        $.ajax({
-            type: 'post',
-            url: 'retractleaveops',
-            data: {
-                get_id: checkbox_value,
-                get_reason: reason_value,
-                get_numdays: numdays_value
-            }
-        });
+            $.ajax({
+                type: 'post',
+                url: 'retractleaveops',
+                data: {
+                    get_id: checkbox_value,
+                    get_reason: reason_value,
+                    get_numdays: numdays_value
+                }
+            });
 
-        location.reload();
+            location.reload();
+        }
     }
-
 </script>
 <script type = "text/javascript" charset="utf-8">
     $(document).ready(function () {
         $('#LeaveHistory').dataTable({
-            'dom':'lBfrtip',
+            'dom': 'lBfrtip',
             'aLengthMenu': [20, 50, 100, 200],
             'iDisplayLength': 20,
             'sPaginationType': 'full_numbers',
-            'buttons': ['excel','pdf','print']
+            'buttons': ['excel', 'pdf', 'print']
         });
 
         //$(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
@@ -135,7 +137,7 @@ include("../LeaveMod/LeaveNav.php");
             <br>
             <label for="LabelNumDays" class="control-label">Number of Days to Retract</label>
             <input type="number" id="NumberDays" class="form-control"/>
-            
+
         </div>
 
     </div>
