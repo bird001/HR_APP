@@ -1,4 +1,4 @@
--keep loans open for an entire month
+-keep loans open for an entire month-- TO-DO
 
 -allow close off functionality
 
@@ -12,7 +12,7 @@
 
 -each branch responsible for their own inv management(add and update)--done
 
--look into datatables not showing search bar at the request inv table
+-look into datatables not showing search bar at the request inv table -- TO-DO
 
 -each branch inv request should be targeted towards the branch supervisors. -- TO-DO
     -recognize the employee location and send request directly to the branch supervisor
@@ -21,5 +21,7 @@
 -account for public holidays when employees applying for leave. --TO-DO
     -do not count public holidays as business days
         solutions: -use a calender api to pull the holiday dates yearly, 
-                    store them in a file, and compare the selected leave dates to them.
-                    -
+                    store them in a file, and compare the selected leave dates to them.-- done
+
+
+-Configure inventory requests to go straight to the HR dept

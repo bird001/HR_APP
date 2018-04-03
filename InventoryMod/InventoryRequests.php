@@ -54,6 +54,12 @@ if ($functiontype == 'Deny') {
 if ($functiontype == 'Delivered') {
     Delivered($idArr);
 }
+if($dept === 'HR'){
+   $itemcat = 'Stationary'; 
+}
+if($dept === 'IT'){
+    $itemcat = 'Tech';
+}
 ?>
 
 <div class = "container-fluid datatables_wrapper">
@@ -80,7 +86,7 @@ if ($functiontype == 'Delivered') {
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM InventoryRequests where ManagerEmail = '$email'";
+                $sql = "SELECT * FROM InventoryRequests where ItemCategory = '$itemcat'";
                 $results = $dbh->query($sql);
                 $rows = $results->fetchAll();
 
@@ -107,8 +113,6 @@ if ($functiontype == 'Delivered') {
         </table>
         <input class="btn btn-primary" type="submit" name="Request" id = "Approve" value="Approve"/>
         <input class="btn btn-primary" type="submit" name="Request" id = "Deny" value="Deny"/> 
-        <!--<input class="btn btn-primary" type="submit" name="Request" id = "Delivered" value="Delivered"/> -->
-        <!--<input class="btn btn-primary" type="button" onclick='ViewInventory()' name="request" value="View"/> -->
     </form>
 </div>
 <br>

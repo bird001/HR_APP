@@ -76,7 +76,8 @@ function Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $i
         mysqli_query($conn, $invreq_query);
 
         //send email to direct manager
-        smtpmailer_InventoryRequest($empname, $empdept, $email, $item, $itemamount, $managername, $manageremail);
+       $cc='e.welsh@tipfriendly.com';//need to make this dynamic TO-DO
+        smtpmailer_InventoryRequest($empname, $empdept, $email, $item, $itemamount, $invmanname, $invmanemail,$cc);
     } else {
         echo "The item '" . $item . " $color" . " $model" . "' is currently not in the catalog";
     }
@@ -116,11 +117,11 @@ function Approve(array $idArr) {
             $getinventoryrow = mysqli_fetch_array($getinventoryresults, MYSQLI_ASSOC);
 
             $invamt = $getinventoryrow['Amount'];
-            $cc='e.welsh@tipfriendly.com';//need to make this dynamic TO-DO
+            
             if ($invamt >= $amtreq) {
 
                 //send emails to relevant personnel
-                smtpmailer_InventoryRequestApprove($cc, $empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail);
+                smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount, $invmanname, $invmanemail);
 
                 //update Inventory Request table
                 $updateinvreq = "update InventoryRequests set ManagerAcceptReject = 'Accepted', ItemDelivered = 'No' where id_val = $id";

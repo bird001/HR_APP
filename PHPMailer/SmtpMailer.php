@@ -760,7 +760,7 @@ function smtpmailer_Registration($to, $name, $dept, $password) {
     }
 }
 
-function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail) {
+function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $itemamount, $invmanname, $invmanemail, $cc) {
 //global $error;
     //email to employee--------------------------------------------------------------------------------
     $mailemp = new PHPMailer;  // create a new object
@@ -775,9 +775,10 @@ function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $
     $mailemp->Password = GPWD;
     $mailemp->SetFrom(GUSER, $empemail);
     $mailemp->Subject = "Inventory Request";
-    $mailemp->Body = "Dear $manname I, $empname, from your department, $empdept, am requesting $itemamount $itemname(s).<br>"
+    $mailemp->Body = "Dear $invmanname I, $empname, from the $empdept department, am requesting $itemamount $itemname(s).<br>"
             . "Please login at <a href = 'http://tiphra/login'>tiphrapp</a>";
-    $mailemp->AddAddress($manemail);
+    $mailemp->AddAddress($invmanemail);
+    $mailemp->addCC($cc);
     $mailemp->isHTML(true);
 
     //--------------------------------------------------------------------------------------------------------
@@ -794,7 +795,7 @@ function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $
     }
 }
 
-function smtpmailer_InventoryRequestApprove($cc,$empname, $empdept, $empemail, $itemname, $itemamount, $manname, $manemail, $invmanname, $invmanemail) {
+function smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount,$invmanname,$invmanemail) {
 //global $error;
     //email to employee--------------------------------------------------------------------------------
     $mailemp = new PHPMailer;  // create a new object
@@ -807,12 +808,12 @@ function smtpmailer_InventoryRequestApprove($cc,$empname, $empdept, $empemail, $
     $mailemp->Port = 25;
     $mailemp->Username = GUSER;
     $mailemp->Password = GPWD;
-    $mailemp->SetFrom(GUSER, $manemail);
+    $mailemp->SetFrom(GUSER, $invmanemail);
     $mailemp->Subject = "Inventory Request";
-    $mailemp->Body = "Dear $empname your request for $itemamount $itemname(s) has been approved, you may approach $invmanname for the item(s) requested)";
+    $mailemp->Body = "Dear $empname your request for $itemamount $itemname(s) has been approved, you may approach HR for the item(s) requested)";
     $mailemp->AddAddress($empemail);
     $mailemp->isHTML(true);
-
+    /*
     //--------------------------------------------------------------------------------------------------------
     //email to inventory manager------------------------------------------------------------------------------
     $mailinv = new PHPMailer;  // create a new object
@@ -832,10 +833,10 @@ function smtpmailer_InventoryRequestApprove($cc,$empname, $empdept, $empemail, $
     $mailinv->AddAddress($invmanemail);
     $mailinv->addCC($cc);
     $mailinv->isHTML(true);
-
+    */
     //--------------------------------------------------------------------------------------------------------
 
-    if (!$mailemp->send() || !$mailinv->send()) {
+    if (!$mailemp->send()) {
         echo 'Try Again';
         //echo 'Mailer Error: ' . $mailemp->ErrorInfo;
         //echo 'Mailer Error: ' . $mailinv->ErrorInfo;

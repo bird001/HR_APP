@@ -40,6 +40,12 @@ $functiontype = $_POST['Request'];
 if ($functiontype == 'Delivered') {
     Delivered($idArr);
 }
+if($dept === 'HR'){
+   $itemcat = 'Stationary'; 
+}
+if($dept === 'IT'){
+    $itemcat = 'Tech';
+}
 ?>
 
 <div class = "container-fluid datatables_wrapper">
@@ -66,7 +72,7 @@ if ($functiontype == 'Delivered') {
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM InventoryRequests where InventoryManEmail = '$email' and ManagerAcceptReject = 'Accepted'"
+                $sql = "SELECT * FROM InventoryRequests where ItemCategory = '$itemcat' and ManagerAcceptReject = 'Accepted'"
                         . "and ItemDelivered = 'No'";
                 $results = $dbh->query($sql);
                 $rows = $results->fetchAll();
