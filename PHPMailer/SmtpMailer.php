@@ -795,6 +795,40 @@ function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $
     }
 }
 
+function smtpmailer_InventoryRequestBranch($empname, $empdept, $empemail, $itemname, $itemamount, $invmanname, $invmanemail) {
+//global $error;
+    //email to employee--------------------------------------------------------------------------------
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    //$mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, $empemail);
+    $mailemp->Subject = "Inventory Request";
+    $mailemp->Body = "Dear $invmanname I, $empname, from the $empdept department, requests $itemamount $itemname(s).<br>"
+            . "Please login at <a href = 'http://tiphra/login'>tiphrapp</a>";
+    $mailemp->AddAddress($invmanemail);
+    $mailemp->isHTML(true);
+
+    //--------------------------------------------------------------------------------------------------------
+
+    if (!$mailemp->send()) {
+        echo 'Try Again';
+        //echo 'Mailer Error: ' . $mailemp->ErrorInfo;
+        //echo 'Mailer Error: ' . $mailinv->ErrorInfo;
+        //exit;
+        //return false;
+    } else {
+        $error = 'Message sent!';
+        //echo $error;
+    }
+}
+
 function smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount,$invmanname,$invmanemail) {
 //global $error;
     //email to employee--------------------------------------------------------------------------------
@@ -810,7 +844,7 @@ function smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $item
     $mailemp->Password = GPWD;
     $mailemp->SetFrom(GUSER, $invmanemail);
     $mailemp->Subject = "Inventory Request";
-    $mailemp->Body = "Dear $empname your request for $itemamount $itemname(s) has been approved, you may approach HR for the item(s) requested)";
+    $mailemp->Body = "Dear $empname your request for $itemamount $itemname(s) has been approved, you may come to receive the item(s) requested)";
     $mailemp->AddAddress($empemail);
     $mailemp->isHTML(true);
     /*

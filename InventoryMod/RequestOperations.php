@@ -83,6 +83,86 @@ function Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $i
     }
 }
 
+function RequestBranch($empname, $empdept, $empid, $email, $emplocation, $empfloor, $itemcat, $item, $model, $color, $itemamount) {
+    global $conn;
+
+    //get details of that employees manager
+    $query_empman = "select * from ManagersDepartments where Department like '%$empdept%'";
+    $result_empman = mysqli_query($conn, $query_empman);
+    $row_empman = mysqli_fetch_array($result_empman, MYSQLI_ASSOC);
+
+    $manageremail = $row_empman['EmpEmail'];
+    $managername = $row_empman['Name'];
+    $date_now = date("d-m-Y h:i A");
+
+
+    //-------------------------------------------------------------------------------------
+
+
+    if ($itemcat == 'Stationary') {
+        //get details of items
+        $query_items = "select * from InventoryStationary where Item = '$item'";
+        $result_items = mysqli_query($conn, $query_items);
+        $item_row = mysqli_fetch_array($result_items, MYSQLI_ASSOC);
+
+        $itemid = $item_row['id_val'];
+
+        //get details of Inventory Manager----------------------------------------------------------
+        $invman_query = "select * from Users where EmpLocation = '$emplocation' and EmpPosition = 'Branch Supervisor'";
+        $invman_results = mysqli_query($conn, $invman_query);
+        $invman_row = mysqli_fetch_array($invman_results, MYSQLI_ASSOC);
+
+        $invmanemail = $invman_row['EmpEmail'];
+        $invmanname = $invman_row['FirstName']." ".$invman_row['LastName'];
+    }
+    if ($itemcat == 'Tech') {
+        //get details of items
+        $query_items = "select * from InventoryTech where Item = '$item' and Color = '$color' and Model = '$model'";
+        $result_items = mysqli_query($conn, $query_items);
+        $item_row = mysqli_fetch_array($result_items, MYSQLI_ASSOC);
+
+        $itemid = $item_row['id_val'];
+
+        //get details of Inventory Manager----------------------------------------------------------
+        $invman_query = "select * from ManagersDepartments where Department like '%IT%'";
+        $invman_results = mysqli_query($conn, $invman_query);
+        $invman_row = mysqli_fetch_array($invman_results, MYSQLI_ASSOC);
+
+        $invmanemail = $invman_row['EmpEmail'];
+        $invmanname = $invman_row['Name'];
+    }
+    if ($itemcat == 'Sanitary') {
+        //get details of items
+        $query_items = "select * from InventorySanitary where Item = '$item'";
+        $result_items = mysqli_query($conn, $query_items);
+        $item_row = mysqli_fetch_array($result_items, MYSQLI_ASSOC);
+
+        $itemid = $item_row['id_val'];
+
+        //get details of Inventory Manager----------------------------------------------------------
+        $invman_query = "select * from ManagersDepartments where Department like '%HR%'";
+        $invman_results = mysqli_query($conn, $invman_query);
+        $invman_row = mysqli_fetch_array($invman_results, MYSQLI_ASSOC);
+
+        $invmanemail = $invman_row['EmpEmail'];
+        $invmanname = $invman_row['Name'];
+    }
+    //------------------------------------------------------------------------------------------
+    //insert into table and update the respective managers
+    if (!empty($itemid)) {
+        $invreq_query = "insert into InventoryRequests (EmpID, EmpName, EmpDept, EmpEmail, EmpLocation, ItemID, ItemName, Model, Color, ItemCategory, EmpFloor, AmountRequested, "
+                . "TimeRequested, Manager, ManagerEmail, InventoryManager, InventoryManEmail) values ('$empid','$empname', '$empdept','$email','$emplocation','$itemid',"
+                . "'$item','$model','$color','$itemcat','$empfloor','$itemamount','$date_now', '$managername','$manageremail','$invmanname','$invmanemail')";
+        mysqli_query($conn, $invreq_query);
+
+        //send email to direct manager
+       //$cc='e.welsh@tipfriendly.com';//need to make this dynamic TO-DO
+        smtpmailer_InventoryRequestBranch($empname, $empdept, $email, $item, $itemamount, $invmanname, $invmanemail);
+    } else {
+        echo "The item '" . $item . " $color" . " $model" . "' is currently not in the catalog";
+    }
+}
+
 function Approve(array $idArr) {
     global $conn;
 

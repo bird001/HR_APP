@@ -2,13 +2,15 @@
 include("../Templates/header.php");
 ?>
 <script type="text/javascript">
-    function fetch_item(category)
-    {
+    function fetch_item(category) {
+        var location = document.getElementById('location').value;
+
         $.ajax({
             type: 'post',
             url: 'inventoryoptions',
             data: {
-                get_item: category
+                get_item: category,
+                get_location: location
             },
             success: function (response) {
                 document.getElementById("Iname").innerHTML = response;
@@ -112,7 +114,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $itemAV = ValidateNumeric($itemamount);
 
     if ($floorNV == 1 && $categoryNV == 1 && $itemNV == 1 && $modelNV == 1 && $colorNV == 1 && $itemAV == 1) {
-        Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $itemcat, $item, $model, $color, $itemamount);
+        if ($emplocation === 'HQ') {
+            Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $itemcat, $item, $model, $color, $itemamount);
+            echo "<br><br>"
+            . "<div class = 'form-group'"
+            . "Successfully Applied"
+            . "</div>"
+            . "<br><br>";
+        } else {
+            RequestBranch($empname, $empdept, $empid, $email, $emplocation, $empfloor, $itemcat, $item, $model, $color, $itemamount);
+            echo "<br><br>"
+            . "<div class = 'form-group'"
+            . "Successfully Applied"
+            . "</div>"
+            . "<br><br>";
+        }
     } else {
         echo "error";
         $itemNV;

@@ -33,6 +33,7 @@ $row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC);
 $position = $row1['EmpPosition'];
 $dept = $row1['EmpDept'];
 $role = $row1['EmpRole'];
+$location = $row1['EmpLocation'];
 
 $idArr = $_POST['checked_id'];
 $functiontype = $_POST['Request'];
@@ -40,7 +41,7 @@ $functiontype = $_POST['Request'];
 if ($functiontype == 'Delivered') {
     Delivered($idArr);
 }
-if($dept === 'HR'){
+if($dept === 'HR' || $position === 'Branch Supervisor'){
    $itemcat = 'Stationary'; 
 }
 if($dept === 'IT'){
@@ -73,7 +74,7 @@ if($dept === 'IT'){
             <tbody>
                 <?php
                 $sql = "SELECT * FROM InventoryRequests where ItemCategory = '$itemcat' and ManagerAcceptReject = 'Accepted'"
-                        . "and ItemDelivered = 'No'";
+                        . "and ItemDelivered = 'No' and EmpLocation = '$location'";
                 $results = $dbh->query($sql);
                 $rows = $results->fetchAll();
 

@@ -18,10 +18,10 @@
     -recognize the employee location and send request directly to the branch supervisor
     -create table to save additions and updates to inventory stock
 
--account for public holidays when employees applying for leave. --TO-DO
+-account for public holidays when employees applying for leave. --done
     -do not count public holidays as business days
         solutions: -use a calender api to pull the holiday dates yearly, 
                     store them in a file, and compare the selected leave dates to them.-- done
 
 
--Configure inventory requests to go straight to the HR dept
+-Configure inventory requests to go straight to the HR dept-- done

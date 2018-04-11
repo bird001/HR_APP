@@ -13,7 +13,7 @@ $position = $row['EmpPosition'];
     <div class="col-lg-12">
         <ul class="nav nav-tabs">
             <?php
-            if($dept == 'IT' || $dept == 'HR'){
+            if($dept == 'IT' || $dept == 'HR' || $position == 'Branch Supervisor'){
             ?>
             <li><a href="inventorycrud">Update Inventory</a></li> <!--Update/Add/Delete inventory items-->
             <?php 
@@ -21,7 +21,7 @@ $position = $row['EmpPosition'];
             ?>
             <li><a href="requestinventory">Request Inventory</a></li><!--Used to request inventory items from HR Dept-->
             <?php
-            if($role == 'Manager' || $dept == 'HR'){
+            if($role == 'Manager' || $dept == 'HR' || $position == 'Branch Supervisor'){
             ?>
             <li><a href="inventoryrequests">Requests To Be Approved</a></li><!--Used to request inventory items from HR Dept-->
             <li><a href="requestdelivery">Requests To Be Delivered</a></li><!--Used to request inventory items from HR Dept-->
