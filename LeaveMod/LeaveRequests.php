@@ -31,6 +31,7 @@ $row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC);
 $row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC);
 
 $manemail = $row1['ManagerEmail'];
+$manresponse = $row2['ManagerResponse'];
 $hremail = $row2['HREmail'];
 
 $sql3 = "select * from Users where EmpEmail = '$email'";
@@ -42,7 +43,7 @@ $role = $row3['EmpRole'];
 
 <?php
 //if user is employees manager
-if ($email === $manemail) {
+if ($email === $manemail || $email === $hremail) {
     ?>
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="requestcheck" method="post" >
@@ -67,7 +68,7 @@ if ($email === $manemail) {
                 <tbody>
                     <?php
                     $email = $_SESSION['login_user'];
-                    $sql = "SELECT * FROM ApplyLeaveHR where ManagerEmail = '$email'";
+                    $sql = "SELECT * FROM ApplyLeaveHR where ManagerEmail = '$email' || HREmail = '$email' && ManagerResponse <> ''";
                     $results = $dbh->query($sql);
                     $rows = $results->fetchAll();
 
@@ -89,50 +90,7 @@ if ($email === $manemail) {
                             echo '<td class="reason">' . $row['Reason'] . '</td>';
 
                             echo '</tr>';
-                        }
-                    }
-                    ?>
-
-
-                </tbody>                     
-            </table>
-            <input class="btn btn-primary" type="submit" name="Submit" value="Accept"/> 
-            <input class="btn btn-primary" type="submit" name="Submit" value="Reject"/> 
-        </form>
-    </div>
-    <?php
-}
-if ($email === $hremail) { //if manager has responded and HR user is logged in
-    ?>
-    <div class = "container-fluid datatables_wrapper">
-        <form name="bulk_action_form" action="requestcheck" method="post" >
-            <table id = "LeaveRequests" class = "table-hover table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th style="display:none">id_val</th><!--needed for sorting-->
-                        <th align = "center">
-                            <div align = "center">
-
-                            </div>
-                        </th>
-                        <th>Name</th>
-                        <th>Emp #</th>
-                        <th>Emp Dept</th>
-                        <th>Leave Type</th>
-                        <th>Dates</th>
-                        <th>Duration</th>
-                        <th>Reason</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $email = $_SESSION['login_user'];
-                    $sql = "SELECT * FROM ApplyLeaveHR where HREmail = '$email'";
-                    $results = $dbh->query($sql);
-                    $rows = $results->fetchAll();
-
-                    foreach ($rows as $row) {
-                        if (!empty($row['ManagerResponse'])) {
+                        } else {
                             echo '<tr id="' . $row['id_val'] . '">';
                             echo '<td class="id" style="display:none">' . $row['id_val'] . '</td>' .
                             '<td align = "center"><input type="checkbox" name = "checked_id[]" class = "checkbox" value= "' . $row['id_val'] . '" >' . '</td>' .
@@ -162,7 +120,9 @@ if ($email === $hremail) { //if manager has responded and HR user is logged in
     </div>
     <?php
 }
+?>
 
+<?php
 if ($dept === 'HR' && $role === 'Supervisor') { //if manager has responded and HR user is logged in
     ?>
     <div class = "container-fluid datatables_wrapper">

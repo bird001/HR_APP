@@ -14,7 +14,7 @@
 
 -look into datatables not showing search bar at the request inv table -- TO-DO
 
--each branch inv request should be targeted towards the branch supervisors. -- TO-DO
+-each branch inv request should be targeted towards the branch supervisors. -- done
     -recognize the employee location and send request directly to the branch supervisor
     -create table to save additions and updates to inventory stock
 
@@ -25,3 +25,19 @@
 
 
 -Configure inventory requests to go straight to the HR dept-- done
+
+-make checks and changes into HR leave application process
+    -check mgr and hr response, it's being left off for some reason-- done[they're being sent]
+    -check if emails are being sent--done, [if happens again check mail server]
+    -add a prompt that states leave application was successful or not successful-- done[was added, persons were applying for leave multiple times]
+    -create a work resumption prompt, it will be similar to leave application process-- to-do[work in progress, not sure if needed]
+    -give mgrs privileges to view leave archive/history -- done[gave them the privilege]
+    -inform supervisors, via email, of employees in their departments who are have successfully applied for leave.--done[all supervisors are notified via email]
+    
+
+-mgmt also wants to include supervisors within the leave approval process-- to-do
+        -rework leave process to include an extra tier at the begining, after employee applies, requests goes directly to supervisors first.
+        -after supervisors approve/deny, requests goes on to managers, then on to the HR dept for final approval
+            -have to account for org structure. for example if normal employee applies, then process is employee->supervisor->mgr->HR, if employee is supervisor then supervisor->mgr->HR, if
+                employee is mgr then mgr->GM->HR
+        

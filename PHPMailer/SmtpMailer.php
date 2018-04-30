@@ -125,9 +125,8 @@ function smtpmailer_LeaveRejectMan($to, $from, $name, $dept, $type, $numdays, $s
     }
 }
 
-function smtpmailer_LeaveAcceptHR($to, $from, $name, $dept, $type, $numdays, $startdate, $enddate) {
+function smtpmailer_LeaveAcceptHR($to, $from, $name, $dept, $type, $numdays, $startdate, $enddate, $supemail, $manemail) {
 //global $error;
-
     $mail = new PHPMailer;  // create a new object
 
     $mail->isSMTP(); // enable SMTP
@@ -144,15 +143,30 @@ function smtpmailer_LeaveAcceptHR($to, $from, $name, $dept, $type, $numdays, $st
     $mail->Subject = "Leave Accepted";
     $mail->Body = "Dear $name of the $dept Department  your $type leave application for $numdays from $startdate to $enddate has been Accepted ";
     $mail->AddAddress($to);
-    //$mail->addAttachment($attatch);
     $mail->isHTML(true);
 
-
-
-    if (!$mail->send()) {
+    $mailman = new PHPMailer;  // create a new object
+    $mailman->isSMTP(); // enable SMTP
+    $mailman->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailman->SMTPAuth = true;  // authentication enabled
+    $mailman->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailman->SMTPAutoTLS = false;
+    $mailman->Host = 'smtp.gmail.com';
+    $mailman->Port = 25;
+    $mailman->Username = GUSER;
+    $mailman->Password = GPWD;
+    $mailman->SetFrom(GUSER, 'Tip Friendly Society');
+    $mailman->Subject = "Employee Leave Accepted";
+    $mailman->Body = "An employee $name, of the $dept Department has been approved for $type for $numdays days from $startdate to $enddate";
+    $mailman->AddAddress($manemail);
+    $mailman->AddCC($supemail);
+    $mailman->isHTML(true);
+    
+    if (!$mail->send() || !$mailman->send()) {
         //$error = 'Mail error: ' . $mail->ErrorInfo;
         echo 'Message could not be sent.';
         echo 'Mailer Error: ' . $mail->ErrorInfo;
+        echo 'Mailer Error: ' . $mailman->ErrorInfo;
         //exit;
         //return false;
     } else {
@@ -236,7 +250,7 @@ function smtpmailer_ApplyLeave($to, $from, $name, $dept, $type, $numdays, $start
         //return false;
     } else {
         //$error = 'Message sent!';
-        echo 'Applied Succesfully';
+        echo 'Successfully Applied';
 
         //exit;
         //return true;

@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      * 
      */
 
-    if($leavetype !== 'Sick') {
+    if ($leavetype !== 'Sick') {
         if (ValidateDatePast($startdate) === 1) {
             $startdateSet = 1;
         } else {
@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $enddateSet = 0;
             $enddateError = ValidateDatePast($enddate);
         }
-    } else{
+    } else {
         $startdateSet = 1;
         $enddateSet = 1;
     }
@@ -137,9 +137,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //check date and calculate the working days
     $newSdate = new DateTime(date("Y-m-d", strtotime($startdate)));
     $newEdate = new DateTime(date("Y-m-d", strtotime($enddate)));
-    
-    $wkdays = getWeekdayDifference($newSdate, $newEdate);// remove weekends and holidays from day sets
-    
+
+    $wkdays = getWeekdayDifference($newSdate, $newEdate); // remove weekends and holidays from day sets
+
     $Sdate = date("d-m-Y", strtotime($startdate));
     $Edate = date("d-m-Y", strtotime($enddate));
 //check date and calculate hours
@@ -169,7 +169,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 //send email to associated Manager and HR
                 smtpmailer_ApplyLeave($manemail, $email, $name, $empdept, $leavetype, $hours . " hours", $Sdate, $Edate);
-                header("Location: leaveapply");
+                header("Location: leaveapply?success");
             } else {
                 //insert the details into the ApplyLeave table
                 $leaveapply = "insert into HR_DEPT.ApplyLeaveHR(FirstName,LastName,EmpID,EmpDept,EmpRole,EmpEmail,ManagerEmail,HREmail,LeaveType,StartDate,EndDate,NumDays,Reason)
@@ -180,13 +180,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 //send email to associated ManageR
                 smtpmailer_ApplyLeave($manemail, $email, $name, $empdept, $leavetype, $wkdays . " days", $Sdate, $Edate);
-                header("Location: leaveapply");
+                header("Location: leaveapply?success");
             }
         } else {
-            echo "error";
+            echo "Error, Something went wrong, Leave wasn't submitted";
         }
     } else {
-        $daysError = "ERROR!!! Not Enough Days/Hours";
+        echo $daysError = "ERROR!!! Not Enough Days/Hours";
     }
 }
 ?>
@@ -195,12 +195,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         display: inline;
     }
 </style>
-
 <br>
 <div align="left" class = "form-group">
     <div style="width:500px;" class = "form-group" align="left">
         <form action="#" method="post" id="form1" class = "form-group" role="form" >
-
+            <?php
+            if (isset($_GET['success'])) {
+                echo '<span class="error">Successfully Applied</span>';
+            }
+            ?>
             <div class="form-group">
                 <label for="inputFName" class="control-label">First Name</label>
                 <input type="text" name="Fname" id="Fname" class="form-control" value="<?php echo $firstname; ?>" required readonly/>

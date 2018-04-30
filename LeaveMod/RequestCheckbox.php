@@ -57,7 +57,7 @@ foreach ($idArr as $id) {
   WHERE id_val = '$id'";
             mysqli_query($conn, $sql_insert_hr_archive); //connect to db and execute
             //update archive table with either accepted or rejected leave app
-            $sql_update_hr_archive = "UPDATE ApplyLeaveHRArchive SET HRResponse = 'Accepted', ManagerResponse = 'Accepted' WHERE id_val = $id";
+            $sql_update_hr_archive = "UPDATE ApplyLeaveHRArchive SET HRResponse = 'Accepted', ManagerResponse = 'Accepted' WHERE id_val = '$id'";
             mysqli_query($conn, $sql_update_hr_archive);
 
 
@@ -214,7 +214,17 @@ foreach ($idArr as $id) {
             $dept = $row['EmpDept'];
             $type = $row['LeaveType'];
             $empemail = $row['EmpEmail'];
-
+            $role = $row['EmpRole'];
+            
+            //Get Supervisors of Dept------
+            $sql_getsup = "select * from Users where EmpDept = '$dept' and EmpRole = 'Supervisor'";
+            $result_getsup = mysqli_query($conn, $sql_getsup);
+            $row_getsup = mysqli_fetch_array($result_getsup, MYSQLI_ASSOC);
+            
+            $supervisorname = $row_getsup['FirstName']." ".$row_getsup['LastName'];
+            $supervisoremail = $row_getsup['EmpEmail'];
+            //-----------------------------
+            
             //subtract the days from the relevant category and update AvailableDays table if the leave was accepted
             $result = mysqli_query($conn, "select * from Leaves where EmpEmail = '$empemail'");
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
@@ -252,7 +262,7 @@ foreach ($idArr as $id) {
   )";
                 mysqli_query($conn, $dashboard_leave);
 
-                smtpmailer_LeaveAcceptHR($empemail, $operator, $name, $dept, $type, $numdays . " hours", $startdate, $enddate); //send email
+                smtpmailer_LeaveAcceptHR($empemail, $operator, $name, $dept, $type, $numdays . " hours", $startdate, $enddate, $supervisoremail, $manemail); //send email
             } else {
 
                 $headline_date = date("d F Y", strtotime($startdate));
@@ -265,7 +275,7 @@ foreach ($idArr as $id) {
   )";
                 mysqli_query($conn, $dashboard_leave);
 
-                smtpmailer_LeaveAcceptHR($empemail, $operator, $name, $dept, $type, $numdays . " days", $startdate, $enddate); //send email
+                smtpmailer_LeaveAcceptHR($empemail, $operator, $name, $dept, $type, $numdays . " days", $startdate, $enddate, $supervisoremail, $manemail); //send email
             }
 
             //delete from applyleavehr

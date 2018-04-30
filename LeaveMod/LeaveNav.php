@@ -21,9 +21,13 @@ $dept = $row['EmpDept'];
             }
             ?>
             <?php
-            if($dept === 'HR') {
+            if ($dept === 'HR' || $role === 'Manager') {
                 ?>
                 <li><a href = "leavehistory">Leave History</a></li>
+                <?php
+            }
+            if ($dept === 'HR') {
+                ?>
                 <li><a href = "retractedleave">Retracted Leave</a></li>
                 <?php
             }
