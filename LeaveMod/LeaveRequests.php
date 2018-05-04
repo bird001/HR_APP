@@ -63,6 +63,7 @@ if ($email === $manemail || $email === $hremail) {
                         <th>Dates</th>
                         <th>Duration</th>
                         <th>Reason</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -88,6 +89,7 @@ if ($email === $manemail || $email === $hremail) {
                                 echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
                             }
                             echo '<td class="reason">' . $row['Reason'] . '</td>';
+                            echo '<td class="reason">' . $row['ManagerResponse'] . '</td>';
 
                             echo '</tr>';
                         } else {
@@ -105,6 +107,7 @@ if ($email === $manemail || $email === $hremail) {
                                 echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
                             }
                             echo '<td class="reason">' . $row['Reason'] . '</td>';
+                            echo '<td class="reason">' . $row['ManagerResponse'] . '</td>';
 
                             echo '</tr>';
                         }
