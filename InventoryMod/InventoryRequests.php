@@ -17,8 +17,6 @@ include("../Templates/header.php");
         $('#InventoryRequests').dataTable({
             "sPaginationType": "full_numbers" //show pagination buttons
         });
-
-        $(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
     });
 
     //window.alert("blah");

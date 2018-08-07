@@ -1,15 +1,15 @@
 <?php
 include("../Templates/header.php");
 ?>
+
 <script type = "text/javascript" charset="utf-8">
 
     $(document).ready(function () {
-        $('#ViewInventory').dataTable({
+        $('#ViewInv').dataTable({
             "sPaginationType": "full_numbers" //show pagination buttons
         });
-
-        $(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
     });
+   
 </script>
 
 <?php
@@ -31,7 +31,7 @@ if ($dept === 'HR') {
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="invcrudops" method="post" target="popup" 
           onsubmit="window.open('about:blank','popup','width=600,height=990');" >
-        <table id = "ViewInventory" class = "table-hover table-bordered" style="width:100%">
+        <table id = "ViewInv" class = "table-hover table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th style="display:none">id_val</th><!--needed for sorting-->
@@ -40,7 +40,6 @@ if ($dept === 'HR') {
 
                         </div>
                     </th>
-                    <th style="display:none">id_val</th><!--needed for sorting--> 
                     <th>Item</th>
                     <th>Color</th>
                     <th>Brand</th>
@@ -87,7 +86,7 @@ if ($dept === 'IT') {
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="invcrudops" method="post" target="popup" 
           onsubmit="window.open('about:blank','popup','width=600,height=990');" >
-        <table id = "ViewInventory" name ="ViewInventory" class = "table-hover table-bordered" style="width:100%">
+        <table id = "ViewInv" name ="ViewInventory" class = "table-hover table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th style="display:none">id_val</th><!--needed for sorting-->
@@ -145,7 +144,7 @@ if ($dept === 'Maintenance') {
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="invcrudops" method="post" target="popup" 
           onsubmit="window.open('about:blank','popup','width=600,height=990');">
-        <table id = "ViewInventory" name ="ViewInventory" value ="<?php echo $dept; ?>" class = "table-hover table-bordered" style="width:100%">
+        <table id = "ViewInv" name ="ViewInventory" value ="<?php echo $dept; ?>" class = "table-hover table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th style="display:none">id_val</th><!--needed for sorting-->
@@ -191,4 +190,4 @@ if ($dept === 'Maintenance') {
     <?php
 }
 ?>
-<?php include("../Templates/footer.php"); ?>
+<?php include("../Templates/footer_dashboard.php"); ?>
