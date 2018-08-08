@@ -75,9 +75,12 @@ function Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $i
                 . "'$item','$model','$color','$itemcat','$empfloor','$itemamount','$date_now', '$managername','$manageremail','$invmanname','$invmanemail')";
         mysqli_query($conn, $invreq_query);
 
-        //send email to direct manager
-       $cc='e.welsh@tipfriendly.com';//need to make this dynamic TO-DO
-        smtpmailer_InventoryRequest($empname, $empdept, $email, $item, $itemamount, $invmanname, $invmanemail,$cc);
+        
+       //send email to direct manager
+       $cc=explode(',','e.welsh@tipfriendly.com,s.grant@tipfriendly.com');//need to make this dynamic TO-DO
+       $cc1 = $cc[0];
+       $cc2 = $cc[1];
+        smtpmailer_InventoryRequest($empname, $empdept, $email, $item, $itemamount, $invmanname, $invmanemail,$cc1,$cc2);
     } else {
         echo "The item '" . $item . " $color" . " $model" . "' is currently not in the catalog";
     }

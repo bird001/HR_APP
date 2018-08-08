@@ -116,18 +116,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($floorNV == 1 && $categoryNV == 1 && $itemNV == 1 && $modelNV == 1 && $colorNV == 1 && $itemAV == 1) {
         if ($emplocation === 'HQ') {
             Request($empname, $empdept, $empid, $email, $emplocation, $empfloor, $itemcat, $item, $model, $color, $itemamount);
-            echo "<br><br>"
-            . "<div class = 'form-group'"
-            . "Successfully Applied"
-            . "</div>"
-            . "<br><br>";
+            echo "<div class = 'form-group'"
+            . "<p>Successfully Applied</p>"
+            . "</div>";
         } else {
             RequestBranch($empname, $empdept, $empid, $email, $emplocation, $empfloor, $itemcat, $item, $model, $color, $itemamount);
-            echo "<br><br>"
-            . "<div class = 'form-group'"
+            echo "<div class = 'form-group'"
             . "Successfully Applied"
-            . "</div>"
-            . "<br><br>";
+            . "</div>";
         }
     } else {
         echo "error";

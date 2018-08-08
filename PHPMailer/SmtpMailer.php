@@ -774,7 +774,7 @@ function smtpmailer_Registration($to, $name, $dept, $password) {
     }
 }
 
-function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $itemamount, $invmanname, $invmanemail, $cc) {
+function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $itemamount, $invmanname, $invmanemail, $cc1, $cc2) {
 //global $error;
     //email to employee--------------------------------------------------------------------------------
     $mailemp = new PHPMailer;  // create a new object
@@ -792,7 +792,8 @@ function smtpmailer_InventoryRequest($empname, $empdept, $empemail, $itemname, $
     $mailemp->Body = "Dear $invmanname I, $empname, from the $empdept department, am requesting $itemamount $itemname(s).<br>"
             . "Please login at <a href = 'http://tiphra/login'>tiphrapp</a>";
     $mailemp->AddAddress($invmanemail);
-    $mailemp->addCC($cc);
+    $mailemp->addCC($cc1);
+    $mailemp->addCC($cc2);
     $mailemp->isHTML(true);
 
     //--------------------------------------------------------------------------------------------------------
