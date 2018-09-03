@@ -7,12 +7,13 @@ include("../Templates/header.php");
 
 <script type="text/javascript">
     $(function () {
-        $("#tablecheck").click(function () {
+        $("input[type=checkbox]").click(function () {
             if ($(this).is(":checked")) {
                 $("#dvReason").show();
             } else {
                 $("#dvReason").hide();
             }
+        });
         });
     });
 </script>

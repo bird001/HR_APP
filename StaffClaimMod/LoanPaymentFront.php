@@ -9,7 +9,8 @@ include("../Templates/header.php");
     function showEdit(editableObj) {
         $(editableObj).css("background", "#FFF");
     }
-
+</script>
+<script>
     function saveToDatabase(editableObj, column, id, name) {
         $(editableObj).css("background", "#FFF url(loaderIcon.gif) no-repeat right");
         $.ajax({
@@ -18,15 +19,17 @@ include("../Templates/header.php");
             data: 'column=' + column + '&editval=' + editableObj.innerHTML + '&id=' + id + '&name=' + name, // send data to SaveEdit to be processed
         });
         location.reload();//reload to display changes
+        //alert(name);
     }
 </script>
+
 <script type="text/javascript" src="https://cdn.datatables.net/r/dt/jq-2.1.4,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.9,af-2.0.0,b-1.0.3,b-colvis-1.0.3,b-html5-1.0.3,b-print-1.0.3,se-1.0.1/datatables.min.js"></script>
 <script type = "text/javascript" charset="utf-8">
     $(document).ready(function () {
         $('#LoanPayments').dataTable({
             'dom': 'lBfrtip',
-            'aLengthMenu': [20, 50, 100, 200],
-            'iDisplayLength': 20,
+            'aLengthMenu': [10, 20, 50],
+            'iDisplayLength': 10000,
             'sPaginationType': 'full_numbers',
             'buttons': [
                 {extend: 'excel',
@@ -49,13 +52,6 @@ include("../Templates/header.php");
         //$(tableTools.fnContainer()).insertBefore('#datatables_wrapper');
     });
 </script>
-<script>
-    function BulkLoanUpload() {
-        //pop up window for uploading SchoolListinngs csv files
-        window.open("bulkloan", "Multiple Registrations", "location=1,status=1,scrollbars=1,width=400,height=400");
-    }
-
-</script>
 <?php
 include("../Templates/navigation.php");
 include("../Templates/body.php");
@@ -77,20 +73,44 @@ $empid = $row1['EmpID'];
 <div class = "container-fluid datatables_wrapper">
     <table id = "LoanPayments" class = "table-hover table-bordered" style="width:100%">
         <thead>
-            <tr>
-                <th style="display:none">id_val</th><!--needed for sorting-->
-                <th>Name</th>
-                <th>Loan Type</th>
-                <th>Beginning Balance</th>
-                <th>Monthly Repayment($)</th>
-                <!--<th>Repayment Period(Months)</th>-->
-                <th>Term(Months)</th>
-                <th>Payment</th>
-                <th>Date of Payment</th>
-                <th>Principal</th>
-                <th>Interest</th>
-                <th>Ending Balance</th>
-            </tr>
+            <?php
+            if (($dept == 'Accounts' && $role == 'Manager') || ($dept == 'Accounts' && $role = 'Supervisor')) {
+                ?>
+                <tr>
+                    <th style="display:none">id_val</th><!--needed for sorting-->
+                    <th>Name</th>
+                    <th>Loan Type</th>
+                    <th>Beginning Balance</th>
+                    <th>Monthly Repayment($)</th>
+                    <!--<th>Repayment Period(Months)</th>-->
+                    <th>Term(Months)</th>
+                    <th>Payment</th>
+                    <th>Date of Payment</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Ending Balance</th>
+                    <th>Action</th>
+                </tr>
+                <?php
+            } else {
+                ?>
+                <tr>
+                    <th style="display:none">id_val</th><!--needed for sorting-->
+                    <th>Name</th>
+                    <th>Loan Type</th>
+                    <th>Beginning Balance</th>
+                    <th>Monthly Repayment($)</th>
+                    <!--<th>Repayment Period(Months)</th>-->
+                    <th>Term(Months)</th>
+                    <th>Payment</th>
+                    <th>Date of Payment</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Ending Balance</th>
+                </tr>
+                <?php
+            }
+            ?>
         </thead>
         <tbody>
             <?php
@@ -101,17 +121,16 @@ $empid = $row1['EmpID'];
                 $rows = $results->fetchAll();
             } else {
                 $email = $_SESSION['login_user'];
-                $sqls = "SELECT * FROM LoanApproved where EmpID = $empid";
+                $sqls = "SELECT * FROM LoanApprovedTail where EmpID = $empid";
                 $results = $dbh->query($sqls);
                 $rows = $results->fetchAll();
             }
-
+            $i = 0;
             foreach ($rows as $row) {
                 //this if statement shows or hides relevant data from the Accounts Supervisor or manager
                 if (($dept == 'Accounts' && $role == 'Manager') || ($dept == 'Accounts' && $role = 'Supervisor')) {
                     ?>    
-
-                    <tr id="' . <?php echo $row['id_val']; ?> . '">
+                    <tr id="<?php $row['id_val']; ?>">
                         <td class="id" style="display:none"> <?php echo $row['id_val']; ?>  </td>
                         <td class="name"> <?php echo $row['EmpName']; ?> </td>
                         <td class="empnum"><?php echo $row['LoanType']; ?> </td>
@@ -136,11 +155,22 @@ $empid = $row1['EmpID'];
                         <td class="days"> <?php echo $row['PrincipalRepaid']; ?></td>
                         <td class="days"> <?php echo $row['InterestRepaid']; ?></td>
                         <td class="days"> <?php echo $row['EndBalance']; ?></td>
+                        <td class="days"> 
+                            <form method="post" action="records">
+                                <input class="btn btn-xs btn-group-justified" type="submit" name="action" id = "UpdatePayment" value="UpdatePayment">
+                                <br>
+                                <div id = "dvPayment" name="dvPayment" class="form-group">
+                                    <input class ="small" type="number" step="0.01" id="payment" name="payment" class="form-control"/>
+                                </div>
+                                <!--<input class="btn btn-xs btn-group-justified" type="submit" name="action" id = "ClearBalance" value="ClearBalance">-->
+                                <input type="hidden" name="id" value="<?php echo $row['id_val']; ?>"/>
+                            </form>
+                        </td>
                     </tr>
 
-                        <?php
-                    } else {
-                        ?>
+                    <?php
+                } else {
+                    ?>
                     <tr id="' . <?php echo $row['id_val']; ?> . '">
                         <td class="id" style="display:none"> <?php echo $row['id_val']; ?>  </td>
                         <td class="name"> <?php echo $row['EmpName']; ?> </td>
@@ -154,18 +184,16 @@ $empid = $row1['EmpID'];
                         <td class="days"> <?php echo $row['InterestRepaid']; ?></td>
                         <td class="days"> <?php echo $row['EndBalance']; ?></td>
                     </tr>
-                        <?php
-                    }
+                    <?php
                 }
-                ?>
+                $i++;
+            }
+            ?>
 
 
         </tbody>                     
     </table>
 </div>
-<br>
-<br>
-<input class="btn btn-primary" onclick='BulkLoanUpload();' type="button" name="Submit" id = "Bulk" value="Bulk"/>
 <br>
 <br>
 

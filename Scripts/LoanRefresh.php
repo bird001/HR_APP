@@ -14,7 +14,8 @@ $get_arr = $conn->query($sql_get);
 
 $dayofmonth = date("d");
 
-if ($dayofmonth == '21') {
+if ($dayofmonth == '28') {
+//if ($dayofmonth == '21') {
 
     while ($row = $get_arr->fetch_assoc()) {
 
@@ -42,34 +43,29 @@ if ($dayofmonth == '21') {
         $loan_type = $row_loantype['Type'];
 
 
-        if ($term != '0' && $loanendbalance != '0') {
+        if ($term != '0' || $loanendbalance != '0') {
 
             $newterm = $term - 1;
-            if ($amountpaid >= $monthlyrepayment) {//if the client pays the correct sum of money
-                $sql_insert_new_approved = "INSERT INTO LoanApproved(EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
-                        MonthlyRepayment, ActualRepayment, RepaymentPeriod, InterestPerAnnum, StartBalance, Editable)
-                        VALUES ('$empname','$empid','$loantype','$loanid','$loanamount','$datedisbursed','$actualrepayment',
-                        '$actualrepayment','$newterm','$interestperannum','$loanendbalance',0)";
-                mysqli_query($conn, $sql_insert_new_approved);
-
-                //set refreshable to 1 so that next month the same record doesn't get updated
-                $sql_update_refresh = "update LoanApproved set Refreshable = '1' where id_val = '$id'";
-                mysqli_query($conn, $sql_update_refresh);
+            if ($amountpaid >= $monthlyrepayment) {//if the client pays the correct sum of money update Tailing info
+                $sql_insert_new_approved = "INSERT INTO LoanApprovedTail select * from LoanApproved where Editable = 1";
+                mysqli_query($conn, $sql_insert_new_approved);//so staff can track payments
+                
+                $sql_update_new_approved = "Update LoanApproved set MonthlyRepayment = '$actualrepayment', "
+                        . "RepaymentPeriod = '$newterm', StartBalance = '$loanendbalance', Editable = 0, Refreshable = 0 where id_val = '$id'";
+                mysqli_query($conn, $sql_update_new_approved);//simply updates current entry in loan approved table instead of replicating
             }
 
             if ($amountpaid < $monthlyrepayment) {//if not then difference is added to the principal
                 $difference = $monthlyrepayment - $amountpaid;
                 $newmonthlyrepayment = $monthlyrepayment + $difference;
 
-                $sql_insert_new_approved = "INSERT INTO LoanApproved(EmpName, EmpID, LoanType, LoanID, LoanAmount, DateDisbursed,
-                        MonthlyRepayment, ActualRepayment, RepaymentPeriod, InterestPerAnnum, StartBalance, Editable)
-                        VALUES ('$empname','$empid','$loantype','$loanid','$loanamount','$datedisbursed','$newmonthlyrepayment','$actualrepayment',
-                        '$newterm','$interestperannum','$loanendbalance',0)";
+                $sql_insert_new_approved = "INSERT INTO LoanApprovedTail select * from LoanApproved where Editable = 1";
                 mysqli_query($conn, $sql_insert_new_approved);
 
                 //set refreshable to 1 so that next month the same record doesn't get updated
-                $sql_update_refresh = "update LoanApproved set Refreshable = '1' where id_val = '$id'";
-                mysqli_query($conn, $sql_update_refresh);
+                $sql_update_refresh = "update LoanApproved set MonthlyRepayment = '$newmonthlyrepayment', RepaymentPeriod = '$newterm',"
+                        . "StartBalance = '$loanendbalance', Editable = 0, Refreshable = 0, OutstandingPayments = 1 where id_val = '$id'";
+                mysqli_query($conn, $sql_update_new_approved);
             }
         } else {
             //remove from LoanApproved table and place into the archive table, loan has been paid off
