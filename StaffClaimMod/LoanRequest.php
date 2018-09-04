@@ -14,7 +14,6 @@ include("../Templates/header.php");
                 $("#dvReason").hide();
             }
         });
-        });
     });
 </script>
 
@@ -194,23 +193,23 @@ $role = $row1['EmpRole'];
             </div>
             <br>
             <?php
-                if(strpos($position, 'Assistant General Manager') !== false){
+            if (strpos($position, 'Assistant General Manager') !== false) {
+                ?>
+                <label for="LabelGMAbsent" class="control-label">General Manager Absent</label>
+                <input type="checkbox" name = "absentcheck" class = "checkbox" id = "absentcheck">
+                <br>
+                <br>
+                <div id = "dvGMAbsent" name="dvGMAbsent" class="form-group" style="width:500px;display: none">
+                    <input class="btn btn-danger" type="submit" name="Request" id = "GMAbsentApprove" value="AbsenceApprove"/> 
+                    <input class="btn btn-danger" type="submit" name="Request" id = "GMAbsentDeny" value="AbsenceDeny"/>
+                    <br> 
+                </div>
+                <?php
+            }
             ?>
-            <label for="LabelGMAbsent" class="control-label">General Manager Absent</label>
-            <input type="checkbox" name = "absentcheck" class = "checkbox" id = "absentcheck">
             <br>
             <br>
-            <div id = "dvGMAbsent" name="dvGMAbsent" class="form-group" style="width:500px;display: none">
-                <input class="btn btn-danger" type="submit" name="Request" id = "GMAbsentApprove" value="AbsenceApprove"/> 
-                <input class="btn btn-danger" type="submit" name="Request" id = "GMAbsentDeny" value="AbsenceDeny"/>
-                <br> 
-            </div>
-            <?php
-        }
-            ?>
-            <br>
-            <br>
-            
+
             <?php
         }
         ?>

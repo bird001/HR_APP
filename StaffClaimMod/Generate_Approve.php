@@ -90,7 +90,7 @@ foreach ($idArr as $id) {
             mysqli_query($conn, $verify);
 
             //notify the Assistant GM/HR Manager
-            smtpmailer_AccountsApprove($hrman_email, $empname, $empdept);
+            smtpmailer_AccountsApprove($hrman_email, $empname, $empdept, $empemail, $loantype, $amount);
 
             header("Location: loanrequests");
         }
@@ -112,7 +112,7 @@ foreach ($idArr as $id) {
                 mysqli_query($conn, $approval);
 
                 //notify the General Manager
-                smtpmailer_AGMApprove($gmemail, $empname, $empdept);
+                smtpmailer_AGMApprove($gmemail, $empname, $empdept, $empemail, $loantype, $amount);
 
                 header("Location: loanrequests");
             }
@@ -213,8 +213,8 @@ foreach ($idArr as $id) {
                 mysqli_query($conn, $sql_update_loan_archive);
 
                 //remove this data from the loan application table
-                //$removeloanapp = "delete from LoanApplication where id_val = '$id'";
-                //mysqli_query($conn, $removeloanapp); //execute the query to remove the loan app
+                $removeloanapp = "delete from LoanApplication where id_val = '$id'";
+                mysqli_query($conn, $removeloanapp); //execute the query to remove the loan app
 
                 header("Location: loanrequests");
             }

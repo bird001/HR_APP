@@ -63,7 +63,7 @@ function smtpmailer_LeaveAcceptMan($to, $from, $name, $dept, $type, $numdays, $s
     $mail->Subject = "Leave Application Finalization";
     $mail->Body = "Accepted $name of the $dept Department for $type leave application for $numdays from $startdate to $enddate, please review and finalize";
     $mail->AddAddress($to);
-    $mail->addCC('e.welsh@tipfriendly.com');// need to work on this, do not leave it static
+    $mail->addCC('e.welsh@tipfriendly.com'); // need to work on this, do not leave it static
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
 
@@ -105,7 +105,7 @@ function smtpmailer_LeaveRejectMan($to, $from, $name, $dept, $type, $numdays, $s
     $mail->Body = "I rejected the leave application of"
             . " $name of the $dept Department for $type leave application for $numdays from $startdate to $enddate, please review and finalize";
     $mail->AddAddress($to);
-    $mail->addCC('e.welsh@tipfriendly.com');// need to work on this, do not leave it static
+    $mail->addCC('e.welsh@tipfriendly.com'); // need to work on this, do not leave it static
     $mail->isHTML(true);
 
 
@@ -161,7 +161,7 @@ function smtpmailer_LeaveAcceptHR($to, $from, $name, $dept, $type, $numdays, $st
     $mailman->AddAddress($manemail);
     $mailman->AddCC($supemail);
     $mailman->isHTML(true);
-    
+
     if (!$mail->send() || !$mailman->send()) {
         //$error = 'Mail error: ' . $mail->ErrorInfo;
         echo 'Message could not be sent.';
@@ -235,7 +235,7 @@ function smtpmailer_ApplyLeave($to, $from, $name, $dept, $type, $numdays, $start
     //$mail->SetFrom(GUSER, $from);
     $mail->Subject = "Leave Application";
     $mail->Body = "$name of the $dept Department has applied for $numdays [$type]. Starting at the $startdate to the $enddate." . "<br>"
-            . "Please log into the HR Application ".$url." in order to vet the leave application.";
+            . "Please log into the HR Application " . $url . " in order to vet the leave application.";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -278,7 +278,7 @@ function smtpmailer_OutstandingLeave($to, $name, $days) {
     $mail->Subject = "Outstanding Leave";
     $mail->Body = "Dear $name it has been noted that you have accumulated $days outstanding leave day(s) over a three year period."
             . "Please rectify by going on leave ASAP to clear off the days. \n"
-            . "login at ".$url;
+            . "login at " . $url;
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -300,7 +300,7 @@ function smtpmailer_OutstandingLeave($to, $name, $days) {
     }
 }
 
-function smtpmailer_LeaveReminder($to, $name, $days, $type,$daysto, $startdate) {
+function smtpmailer_LeaveReminder($to, $name, $days, $type, $daysto, $startdate) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -388,7 +388,7 @@ function smtpmailer_RetractLeave($empname, $empemail, $leavetype, $empdept, $man
     }
 }
 
-function smtpmailer_LoanApplication($to, $cc,$name, $dept) {
+function smtpmailer_LoanApplication($to, $cc, $name, $dept) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -404,7 +404,7 @@ function smtpmailer_LoanApplication($to, $cc,$name, $dept) {
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'Tip Friendly Society');
     $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
-    $mail->Body = "Please Log into the HR Application login at ". $url;
+    $mail->Body = "Please Log into the HR Application login at " . $url;
     $mail->AddAddress($to);
     $mail->addCC($cc);
     //$mail->addAttachment($attatch);
@@ -427,7 +427,7 @@ function smtpmailer_LoanApplication($to, $cc,$name, $dept) {
     }
 }
 
-function smtpmailer_AccountsApprove($to, $name, $dept) {
+function smtpmailer_AccountsApprove($to, $name, $dept, $empemail, $type, $amount) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -445,17 +445,32 @@ function smtpmailer_AccountsApprove($to, $name, $dept) {
     $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "This application has been revised and verified by the Accounts Dept."
             . "Vet and proceed as necessary \n"
-            . "login at ". $url;
+            . "login at " . $url;
     $mail->AddAddress($to);
-    //$mail->addAttachment($attatch);
     $mail->isHTML(true);
 
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    $mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, 'Tip Friendly Society');
+    $mailemp->Subject = "Loan Status";
+    $mailemp->Body = "Dear $name your $type loan for $amount has been verified by the Accounts Department, it will now be sent to The HR Dept for further approval";
+    $mailemp->AddAddress($empemail);
+    $mailemp->isHTML(true);
 
 
-    if (!$mail->send()) {
+    if (!$mail->send() || !$mailemp->send()) {
         //$error = 'Mail error: ' . $mail->ErrorInfo;
         echo 'Try Again';
-        //echo 'Mailer Error: ' . $mail->ErrorInfo;
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        echo 'Mailer Error: ' . $mailemp->ErrorInfo;
         //exit;
         //return false;
     } else {
@@ -467,7 +482,7 @@ function smtpmailer_AccountsApprove($to, $name, $dept) {
     }
 }
 
-function smtpmailer_AGMApprove($to, $name, $dept) {
+function smtpmailer_AGMApprove($to, $name, $dept, $empemail, $type, $amount) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -485,17 +500,35 @@ function smtpmailer_AGMApprove($to, $name, $dept) {
     $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "This application has been Vetted and approved by the Assistant General Manager."
             . " Please Check it over and proceed as needed. \n"
-            . "login at ". $url;
+            . "login at " . $url;
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
 
 
 
-    if (!$mail->send()) {
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    $mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, 'Tip Friendly Society');
+    $mailemp->Subject = "Loan Status";
+    $mailemp->Body = "Dear $name your $type loan for $amount has been Vetted by the AGM, it will now be sent to The GM for further approval";
+    $mailemp->AddAddress($empemail);
+    $mailemp->isHTML(true);
+
+
+    if (!$mail->send() || !$mailemp->send()) {
         //$error = 'Mail error: ' . $mail->ErrorInfo;
         echo 'Try Again';
-        //echo 'Mailer Error: ' . $mail->ErrorInfo;
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        echo 'Mailer Error: ' . $mailemp->ErrorInfo;
         //exit;
         //return false;
     } else {
@@ -507,7 +540,7 @@ function smtpmailer_AGMApprove($to, $name, $dept) {
     }
 }
 
-function smtpmailer_AGMDenial($to, $name, $dept) {
+function smtpmailer_AGMDenial($to, $name, $dept, $empemail, $type, $amount) {
 //global $error;
 
     $mail = new PHPMailer;  // create a new object
@@ -525,17 +558,35 @@ function smtpmailer_AGMDenial($to, $name, $dept) {
     $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "This application has been Vetted and Denied by the Assistant General Manager."
             . " Please Check it over and proceed as needed. \n"
-            . "login at ". $url;
+            . "login at " . $url;
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
 
 
 
-    if (!$mail->send()) {
+    $mailemp = new PHPMailer;  // create a new object
+    $mailemp->isSMTP(); // enable SMTP
+    $mailemp->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+    $mailemp->SMTPAuth = true;  // authentication enabled
+    $mailemp->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+    $mailemp->SMTPAutoTLS = false;
+    $mailemp->Host = 'smtp.gmail.com';
+    $mailemp->Port = 25;
+    $mailemp->Username = GUSER;
+    $mailemp->Password = GPWD;
+    $mailemp->SetFrom(GUSER, 'Tip Friendly Society');
+    $mailemp->Subject = "Loan Status";
+    $mailemp->Body = "Dear $name your $type loan for $amount has been Vetted by the AGM, it will now be sent to The GM for further approval";
+    $mailemp->AddAddress($empemail);
+    $mailemp->isHTML(true);
+
+
+    if (!$mail->send() || !$mailemp->send()) {
         //$error = 'Mail error: ' . $mail->ErrorInfo;
         echo 'Try Again';
-        //echo 'Mailer Error: ' . $mail->ErrorInfo;
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        echo 'Mailer Error: ' . $mailemp->ErrorInfo;
         //exit;
         //return false;
     } else {
@@ -565,7 +616,7 @@ function smtpmailer_GMApproveAccounts($to, $name, $dept) {
     $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "This application has been Vetted and approved by the General Manager."
             . " Disburse the loan \n"
-            . "login at ". $url;
+            . "login at " . $url;
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -605,7 +656,7 @@ function smtpmailer_GMDenialAccounts($to, $name, $dept) {
     $mail->Subject = "Loan Application from " . $name . " of the " . $dept . " Department";
     $mail->Body = "This application has been Vetted and Denied by the General Manager."
             . "DO NOT Disburse the loan \n"
-            . "login at ". $url;
+            . "login at " . $url;
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -681,7 +732,7 @@ function smtpmailer_GMDenialEmployee($to, $name, $dept, $type, $amount) {
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
     $mail->Subject = "Loan Application";
     $mail->Body = "Dear $name of the $dept department we would like to inform you that your $type loan request for $ $amount has been denied"
-            . ". If you have any enquiries please contact the Assistant General Manager.";
+            . ". If you have any enquiries please contact the Assistant General Manager or the General Manager.";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -718,7 +769,8 @@ function smtpmailer_Disburse($to, $name, $dept, $type, $amount) {
     $mail->Password = GPWD;
     $mail->SetFrom(GUSER, 'TIP Friendly Society');
     $mail->Subject = "Loan Application";
-    $mail->Body = "Dear $name of the $dept department we would like to inform you that your $type loan request for $ $amount has been disbursed.";
+    $mail->Body = "Dear $name of the $dept department we would like to inform you that your $type loan request for $ $amount has been disbursed."
+            . "Check your account and if you have any problems please get back to us";
     $mail->AddAddress($to);
     //$mail->addAttachment($attatch);
     $mail->isHTML(true);
@@ -844,7 +896,7 @@ function smtpmailer_InventoryRequestBranch($empname, $empdept, $empemail, $itemn
     }
 }
 
-function smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount,$invmanname,$invmanemail) {
+function smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $itemname, $itemamount, $invmanname, $invmanemail) {
 //global $error;
     //email to employee--------------------------------------------------------------------------------
     $mailemp = new PHPMailer;  // create a new object
@@ -863,26 +915,26 @@ function smtpmailer_InventoryRequestApprove($empname, $empdept, $empemail, $item
     $mailemp->AddAddress($empemail);
     $mailemp->isHTML(true);
     /*
-    //--------------------------------------------------------------------------------------------------------
-    //email to inventory manager------------------------------------------------------------------------------
-    $mailinv = new PHPMailer;  // create a new object
-    $mailinv->isSMTP(); // enable SMTP
-    //$mailinv->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
-    $mailinv->SMTPAuth = true;  // authentication enabled
-    $mailinv->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
-    $mailinv->SMTPAutoTLS = false;
-    $mailinv->Host = 'smtp.gmail.com';
-    $mailinv->Port = 25;
-    $mailinv->Username = GUSER;
-    $mailinv->Password = GPWD;
-    $mailinv->SetFrom(GUSER, $manemail);
-    $mailinv->Subject = "Inventory Request";
-    $mailinv->Body = "Dear $invmanname I, $manname, have approved for $empname to receive $itemamount $itemname from you."
-            . " They will be by shortly";
-    $mailinv->AddAddress($invmanemail);
-    $mailinv->addCC($cc);
-    $mailinv->isHTML(true);
-    */
+      //--------------------------------------------------------------------------------------------------------
+      //email to inventory manager------------------------------------------------------------------------------
+      $mailinv = new PHPMailer;  // create a new object
+      $mailinv->isSMTP(); // enable SMTP
+      //$mailinv->SMTPDebug = 2;  // debugging: 1 = errors and messages, 2 = messages only
+      $mailinv->SMTPAuth = true;  // authentication enabled
+      $mailinv->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+      $mailinv->SMTPAutoTLS = false;
+      $mailinv->Host = 'smtp.gmail.com';
+      $mailinv->Port = 25;
+      $mailinv->Username = GUSER;
+      $mailinv->Password = GPWD;
+      $mailinv->SetFrom(GUSER, $manemail);
+      $mailinv->Subject = "Inventory Request";
+      $mailinv->Body = "Dear $invmanname I, $manname, have approved for $empname to receive $itemamount $itemname from you."
+      . " They will be by shortly";
+      $mailinv->AddAddress($invmanemail);
+      $mailinv->addCC($cc);
+      $mailinv->isHTML(true);
+     */
     //--------------------------------------------------------------------------------------------------------
 
     if (!$mailemp->send()) {
@@ -1032,7 +1084,7 @@ function smtpmailer_PasswordChange($empname, $empemail, $emppass) {
     $mailemp->SetFrom(GUSER, 'TIP Friendly Society');
     $mailemp->Subject = "Password Changed";
     $mailemp->Body = "Dear $empname, your password for the HR Application has been changed to $emppass, your username remains your email address,  "
-            . "please log into the <a href = 'http://tiphra/login'>tiphrapp</a>" ;
+            . "please log into the <a href = 'http://tiphra/login'>tiphrapp</a>";
     $mailemp->AddAddress($empemail);
     $mailemp->isHTML(true);
 
