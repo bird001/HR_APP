@@ -146,6 +146,7 @@ if ($dept === 'HR' && $role === 'Supervisor') { //if manager has responded and H
                         <th>Dates</th>
                         <th>Duration</th>
                         <th>Reason</th>
+                        <th>ManagerResponse</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -171,6 +172,7 @@ if ($dept === 'HR' && $role === 'Supervisor') { //if manager has responded and H
                                 echo '<td class="days">' . $row['NumDays'] . ' Days' . '</td>';
                             }
                             echo '<td class="reason">' . $row['Reason'] . '</td>';
+                            echo '<td class="reason">' . $row['ManagerResponse'] . '</td>';
 
                             echo '</tr>';
                         }
