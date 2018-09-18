@@ -43,7 +43,7 @@ $role = $row3['EmpRole'];
 
 <?php
 //if user is employees manager
-if ($email === $manemail || $email === $hremail) {
+if ($email === $manemail || (($email === $hremail) || ($dept === 'HR' && $role === 'Supervisor'))) {
     ?>
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="requestcheck" method="post" >
@@ -63,7 +63,7 @@ if ($email === $manemail || $email === $hremail) {
                         <th>Dates</th>
                         <th>Duration</th>
                         <th>Reason</th>
-                        <th>Status</th>
+                        <th>ManagerReponse</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -126,7 +126,7 @@ if ($email === $manemail || $email === $hremail) {
 ?>
 
 <?php
-if ($dept === 'HR' && $role === 'Supervisor') { //if manager has responded and HR user is logged in
+/*if ($dept === 'HR' && $role === 'Supervisor') { //if manager has responded and HR user is logged in
     ?>
     <div class = "container-fluid datatables_wrapper">
         <form name="bulk_action_form" action="requestcheck" method="post" >
@@ -185,7 +185,7 @@ if ($dept === 'HR' && $role === 'Supervisor') { //if manager has responded and H
         </form>
     </div>
     <?php
-}
+}*/
 ?>
 <br>
 <br>
