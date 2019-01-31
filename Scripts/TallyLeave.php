@@ -19,16 +19,13 @@ while ($row = $get_arr->fetch_assoc()) {
     $vacationDaysRemain = $row['Vacation']; //get vacation days that haven't been used
     $vacationOutstanding = $row['VacationOutstanding']; //get vacation days that haven't been used
     $now = date("d-m-Y");
+    $yearstartcomparison = date("d-m");
     $empsex = $row['EmpSex'];
     $outstandingleave = $row['OutstandingLeave_Years'];
 
     $yearsOfService = dateDifferenceYears($startdate, $now); //calculates the years of service 
     //$yearsOfService = $now - $startdate; //calculates the years of service 
     //$yearsOfService = dateDifferenceYears($startdate, "11-08-2016");//for testing
-
-
-
-
     //if years of service > years of emp then update leave days and employment years
     if ($yearsOfService > $yearsofemp) {
         //update Leaves table with new allocation of leave days for the different types of leave and increment the years of employment column
@@ -99,11 +96,11 @@ while ($row = $get_arr->fetch_assoc()) {
 
             $bereavementDays = "3";
         } else {
-            
+
             //update oustanding leave by one if employee has carry over leave for that year
-            if($outstandingleave === '3'){
-            $outstandingleave = $outstandingleave;
-            } else{
+            if ($outstandingleave === '3') {
+                $outstandingleave = $outstandingleave;
+            } else {
                 $outstandingleave += 1;
             }
             //update Outstanding Leave
@@ -114,42 +111,32 @@ while ($row = $get_arr->fetch_assoc()) {
             //vacation days for managers
 
             if ($yearsOfEmp >= '0' && $yearsOfEmp <= '5' && $role === 'Manager') {
-                $vacationDays = "15";// + $vacationDaysRemain;
+                $vacationDays = "15"; // + $vacationDaysRemain;
             }
 
             if ($yearsOfEmp >= '6' && $yearsOfEmp <= '10' && $role === 'Manager') {
-                $vacationDays = "20";// + $vacationDaysRemain;
+                $vacationDays = "20"; // + $vacationDaysRemain;
             }
 
             if ($yearsOfEmp >= 11 && $yearsOfEmp <= 15 && $role === 'Manager') {
-                $vacationDays = "25";// + $vacationDaysRemain;
+                $vacationDays = "25"; // + $vacationDaysRemain;
             }
 
             if ($yearsOfEmp >= 16 && $role === 'Manager') {
-                $vacationDays = "30";// + $vacationDaysRemain;
+                $vacationDays = "30"; // + $vacationDaysRemain;
             }
 
             //vacation days for non managerial
             if ($yearsOfEmp >= 0 && $yearsOfEmp <= 5 && $role !== 'Manager') {
-                $vacationDays = "10";// + $vacationDaysRemain;
+                $vacationDays = "10"; // + $vacationDaysRemain;
             }
 
             if ($yearsOfEmp >= 6 && $yearsOfEmp <= 10 && $role !== 'Manager') {
-                $vacationDays = "15";// + $vacationDaysRemain;
+                $vacationDays = "15"; // + $vacationDaysRemain;
             }
 
             if ($yearsOfEmp >= 11 && $role !== 'Manager') {
-                $vacationDays = "20";// + $vacationDaysRemain;
-            }
-
-
-            //sick days 
-            if ($yearsOfEmp >= 0 && $yearsOfEmp <= 5) {
-                $sickDays = "10";
-            }
-
-            if ($yearsOfEmp >= 6) {
-                $sickDays = "15";
+                $vacationDays = "20"; // + $vacationDaysRemain;
             }
 
             //study days
@@ -179,12 +166,28 @@ while ($row = $get_arr->fetch_assoc()) {
         $sql_update = "update Leaves set YearsOfEmployment = '$yearsOfService' where EmpEmail = '$empemail'";
         mysqli_query($conn, $sql_update); //execute
         //update the different leave types and carry over leave from vacation
-        $leave = "update HR_DEPT.Leaves set Vacation = '$vacationDays', VacationOutstanding = '$vacationOutstanding',Sick = '$sickDays',Maternity = '$maternityDays',Study='$studyDays',Bereavement='$bereavementDays',"
+        $leave = "update HR_DEPT.Leaves set Vacation = '$vacationDays', VacationOutstanding = '$vacationOutstanding',Maternity = '$maternityDays',Study='$studyDays',Bereavement='$bereavementDays',"
                 . "JuryDuty='$juryDutyDays' where EmpEmail = '$empemail'";
         mysqli_query($conn, $leave); //execute
         //update oustanding leave column by one if employee has carry over leave for that year
         $sql_update = "update HR_DEPT.Leaves set OutstandingLeave_Years = '$outstandingleave' where EmpEmail = '$empemail'";
         mysqli_query($conn, $sql_update);
+
+        //$test="31-01";
+    }
+
+    if ($yearstartcomparison === "31-01") {
+
+        //sick days 
+        if ($yearsofemp >= 0 && $yearsofemp <= 5) {
+            $sickDays = "10";
+        }
+
+        if ($yearsofemp >= 6) {
+            $sickDays = "15";
+        }
+        $leave = "update HR_DEPT.Leaves set Sick = '$sickDays' where EmpEmail = '$empemail'";
+        mysqli_query($conn, $leave); //execute
     }
 }
 ?>

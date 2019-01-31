@@ -265,6 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <option>Marketing</option>
                         <option>Processing</option>
                         <option>HR</option>
+                        <option>Branch</option>
                     </select>
                 </div>
 
