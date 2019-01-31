@@ -176,7 +176,7 @@ while ($row = $get_arr->fetch_assoc()) {
         //$test="31-01";
     }
 
-    if ($yearstartcomparison === "31-01") {
+    if ($yearstartcomparison === "01-01") {
 
         //sick days 
         if ($yearsofemp >= 0 && $yearsofemp <= 5) {
